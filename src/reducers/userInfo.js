@@ -8,13 +8,11 @@ const initState = {
         followerCount: 20,
         likesCount:5,
     }
-}
+};
 
-const userInfo = (state = initState, action) => {
+export default (state = initState, action) => {
     switch (action.type) {
         default:
             return state
     }
-}
-
-export default userInfo
+};

@@ -25,14 +25,12 @@ const initState = {
             likes:10
         }
     ]
-}
+};
 
 
-const tweets = (state = initState, action) => {
+export default (state = initState, action) => {
     switch (action.type) {
         default:
             return state
     }
-}
-
-export default tweets
+};

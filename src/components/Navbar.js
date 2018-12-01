@@ -1,9 +1,8 @@
 import {Layout, Menu, Icon, Input,Avatar,Button,Dropdown} from 'antd/lib';
 import React, {Component} from 'react';
-import './NavStyle.scss'
+import '../css//navstyle.css'
 const {Header} = Layout;
 const Search = Input.Search;
-
 
 const menuDrop = (
     <div style={{boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'}}>
@@ -19,7 +18,7 @@ const menuDrop = (
                 Detail
             </Menu.Item>
             <Menu.Item key="1">
-                <Icon type="logout"/>
+                <Icon type="logoff"/>
                 Logout
             </Menu.Item>
         </Menu>
@@ -40,11 +39,9 @@ class Navbar extends Component {
                     height: '48px',
                     lineHeight: '46px',
                     borderBottom: '1px solid #e8e8e8',
-                    padding:0
                 }}>
                     <div className={'container'}>
                         <Menu
-                            overflowedIndicator = <Icon type="bars"/>
                             theme="light"
                             mode="horizontal"
                             defaultSelectedKeys={['1']}
