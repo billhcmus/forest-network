@@ -5,8 +5,8 @@ class App extends Component {
   render() {
     return (
       <div>
-          <Navbar/>
-          <Wall/>
+        <Navbar/>
+        <Wall/>
       </div>
     );
   }

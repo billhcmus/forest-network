@@ -20,9 +20,11 @@ body, html {
 .main-content {
   display: flex;
   flex-direction: row;
-  height: 100%;
   width: 100%;
   overflow: hidden;
+  height: 350px;
+  position: relative;
+  top: 48px;
   .sidebar-left {
     border-right: solid 1px $border-color;
     border-top: solid 1px $border-color;

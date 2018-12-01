@@ -17,9 +17,11 @@ body, html {
 .main-content {
   display: flex;
   flex-direction: row;
-  height: 100%;
   width: 100%;
-  overflow: hidden; }
+  overflow: hidden;
+  height: 350px;
+  position: relative;
+  top: 48px; }
   .main-content .sidebar-left {
     border-right: solid 1px rgba(0, 0, 0, 0.1);
     border-top: solid 1px rgba(0, 0, 0, 0.1);
