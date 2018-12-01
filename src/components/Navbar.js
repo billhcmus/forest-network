@@ -4,6 +4,7 @@ import './NavStyle.scss'
 const {Header} = Layout;
 const Search = Input.Search;
 
+
 const menuDrop = (
     <div style={{boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'}}>
         <div style={{padding:'15px'}}>
@@ -18,7 +19,7 @@ const menuDrop = (
                 Detail
             </Menu.Item>
             <Menu.Item key="1">
-                <Icon type="poweroff"/>
+                <Icon type="logout"/>
                 Logout
             </Menu.Item>
         </Menu>
@@ -39,9 +40,11 @@ class Navbar extends Component {
                     height: '48px',
                     lineHeight: '46px',
                     borderBottom: '1px solid #e8e8e8',
+                    padding:0
                 }}>
                     <div className={'container'}>
                         <Menu
+                            overflowedIndicator = <Icon type="bars"/>
                             theme="light"
                             mode="horizontal"
                             defaultSelectedKeys={['1']}

@@ -4,28 +4,25 @@
 
 @media screen and (max-width: 938px) {
   .container {
-    padding: 0;
+    padding: 0 !important;
   }
 }
 
 @media screen and (max-width: 1190px)
 {
   .container {
-    min-width: 590px;
+    min-width: 590px !important;
   }
 }
 
 @media screen and (min-width: 1236px) {
   .container {
-    max-width: 1190px;
+    max-width: 1190px !important;
   }
 }
 
 .container {
-  height: 100%;
   max-width: 900px;
   text-align: center;
-  width: auto;
-  position: relative;
   margin: 0 auto;
 }
