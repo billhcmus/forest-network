@@ -45,6 +45,13 @@ class ProfileComponent extends Component {
                         <span className="nav-item-value">1111</span>
                       </a>
                     </li>
+                    <li className="nav-list-item item-button">
+                      <div className="button-edit-profile">
+                        <button type="button" className="button-edit">
+                          <span className="button-text">Edit Profile</span>
+                        </button>
+                      </div>
+                    </li>
                   </ul>
                 </div>
               </div>
