@@ -83,7 +83,7 @@
                     position: relative;
                     list-style: none;
                     padding: 0;
-                    justify-content: center;
+                    // justify-content: center;
                     .nav-list-item {
                         text-align: center;
                         display: block;
@@ -100,6 +100,14 @@
                             font-weight: 800;
                             color: #1DA1F2;
                         }
+                    }
+
+                    .nav-list-item:last-child:hover {
+                        border-bottom: 0;
+                    }
+
+                    .first-item-blance {
+                        width: 22%;
                     }
 
                     .nav-item-link {
@@ -119,6 +127,7 @@
                     .item-button {
                         position: absolute;
                         right: 5%;
+                        margin-top: 0.25%;
                     }
                     .button-edit-profile {
                         .button-edit {

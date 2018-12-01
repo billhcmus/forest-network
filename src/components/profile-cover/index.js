@@ -15,7 +15,7 @@ class ProfileComponent extends Component {
               <div className="avatar-container">
                 <div className="profile-container-avatar">
                   <div className="profile-avatar">
-                    <a className="profile-picture">
+                    <a href="#" className="profile-picture">
                       <img alt="" src="https://pbs.twimg.com/profile_images/552490918989668352/ywlPHVTJ_400x400.jpeg"/>
                     </a>
                   </div>
@@ -27,6 +27,8 @@ class ProfileComponent extends Component {
               <div className="navbar-container">
                 <div className="profile-Nav">
                   <ul className="nav-list">
+                    <li className="nav-list-item first-item-blance">
+                    </li>
                     <li className="nav-list-item item-tweets">
                       <a className="nav-item-link">
                         <span className="nav-item-label">Tweets</span>
