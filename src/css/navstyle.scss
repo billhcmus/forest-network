@@ -1,0 +1,31 @@
+.inputSearch input{
+  border-radius: 21px;
+}
+
+@media screen and (max-width: 938px) {
+  .container {
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 1190px)
+{
+  .container {
+    min-width: 590px;
+  }
+}
+
+@media screen and (min-width: 1236px) {
+  .container {
+    max-width: 1190px;
+  }
+}
+
+.container {
+  height: 100%;
+  max-width: 900px;
+  text-align: center;
+  width: auto;
+  position: relative;
+  margin: 0 auto;
+}

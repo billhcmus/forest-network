@@ -1,6 +1,12 @@
 import { combineReducers } from 'redux';
+import userInfo from  './userInfo'
+import follower from "./follower";
+import following from "./following";
+import tweets from "./tweets";
 
-const myReducer = combineReducers({
+export default combineReducers({
+    userInfo,
+    follower,
+    following,
+    tweets
 });
-
-export default myReducer;
