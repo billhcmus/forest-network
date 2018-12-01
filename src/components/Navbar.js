@@ -1,6 +1,6 @@
-import {Layout, Menu, Icon, Input,Avatar,Button,Dropdown} from 'antd';
+import {Layout, Menu, Icon, Input,Avatar,Button,Dropdown} from 'antd/lib';
 import React, {Component} from 'react';
-import '../css/navstyle.css'
+import '../css//navstyle.css'
 const {Header} = Layout;
 const Search = Input.Search;
 
@@ -8,7 +8,7 @@ const menuDrop = (
     <div style={{boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'}}>
         <div style={{padding:'15px'}}>
             <b>Nguyễn Đình Tiến</b>
-            <br/>
+            <br></br>
             @nguditi
         </div>
         <Menu >
@@ -18,7 +18,7 @@ const menuDrop = (
                 Detail
             </Menu.Item>
             <Menu.Item key="1">
-                <Icon type="poweroff"/>
+                <Icon type="logout"/>
                 Logout
             </Menu.Item>
         </Menu>
@@ -39,27 +39,27 @@ class Navbar extends Component {
                     height: '48px',
                     lineHeight: '46px',
                     borderBottom: '1px solid #e8e8e8',
+                    padding: 0
                 }}>
                     <div className={'container'}>
-                        <Menu
-                            theme="light"
-                            mode="horizontal"
-                            defaultSelectedKeys={['1']}
-                            style={{lineHeight: '46px', border: 'none', display: 'inline-block', float: 'left'}}>
-                            <Menu.Item key="1" style={{fontWeight:'600'}}>
-                                <Icon type="home"/>
-                                Home
-                            </Menu.Item>
-                            <Menu.Item key="2" style={{fontWeight:'600'}}>
-                                <Icon type="bell"/>
-                                Notification
-                            </Menu.Item>
-                            <Menu.Item key="3" style={{fontWeight:'600'}}>
-                                <Icon type="mail"/>
-                                Message
-                            </Menu.Item>
+                        <div className={'menu'}>
+                            <Menu
+                                overflowedIndicator={<Icon type="bars"/>}
+                                theme="light"
+                                mode="horizontal"
+                                defaultSelectedKeys={['1']}
+                                style={{lineHeight: '46px', border: 'none'}}>
+                                <Menu.Item key="1" style={{fontWeight:'600'}}>
+                                    <Icon type="home"/>
+                                    Home
+                                </Menu.Item>
+                                <Menu.Item key="2" style={{fontWeight:'600'}}>
+                                    <Icon type="bell"/>
+                                    Notification
+                                </Menu.Item>
 
-                        </Menu>
+                            </Menu>
+                        </div>
 
                         <Icon type="twitter" style={{fontSize: '20px', color: '#1da1f2'}}/>
 
@@ -71,7 +71,7 @@ class Navbar extends Component {
                                 className={'inputSearch'}
                             />
 
-                            <Dropdown style={{cursor: 'pointer'}} overlay={menuDrop} trigger={['click']} placement="bottomRight">
+                            <Dropdown overlay={menuDrop} trigger={['click']} placement="bottomRight">
                                 <Avatar icon="user" style={{marginLeft:'16px'}}/>
                             </Dropdown>
 
