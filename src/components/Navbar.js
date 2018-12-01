@@ -1,6 +1,6 @@
-import {Layout, Menu, Icon, Input,Avatar,Button,Dropdown} from 'antd/lib';
+import {Layout, Menu, Icon, Input,Avatar,Button,Dropdown} from 'antd';
 import React, {Component} from 'react';
-import './NavStyle.scss'
+import '../css/navstyle.css'
 const {Header} = Layout;
 const Search = Input.Search;
 
@@ -8,7 +8,7 @@ const menuDrop = (
     <div style={{boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'}}>
         <div style={{padding:'15px'}}>
             <b>Nguyễn Đình Tiến</b>
-            <br></br>
+            <br/>
             @nguditi
         </div>
         <Menu >
@@ -71,7 +71,7 @@ class Navbar extends Component {
                                 className={'inputSearch'}
                             />
 
-                            <Dropdown overlay={menuDrop} trigger={['click']} placement="bottomRight">
+                            <Dropdown style={{cursor: 'pointer'}} overlay={menuDrop} trigger={['click']} placement="bottomRight">
                                 <Avatar icon="user" style={{marginLeft:'16px'}}/>
                             </Dropdown>
 

@@ -9,7 +9,7 @@ const initState = {
             displayName:'EmmaWatson'
         }
     ]
-}
+};
 
 
 const follower = (state = initState, action) => {
@@ -17,6 +17,6 @@ const follower = (state = initState, action) => {
         default:
             return state
     }
-}
+};
 
 export default follower

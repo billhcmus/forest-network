@@ -25,7 +25,7 @@ const initState = {
             likes:10
         }
     ]
-}
+};
 
 
 const tweets = (state = initState, action) => {
@@ -33,6 +33,6 @@ const tweets = (state = initState, action) => {
         default:
             return state
     }
-}
+};
 
 export default tweets
