@@ -4,7 +4,7 @@ import './index.scss'
 class ProfileComponent extends Component {
   render() {
     return (
-      <div>
+      <div className="profile-content">
         <div className="profile-container">
           <div className="profile-cover">
             <div className="profile-header">
@@ -25,7 +25,28 @@ class ProfileComponent extends Component {
 
             <div className="profile-Navbar">
               <div className="navbar-container">
-                
+                <div className="profile-Nav">
+                  <ul className="nav-list">
+                    <li className="nav-list-item item-tweets">
+                      <a className="nav-item-link">
+                        <span className="nav-item-label">Tweets</span>
+                        <span className="nav-item-value">1111</span>
+                      </a>
+                    </li>
+                    <li className="nav-list-item item-following">
+                      <a className="nav-item-link">
+                        <span className="nav-item-label">Following</span>
+                        <span className="nav-item-value">1111</span>
+                      </a>
+                    </li>
+                    <li className="nav-list-item item-followers">
+                      <a className="nav-item-link">
+                        <span className="nav-item-label">Follers</span>
+                        <span className="nav-item-value">1111</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
