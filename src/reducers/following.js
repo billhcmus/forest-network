@@ -12,11 +12,9 @@ const initState = {
 };
 
 
-const following = (state = initState, action) => {
+export default (state = initState, action) => {
     switch (action.type) {
         default:
             return state
     }
 };
-
-export default following;
