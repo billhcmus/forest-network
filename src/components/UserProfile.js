@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 
 class UserProfile extends Component {
+    constructor(props) {
+        super(props);
+    }
+    componentDidMount() {
+        console.log(this.props)
+    }
+
     render() {
+        const UserInfo = this.props.userInfo
+        console.log(UserInfo)
         return (
             <div className="profile-content">
                 <div className="profile-container">
@@ -31,19 +40,19 @@ class UserProfile extends Component {
                                         <li className="nav-list-item item-tweets">
                                             <a className="nav-item-link">
                                                 <span className="nav-item-label">Tweets</span>
-                                                <span className="nav-item-value">1111</span>
+                                                <span className="nav-item-value">{UserInfo.other.tweetCount}</span>
                                             </a>
                                         </li>
                                         <li className="nav-list-item item-following">
                                             <a className="nav-item-link">
                                                 <span className="nav-item-label">Following</span>
-                                                <span className="nav-item-value">1111</span>
+                                                <span className="nav-item-value">{UserInfo.other.followingCount}</span>
                                             </a>
                                         </li>
                                         <li className="nav-list-item item-followers">
                                             <a className="nav-item-link">
                                                 <span className="nav-item-label">Follower</span>
-                                                <span className="nav-item-value">1111</span>
+                                                <span className="nav-item-value">{UserInfo.other.followerCount}</span>
                                             </a>
                                         </li>
                                         <li className="nav-list-item item-button">
