@@ -23,7 +23,7 @@ export default class Follow extends Component {
                                 <div key={key} className="user-item">
                                     <div className="media">
                                         <div className="media-left">
-                                            <img src="http://placehold.it/48x48" alt=""/>
+                                            <img src={_.get(value, "avatar")} alt="avatar"/>
                                         </div>
                                         <div className="media-body">
                                             <h4 className="media-heading">{_.get(value, "displayName")}</h4>
