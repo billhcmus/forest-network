@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import Follow from "../containers/Follow";
 export default class Wall extends Component {
     render() {
         return (
@@ -10,7 +11,7 @@ export default class Wall extends Component {
                     Center
                 </div>
                 <div className={"sidebar-right"}>
-                    Right
+                    <Follow/>
                 </div>
             </div>
         );
