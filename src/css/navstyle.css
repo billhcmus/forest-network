@@ -2,25 +2,25 @@
   border-radius: 21px;
 }
 
-@media screen and (max-width: 652px) {
+@media screen and (max-width: 768px) {
   .menu {
-    max-width: 100px;
+    max-width: 100px !important;
   }
 }
-@media screen and (min-width: 652px) {
+@media screen and (min-width: 768px) {
   .container {
-    width: auto;
-    min-width: 424px;
+    width: auto !important;
+    min-width: 424px !important;
   }
 
   .menu {
-    width: 280px;
+    width: 280px !important;
   }
 }
 @media screen and (min-width: 1236px) {
   .container {
     max-width: 1290px !important;
-    min-width: 424px;
+    min-width: 424px !important;
   }
 
   .menu {
