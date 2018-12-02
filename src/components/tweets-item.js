@@ -49,11 +49,17 @@ class TweetItem extends Component {
             <p>{_.get(itemInfo,'content')}</p>
           </div>
 
-          <div className="tweet-actionList">
-            <div className="">
+          <div className="tweet-action-footer">
+            <div className="action-item action-reply">
               <button type="button">
-                <span className="icon"></span>
-                <span className="actionCount">1</span>
+                <span className="icon"><Icon type="message" /></span>
+                <span className="actionCount">{_.get(itemInfo,'comments').length}</span>
+              </button>
+            </div>
+            <div className="action-item action-like">
+              <button type="button">
+                <span className="icon"><Icon type="heart" /></span>
+                <span className="actionCount">{_.get(itemInfo,'likesCount')}</span>
               </button>
             </div>
           </div>

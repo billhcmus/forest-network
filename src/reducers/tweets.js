@@ -12,7 +12,13 @@ const initState = {
                 'COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF ' +
                 'CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE ' +
                 'OR OTHER DEALINGS IN THE SOFTWARE.',
-            likes:2
+            likesCount:2,
+            comments: [
+                {
+                    id: 1,
+                    content: "Lorens"
+                }
+            ]
         },
         {
             id:2,
@@ -26,7 +32,21 @@ const initState = {
                 'COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF ' +
                 'CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE ' +
                 'OR OTHER DEALINGS IN THE SOFTWARE.',
-            likes:10
+            likesCount:10,
+            comments: [
+                {
+                    id: 1,
+                    content: "Lorens"
+                },
+                {
+                    id: 2,
+                    content: "Lorens"
+                },
+                {
+                    id: 3,
+                    content: "Lorens"
+                }
+            ]
         }
     ]
 };
