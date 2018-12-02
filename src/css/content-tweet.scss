@@ -100,6 +100,31 @@
                                 font-size: 14px;
                             }
                         }
+
+                        .tweet-action-footer {
+                            display: flex;
+                            .action-item {
+                                min-width: 80px;
+                                button {
+                                    color: #657786;
+                                    display: inline-block;
+                                    font-size: 16px;
+                                    line-height: 1;
+                                    padding: 0 2px;
+                                    position: relative;
+                                    border: 0;
+                                    background: transparent;
+                                    .actionCount {
+                                        font-size: 16px;
+                                        font-weight: bold;
+                                        line-height: 0.75;
+                                        margin-left: 12px;
+                                        position: relative;
+                                        vertical-align: text-bottom;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 

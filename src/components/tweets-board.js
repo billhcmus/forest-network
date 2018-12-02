@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TweetItem from './tweets-item';
-import './tweets.scss'
+// import './tweets.scss'
 
 class TweetBoard extends Component {
     constructor(props) {
