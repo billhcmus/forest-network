@@ -2,6 +2,7 @@ const initState = {
     listTweet:[
         {
             id:1,
+            urlAvatar: "https://pbs.twimg.com/profile_images/552490918989668352/ywlPHVTJ_400x400.jpeg",
             author:'@Nguynnh74289770',
             time:1543641338,
             content:'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, ' +
@@ -14,6 +15,7 @@ const initState = {
         },
         {
             id:2,
+            urlAvatar: "https://pbs.twimg.com/profile_images/552490918989668352/ywlPHVTJ_400x400.jpeg",
             author:'@Nguynnh74289770',
             time:15436414000,
             content:'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, ' +

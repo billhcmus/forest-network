@@ -3,7 +3,7 @@ import TweetBoard from "../components/tweets-board";
 
 const mapStateToProps = state => {
 	return {
-
+		tweets: state.tweets
 	}
 };
 

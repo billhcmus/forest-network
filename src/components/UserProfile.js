@@ -17,14 +17,14 @@ class UserProfile extends Component {
                     <div className="profile-cover">
                         <div className="profile-header">
                             <div className="profile-header-bg">
-                                <img alt="Cover Photos...." src="https://pbs.twimg.com/profile_banners/173407308/1405769923/1500x500"/>
+                                <img alt="Cover Photos...." src={UserInfo.urlPhotoCover}/>
                             </div>
 
                             <div className="avatar-container">
                                 <div className="profile-container-avatar">
                                     <div className="profile-avatar">
                                         <a href="#" className="profile-picture">
-                                            <img alt="" src="https://pbs.twimg.com/profile_images/552490918989668352/ywlPHVTJ_400x400.jpeg"/>
+                                            <img alt="" src={UserInfo.urlAvatar}/>
                                         </a>
                                     </div>
                                 </div>
