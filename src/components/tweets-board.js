@@ -30,7 +30,7 @@ class TweetBoard extends Component {
                 {
                   !!listTweet && listTweet.map((value, key) =>{
                     return (
-                      <TweetItem key={key}/>
+                      <TweetItem key={key} itemInfo={value}/>
                     )
                   })
                 }
