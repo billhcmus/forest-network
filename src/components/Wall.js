@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import Follow from "../containers/Follow";
+import TweetBoard from '../containers/tweets-board';
+
 export default class Wall extends Component {
     render() {
         return (
@@ -8,7 +10,7 @@ export default class Wall extends Component {
                     Left
                 </div>
                 <div className={"content"}>
-                    Center
+                    <TweetBoard/>
                 </div>
                 <div className={"sidebar-right"}>
                     <Follow/>
