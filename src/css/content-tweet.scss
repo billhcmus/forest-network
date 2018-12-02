@@ -1,0 +1,137 @@
+.tweets-board-container {
+    .heading-title {
+        .space-content {
+
+        }
+        .title-content {
+            background-color: #fff;
+            border: 1px solid #e6ecf0;
+            margin-bottom: -1px;
+            .title-toggle {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                .title-item {
+                    // color: #14171a;
+                    cursor: default;
+                    line-height: 1;
+                    padding: 15px 15px 12px;
+                    text-decoration: none;
+                    display: block;
+                    a {
+                        font-weight: 800;
+                        color: #1DA1F2;
+                        font-size: 18px;
+                    }
+                    a:hover {
+                        border-bottom: solid 1px #1DA1F2;
+                    }
+
+                }
+            }
+        }
+    }
+
+    .tweets-timeline {
+        .tweet-container {
+            position: relative;
+            .list-tweets {
+                position: relative;
+                margin: 0;
+                list-style: none;
+                .item-tweet {
+                    background: #fff;
+                    border-left: 5px solid #e6ecf0;
+                    border-right: 5px solid #e6ecf0;
+                    border-bottom: 5px solid #e6ecf0;
+                    // background-clip: padding-box;
+                    padding: 9px 12px;
+                    .tweet-content {
+                        margin-left: 58px;
+                        position: relative;
+                        .tweet-header {
+                            display: flex;
+                            .tweet-profile-link {
+                                color: #14171a;
+                                overflow: hidden;
+                                // display: inline-block;
+                                flex-shrink: 1;
+                                img {
+                                    width: 50px;
+                                    height: 50px;
+                                    max-width: 50px;
+                                    max-height: 50px;
+                                    border-radius: 50%;
+                                    position: absolute;
+                                    margin-top: 3px;
+                                    margin-left: -58px;
+                                }
+                                .displayName {
+                                    // display: flex;
+                                    max-width: 100%;
+                                    font-weight: 800;
+                                    font-size: 18px;
+                                }
+                                .displayName:hover {
+                                    color: #1DA1F2;
+                                    border-bottom: solid 1px #1DA1F2;
+                                }
+                                .usernName {
+                                    color: #657786;
+                                }
+                                .time::before {
+                                    content: "\00b7"
+                                }
+                            }
+                            .tweets-action {
+                                margin: -2px -9px 0 auto;
+                                min-width: inherit;
+                            }
+                        }
+
+                        .tweet-text-container {
+                            position: relative;
+                            p {
+                                overflow: hidden;
+                                // color: #2e2e2e;
+                                -webkit-line-clamp: 4;
+                                display: -webkit-box;
+                                font-size: 14px;
+                            }
+                        }
+
+                        .tweet-action-footer {
+                            display: flex;
+                            .action-item {
+                                min-width: 80px;
+                                button {
+                                    color: #657786;
+                                    display: inline-block;
+                                    font-size: 16px;
+                                    line-height: 1;
+                                    padding: 0 2px;
+                                    position: relative;
+                                    border: 0;
+                                    background: transparent;
+                                    .actionCount {
+                                        font-size: 16px;
+                                        font-weight: bold;
+                                        line-height: 0.75;
+                                        margin-left: 12px;
+                                        position: relative;
+                                        vertical-align: text-bottom;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .item-tweet:hover {
+                    background: #e6ecf0
+                }
+            }
+        }
+    }
+}
