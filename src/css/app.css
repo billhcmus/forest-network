@@ -9,6 +9,10 @@ body, html {
   box-sizing: border-box;
   padding: 0; }
 
+.profile-content {
+  position: relative;
+  top: 48px; }
+
 .profile-container {
   height: 320px; }
   .profile-container .profile-cover {

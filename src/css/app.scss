@@ -13,6 +13,10 @@ body, html {
 
 
 // User profile here
+.profile-content {
+  position: relative;
+  top: 48px;
+}
 .profile-container {
   height: 320px;
   .profile-cover {
