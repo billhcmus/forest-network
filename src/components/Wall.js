@@ -8,18 +8,41 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 export default class Wall extends Component {
     render() {
         return (
-            <div className={"main-content"}>
-                <div className={"sidebar-left"}>
-                    <SideBar/>
-                </div>
-                {/*<div className={"content"}>
-                    <TweetBoard/>
-                </div>
-                <div className={"sidebar-right"}>
-                    <Follow/>
-                </div>*/}
-                <FollowingList/>
-            </div>
+            <Router>
+                <Switch>
+                    <Route
+                        path="/following"
+                        children={({ match }) => (
+                            <div className={"main-content"}>
+                                <div className={"sidebar-left"}>
+                                    <SideBar/>
+                                </div>
+                                <div className={"main-right"}>
+                                    <FollowingList/>
+                                </div>
+                            </div>
+                        )}
+                      />
+
+                    <Route
+                        exact
+                        path="/"
+                        children={({ match }) => (
+                          <div className={"main-content"}>
+                            <div className={"sidebar-left"}>
+                                <SideBar/>
+                            </div>
+                            <div className={"content"}>
+                                <TweetBoard/>
+                            </div>
+                            <div className={"sidebar-right"}>
+                                <Follow/>
+                            </div>
+                        </div>
+                        )}
+                      />
+                </Switch>
+            </Router>
         );
     }
 }

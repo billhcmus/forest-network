@@ -10,7 +10,7 @@ class FollowingList extends Component {
 
   render() {
     return (
-      <div className="list">
+      <div className="list-following">
         { 
           this.props.list_following.map((value, key)=>{
             return <FollowingItem key={key} FollowItem={value}/>
