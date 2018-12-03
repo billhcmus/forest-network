@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import { BrowserRouter as Link } from 'react-router-dom';
-
 
 class UserProfile extends Component {
     
