@@ -2,96 +2,117 @@
 .tweets-board-container .heading-title .title-content {
   background-color: #fff;
   border: 1px solid #e6ecf0;
-  margin-bottom: -1px; }
-  .tweets-board-container .heading-title .title-content .title-toggle {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex; }
-    .tweets-board-container .heading-title .title-content .title-toggle .title-item {
-      cursor: default;
-      line-height: 1;
-      padding: 15px 15px 12px;
-      text-decoration: none;
-      display: block; }
-      .tweets-board-container .heading-title .title-content .title-toggle .title-item a {
-        font-weight: 800;
-        color: #1DA1F2;
-        font-size: 18px; }
-      .tweets-board-container .heading-title .title-content .title-toggle .title-item a:hover {
-        border-bottom: solid 1px #1DA1F2; }
+  margin-bottom: -1px;
+}
+.tweets-board-container .heading-title .title-content .title-toggle {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.tweets-board-container .heading-title .title-content .title-toggle .title-item {
+  cursor: default;
+  line-height: 1;
+  padding: 15px 15px 12px;
+  text-decoration: none;
+  display: block;
+}
+.tweets-board-container .heading-title .title-content .title-toggle .title-item a {
+  font-weight: 800;
+  color: #1DA1F2;
+  font-size: 18px;
+}
+.tweets-board-container .heading-title .title-content .title-toggle .title-item a:hover {
+  border-bottom: solid 1px #1DA1F2;
+}
 .tweets-board-container .tweets-timeline .tweet-container {
-  position: relative; }
-  .tweets-board-container .tweets-timeline .tweet-container .list-tweets {
-    position: relative;
-    margin: 0;
-    list-style: none; }
-    .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet {
-      background: #fff;
-      border-left: 5px solid #e6ecf0;
-      border-right: 5px solid #e6ecf0;
-      border-bottom: 5px solid #e6ecf0;
-      padding: 9px 12px; }
-      .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content {
-        margin-left: 58px;
-        position: relative; }
-        .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header {
-          display: flex; }
-          .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link {
-            color: #14171a;
-            overflow: hidden;
-            flex-shrink: 1; }
-            .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link img {
-              width: 50px;
-              height: 50px;
-              max-width: 50px;
-              max-height: 50px;
-              border-radius: 50%;
-              position: absolute;
-              margin-top: 3px;
-              margin-left: -58px; }
-            .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link .displayName {
-              max-width: 100%;
-              font-weight: 800;
-              font-size: 18px; }
-            .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link .displayName:hover {
-              color: #1DA1F2;
-              border-bottom: solid 1px #1DA1F2; }
-            .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link .usernName {
-              color: #657786; }
-            .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link .time::before {
-              content: "·"; }
-          .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweets-action {
-            margin: -2px -9px 0 auto;
-            min-width: inherit; }
-        .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-text-container {
-          position: relative; }
-          .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-text-container p {
-            overflow: hidden;
-            -webkit-line-clamp: 4;
-            display: -webkit-box;
-            font-size: 14px; }
-        .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer {
-          display: flex; }
-          .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer .action-item {
-            min-width: 80px; }
-            .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer .action-item button {
-              color: #657786;
-              display: inline-block;
-              font-size: 16px;
-              line-height: 1;
-              padding: 0 2px;
-              position: relative;
-              border: 0;
-              background: transparent; }
-              .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer .action-item button .actionCount {
-                font-size: 16px;
-                font-weight: bold;
-                line-height: 0.75;
-                margin-left: 12px;
-                position: relative;
-                vertical-align: text-bottom; }
-    .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet:hover {
-      background: #e6ecf0; }
+  position: relative;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets {
+  position: relative;
+  margin: 0;
+  list-style: none;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet {
+  background: #fff;
+  padding: 9px 12px;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content {
+  margin-left: 58px;
+  position: relative;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header {
+  display: flex;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link {
+  color: #14171a;
+  overflow: hidden;
+  flex-shrink: 1;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link img {
+  width: 50px;
+  height: 50px;
+  max-width: 50px;
+  max-height: 50px;
+  border-radius: 50%;
+  position: absolute;
+  margin-top: 3px;
+  margin-left: -58px;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link .displayName {
+  max-width: 100%;
+  font-weight: 800;
+  font-size: 18px;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link .displayName:hover {
+  color: #1DA1F2;
+  border-bottom: solid 1px #1DA1F2;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link .usernName {
+  color: #657786;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link .time::before {
+  content: "·";
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweets-action {
+  margin: -2px -9px 0 auto;
+  min-width: inherit;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-text-container {
+  position: relative;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-text-container p {
+  overflow: hidden;
+  -webkit-line-clamp: 4;
+  display: -webkit-box;
+  font-size: 14px;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer {
+  display: flex;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer .action-item {
+  min-width: 80px;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer .action-item button {
+  color: #657786;
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0 2px;
+  position: relative;
+  border: 0;
+  background: transparent;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer .action-item button .actionCount {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 0.75;
+  margin-left: 12px;
+  position: relative;
+  vertical-align: text-bottom;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet:hover {
+  background: #e6ecf0;
+}
 
 /*# sourceMappingURL=content-tweet.css.map */
