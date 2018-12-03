@@ -313,6 +313,23 @@ body, html {
 }
 //end tweet dashboard
 
+
+//start sidebar
+.sidebar {
+  .sidebar-head {
+    .displayName {
+      line-height: 1;
+    }
+    .userName {
+      line-height: 1;
+      font-size: 14px;
+      line-height: 20px;
+      margin-bottom: 12px;
+    }
+  }
+}
+//end sidebar
+
 .main-page {
   overflow: hidden;
   display: flex;
@@ -326,12 +343,14 @@ body, html {
   height: 350px;
   position: relative;
   top: 110px;
+  padding-left: 100px;
+  padding-right: 100px;
   .sidebar-left {
     border-right: solid 1px $border-color;
     border-top: solid 1px $border-color;
     flex-grow: 1;
     width: 350px;
-    background-color: #2ecc71;
+    // background-color: #e6ecf0;
   }
   .content {
     border-top: solid 1px $border-color;
