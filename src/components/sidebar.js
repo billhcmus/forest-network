@@ -5,9 +5,6 @@ import {location} from 'react-icons-kit/icomoon/location';
 import {calendar} from 'react-icons-kit/icomoon/calendar';
 import {droplet} from 'react-icons-kit/icomoon/droplet'
 
-
-import '../css/sidebar.scss'
-
 class SideBar extends Component {
 
   constructor(props) {
