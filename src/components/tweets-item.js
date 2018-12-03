@@ -63,6 +63,9 @@ class TweetItem extends Component {
               </button>
             </div>
           </div>
+
+           <a style={{color:'#1DA1F2',textAlign:'left'}}>Show this
+              thread</a>
         </div>
       </li>
     );

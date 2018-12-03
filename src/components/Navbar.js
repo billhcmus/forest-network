@@ -36,8 +36,8 @@ class Navbar extends Component {
                     zIndex: 2,
                     width: '100%',
                     background: '#fff',
-                    height: '48px',
-                    lineHeight: '46px',
+                    height: '46px',
+                    lineHeight: '44px',
                     borderBottom: '1px solid #e8e8e8',
                     padding: 0
                 }}>
@@ -48,7 +48,7 @@ class Navbar extends Component {
                                 theme="light"
                                 mode="horizontal"
                                 defaultSelectedKeys={['1']}
-                                style={{lineHeight: '46px', border: 'none'}}>
+                                style={{lineHeight: '44px', border: 'none'}}>
                                 <Menu.Item key="1" style={{fontWeight:'600'}}>
                                     <Icon type="home"/>
                                     Home

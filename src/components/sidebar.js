@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import '../css/sidebar.scss'
 
 class SideBar extends Component {
 

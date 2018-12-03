@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import {Icon} from 'antd/lib';
 import TweetItem from './tweets-item';
-// import './tweets.scss'
 
 class TweetBoard extends Component {
     constructor(props) {
@@ -37,6 +37,9 @@ class TweetBoard extends Component {
               </ul>
             </div>
           </div>
+            <div className="stream-end-inner">
+                <Icon type="twitter" style={{fontSize: '20px'}}/>
+            </div>
         </div>
       );
     }
