@@ -2,7 +2,7 @@
 body, html {
   margin: 0;
   padding: 0;
-  color: #34495e;
+  color: #e6ecf0;
   font-size: 13px;
   font-family: 'Open Sans', sans-serif; }
 
@@ -230,6 +230,14 @@ body, html {
     .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet:hover {
       background: #e6ecf0; }
 
+.sidebar .sidebar-head .displayName {
+  line-height: 1; }
+.sidebar .sidebar-head .userName {
+  line-height: 1;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 12px; }
+
 .main-page {
   overflow: hidden;
   display: flex;
@@ -241,13 +249,14 @@ body, html {
   width: 100%;
   height: 350px;
   position: relative;
-  top: 110px; }
+  top: 110px;
+  padding-left: 100px;
+  padding-right: 100px; }
   .main-content .sidebar-left {
     border-right: solid 1px rgba(0, 0, 0, 0.1);
     border-top: solid 1px rgba(0, 0, 0, 0.1);
     flex-grow: 1;
-    width: 350px;
-    background-color: #2ecc71; }
+    width: 350px; }
   .main-content .content {
     border-top: solid 1px rgba(0, 0, 0, 0.1);
     flex-grow: 3;
