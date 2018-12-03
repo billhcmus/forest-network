@@ -4,13 +4,13 @@ import { Menu, Dropdown, Icon } from 'antd';
 const menu = (
   <Menu>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">1st menu item</a>
+      <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">Turn on mobile notification</a>
     </Menu.Item>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">2nd menu item</a>
+      <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">Add or remove this twweet</a>
     </Menu.Item>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">3rd menu item</a>
+      <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">Embed this porfile</a>
     </Menu.Item>
   </Menu>
 );
@@ -24,13 +24,19 @@ class FollowingItem extends Component {
   render() {
     return (
       <div className="card" style={{width: '23rem'}}>
-        <a className="card-img-top card-head" href="#"></a>
+        <a className="card-img-top card-head" href="#">
+        { !!this.props.FollowItem.theme &&
+          <img className="card-img-top" src={this.props.FollowItem.theme}/>
+        }
+        </a>
         <div className="card-body">
           <a href="#" className="avatar">
-            <img src="https://pbs.twimg.com/profile_images/552490918989668352/ywlPHVTJ_400x400.jpeg" alt="...."/>
+            <img src={this.props.FollowItem.avatar} alt="...."/>
           </a>
           <div className="card-action">
-            <a href="#" className="btn btn-primary">Go somewhere</a>
+            <button href="#" className="btn btn-primary" type="button">
+              <span>Following</span>
+            </button>
             <div className="actions-group">
               <Dropdown overlay={menu} trigger={['click']}>
                 <a className="ant-dropdown-link" href="#">
@@ -41,14 +47,14 @@ class FollowingItem extends Component {
           </div>
           <div className="card-userfield">
             <div className="displayName">
-              JBThong
+              <a href="">{this.props.FollowItem.displayName}</a>
             </div>
 
             <div className="userName">
-              jb_thong
+              <a href="">{this.props.FollowItem.userName}</a>
             </div>
             <div className="bio">
-              .......
+              <p>{this.props.FollowItem.bio}</p>
             </div>
 
           </div>

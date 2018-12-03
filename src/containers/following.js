@@ -3,6 +3,7 @@ import FollowingList from '../components/following-list'
 
 const mapStateToProps = state => {
 	return {
+		list_following: state.following.listFollowing
 	}
 }
 
