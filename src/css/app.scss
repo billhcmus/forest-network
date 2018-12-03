@@ -231,7 +231,7 @@ body, html {
             margin-left: 58px;
             position: relative;
             .tweet-header {
-              display: block;
+              display: flex;
               .tweet-profile-link {
                 color: #14171a;
                 overflow: hidden;
@@ -257,7 +257,7 @@ body, html {
                   color: #1DA1F2;
                   border-bottom: solid 1px #1DA1F2;
                 }
-                .userName {
+                .usernName {
                   color: #657786;
                   font-size: 16px;
 
@@ -269,13 +269,17 @@ body, html {
                   content: "\00b7"
                 }
               }
+              .tweets-action {
+                margin: -2px -9px 0 auto;
+                min-width: inherit;
+              }
             }
 
             .tweet-text-container {
               position: relative;
               p {
                 overflow: hidden;
-                margin-bottom: 0px;
+                // color: #2e2e2e;
                 -webkit-line-clamp: 4;
                 display: -webkit-box;
                 font-size: 14px;
@@ -283,59 +287,46 @@ body, html {
               }
             }
 
-            .tweets-action {
-              float: right;
-              display: inline-block;
-              text-align: right;
-              min-width: inherit;
-            }
-            .action-like {
-              button:hover{
-                cursor: pointer;
-                color: #ff0083;
-              }
-            }
-            .action-reply {
-              button:hover{
-                cursor: pointer;
-                color: #04dff8;
-              }
-            }
-
-            .action-drop {
-              button:hover{
-                cursor: pointer;
-                color: #70df00;
-              }
-            }
-
-            .action-item {
-              min-width: 80px;
-              button {
-                color: #657786;
-                display: inline-block;
-                font-size: 16px;
-                line-height: 1;
-                padding: 2px;
-                position: relative;
-                border: none;
-
-                background: transparent;
-
-                .actionCount {
-                  font-size: 16px;
-                  font-weight: bold;
-                  line-height: 1;
-                  margin-left: 10px;
-                  position: relative;
-                  vertical-align: text-bottom;
-                }
-              }
-            }
-
             .tweet-action-footer {
               display: flex;
-              margin-bottom: 0px;
+              margin-bottom: 10px;
+              .action-like {
+                button:hover{
+                  cursor: pointer;
+                  color: #ff0083;
+                }
+              }
+              .action-reply {
+                button:hover{
+                  cursor: pointer;
+                  color: #04dff8;
+                }
+              }
+              .action-item {
+                min-width: 80px;
+                button {
+                  color: #657786;
+                  display: inline-block;
+                  font-size: 16px;
+                  line-height: 1;
+                  padding: 0 2px;
+                  position: relative;
+                  border: none;
+
+                  background: transparent;
+
+                  .actionCount {
+                    font-size: 16px;
+                    font-weight: bold;
+                    line-height: 0.75;
+                    margin-left: 12px;
+                    position: relative;
+                    vertical-align: text-bottom;
+                  }
+                }
+              }
+
+
             }
 
           }
