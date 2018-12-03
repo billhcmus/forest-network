@@ -7,9 +7,6 @@ import {droplet} from 'react-icons-kit/icomoon/droplet'
 
 class SideBar extends Component {
 
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (
