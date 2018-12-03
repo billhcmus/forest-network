@@ -1,9 +1,7 @@
-import { Form, Icon, Input, Button, Modal } from 'antd';
+import { Icon, Input, Button, Modal } from 'antd';
 import React, {Component} from 'react';
 import "../../css/compose-tweet.scss"
 import {Menu} from "antd/lib/menu";
-
-const FormItem = Form.Item;
 
 class TweetForm extends Component {
     state = {
@@ -24,7 +22,6 @@ class TweetForm extends Component {
     }
 
     render() {
-        const { getFieldDecorator } = this.props.form;
         return (
             <Modal
                 title="Compose new Tweet"
@@ -61,4 +58,4 @@ class TweetForm extends Component {
         );
     }
 }
-export default Form.create()(TweetForm);
+export default TweetForm;

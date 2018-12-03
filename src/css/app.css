@@ -213,7 +213,7 @@ body, html {
   position: relative;
 }
 .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header {
-  display: flex;
+  display: block;
 }
 .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link {
   color: #14171a;
@@ -239,7 +239,7 @@ body, html {
   color: #1DA1F2;
   border-bottom: solid 1px #1DA1F2;
 }
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link .usernName {
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link .userName {
   color: #657786;
   font-size: 16px;
 }
@@ -249,52 +249,59 @@ body, html {
 .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link .time::before {
   content: "·";
 }
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweets-action {
-  margin: -2px -9px 0 auto;
-  min-width: inherit;
-}
 .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-text-container {
   position: relative;
 }
 .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-text-container p {
   overflow: hidden;
+  margin-bottom: 0px;
   -webkit-line-clamp: 4;
   display: -webkit-box;
   font-size: 14px;
   font-weight: 500;
 }
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer {
-  display: flex;
-  margin-bottom: 10px;
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweets-action {
+  float: right;
+  display: inline-block;
+  text-align: right;
+  min-width: inherit;
 }
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer .action-like button:hover {
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .action-like button:hover {
   cursor: pointer;
   color: #ff0083;
 }
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer .action-reply button:hover {
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .action-reply button:hover {
   cursor: pointer;
   color: #04dff8;
 }
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer .action-item {
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .action-drop button:hover {
+  cursor: pointer;
+  color: #70df00;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .action-item {
   min-width: 80px;
 }
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer .action-item button {
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .action-item button {
   color: #657786;
   display: inline-block;
   font-size: 16px;
   line-height: 1;
-  padding: 0 2px;
+  padding: 2px;
   position: relative;
   border: none;
   background: transparent;
 }
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer .action-item button .actionCount {
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .action-item button .actionCount {
   font-size: 16px;
   font-weight: bold;
-  line-height: 0.75;
-  margin-left: 12px;
+  line-height: 1;
+  margin-left: 10px;
   position: relative;
   vertical-align: text-bottom;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer {
+  display: flex;
+  margin-bottom: 0px;
 }
 .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet:hover {
   background: #eff4fa;
