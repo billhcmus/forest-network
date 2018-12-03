@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
+import { BrowserRouter as Link } from 'react-router-dom';
+
 
 class UserProfile extends Component {
     constructor(props) {
@@ -7,6 +10,7 @@ class UserProfile extends Component {
     componentDidMount() {
         console.log(this.props)
     }
+
     render() {
         return (
             <div className="profile-content">
@@ -41,7 +45,7 @@ class UserProfile extends Component {
                                             </a>
                                         </li>
                                         <li className="nav-list-item item-following">
-                                            <a className="nav-item-link">
+                                            <a className="nav-item-link" >
                                                 <span className="nav-item-label">Following</span>
                                                 <span className="nav-item-value">{this.props.userInfo.other.followingCount}</span>
                                             </a>

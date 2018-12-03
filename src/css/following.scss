@@ -1,4 +1,8 @@
-.card{
+.list-following {
+	display: flex;
+	flex-wrap: wrap;
+	.card{
+		border: 5px solid #e6ecf0 !important;
 	.card-head {
 		background-position: 0 50%;
     	background-size: 100%;
@@ -87,4 +91,5 @@
  	   		}
 		}
 	}
+}
 }

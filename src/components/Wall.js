@@ -3,7 +3,7 @@ import Follow from "../containers/Follow";
 import TweetBoard from '../containers/tweets-board';
 import SideBar from '../containers/sidebar';
 import FollowingList from '../containers/following';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 export default class Wall extends Component {
     render() {
