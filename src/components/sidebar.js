@@ -12,7 +12,6 @@ class SideBar extends Component {
   }
 
   render() {
-    console.log(this.props.userInfo)
     return (
       <div className="sidebar">
         <div className="sidebar-head">
