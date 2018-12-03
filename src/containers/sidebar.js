@@ -3,6 +3,7 @@ import SideBar from '../components/sidebar'
 
 const mapStateToProps = state => {
 	return {
+		userInfo: state.userInfo
 	}
 }
 

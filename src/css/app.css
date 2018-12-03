@@ -230,14 +230,6 @@ body, html {
     .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet:hover {
       background: #e6ecf0; }
 
-.sidebar .sidebar-head .displayName {
-  line-height: 1; }
-.sidebar .sidebar-head .userName {
-  line-height: 1;
-  font-size: 14px;
-  line-height: 20px;
-  margin-bottom: 12px; }
-
 .main-page {
   overflow: hidden;
   display: flex;
