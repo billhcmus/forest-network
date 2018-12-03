@@ -305,14 +305,54 @@ body, html {
   background-color: #fff;
 }
 
+.sidebar {
+  margin-top: 35px;
+}
+.sidebar .sidebar-head {
+  padding-right: 15px;
+  padding-left: 15px;
+}
 .sidebar .sidebar-head .displayName {
-  line-height: 1;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+}
+.sidebar .sidebar-head .displayName a {
+  line-height: 28px;
+}
+.sidebar .sidebar-head .displayName a:hover {
+  border-bottom: solid 2px #000;
 }
 .sidebar .sidebar-head .userName {
-  line-height: 1;
+  color: #657786;
   font-size: 14px;
   line-height: 20px;
   margin-bottom: 12px;
+}
+.sidebar .sidebar-head .userName span:hover {
+  border-bottom: solid 1px;
+  cursor: pointer;
+}
+.sidebar .sidebar-head .location {
+  color: #657786;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 8px;
+  position: relative;
+}
+.sidebar .sidebar-head .joined-date {
+  color: #657786;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 8px;
+  position: relative;
+}
+.sidebar .sidebar-head .birthdate {
+  color: #657786;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 8px;
+  position: relative;
 }
 
 .main-page {
