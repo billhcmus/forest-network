@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import Follow from "../containers/Follow";
 import TweetBoard from '../containers/tweets-board';
+import SideBar from '../containers/sidebar';
 
 export default class Wall extends Component {
     render() {
         return (
             <div className={"main-content"}>
                 <div className={"sidebar-left"}>
-                    Left
+                    <SideBar/>
                 </div>
                 <div className={"content"}>
                     <TweetBoard/>
