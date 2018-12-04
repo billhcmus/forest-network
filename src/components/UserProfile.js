@@ -63,7 +63,7 @@ class UserProfile extends Component {
                                         <li className="first-item-blance">
                                         </li>
                                         <li className="nav-list-item item-tweets isSelected">
-                                            <Link className="nav-item-link" to="/" activeClassName="isSelected">
+                                            <Link className="nav-item-link" to="/" activeclassname="isSelected">
                                                 <span className="nav-item-label">Tweets</span>
                                                 <span className="nav-item-value">{this.props.userInfo.other.tweetCount}</span>
                                             </Link>
