@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './follow-style.scss'
 import _ from 'lodash';
 
-export default class Follow extends Component {
+export default class RecommendFollow extends Component {
 
     constructor(props) {
         super(props);

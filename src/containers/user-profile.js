@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import UserProfile from "../components/UserProfile";
+import UserProfile from "../components/user-profile";
 import {increaseFollowing} from "../actions";
 
 const mapStateToProps = state => {

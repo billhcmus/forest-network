@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import Follow from "../components/Follow/Follow";
+import RecommendFollow from "../components/Recommend-Follow/recommend-follow";
 import {dismissUserRecommend, increaseFollowing} from "../actions";
 
 const mapStateToProps = state => ({
@@ -19,4 +19,4 @@ const mapDispatchToProps = dispatch => {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Follow);
+export default connect(mapStateToProps, mapDispatchToProps)(RecommendFollow);

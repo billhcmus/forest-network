@@ -63,7 +63,7 @@ class UserProfile extends Component {
                                         <li className="first-item-blance">
                                         </li>
                                         <li className="nav-list-item item-tweets isSelected">
-                                            <Link className="nav-item-link" to="/" activeclassname="isSelected">
+                                            <Link className="nav-item-link" to="/">
                                                 <span className="nav-item-label">Tweets</span>
                                                 <span className="nav-item-value">{this.props.userInfo.other.tweetCount}</span>
                                             </Link>
@@ -75,15 +75,15 @@ class UserProfile extends Component {
                                             </Link>
                                         </li>
                                         <li className="nav-list-item item-followers">
-                                            <a className="nav-item-link">
+                                            <Link className="nav-item-link" to="/follower">
                                                 <span className="nav-item-label">Follower</span>
                                                 <span className="nav-item-value">{this.props.userInfo.other.followerCount}</span>
-                                            </a>
+                                            </Link>
                                         </li>
                                         <li className="nav-list-item item-button">
                                             <div className="button-edit-profile">
                                                 <button type="button" className="button-edit">
-                                                    <span className="button-text">Edit Profile</span>
+                                                    <span className="button-text" onClick={(e)=>this.handleEditClick(e)}>Edit Profile</span>
                                                 </button>
                                             </div>
                                         </li>

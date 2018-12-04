@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import Follow from "../containers/Follow";
+import Follow from "../containers/recommend-follow";
 import TweetBoard from '../containers/tweets-board';
-import SideBar from '../containers/sidebar';
+import SideBar from '../containers/left-sidebar';
 import FollowingList from '../containers/following';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
@@ -22,6 +22,20 @@ export default class Wall extends Component {
                         </div>
                     )}
                   />
+
+                <Route
+                    path="/follower"
+                    children={({ match }) => (
+                        <div className={"main-content"}>
+                            <div className={"sidebar-left"}>
+                                <SideBar/>
+                            </div>
+                            <div className={"main-right"}>
+                                <FollowerList/>
+                            </div>
+                        </div>
+                    )}
+                />
 
                 <Route
                     exact

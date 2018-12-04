@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import SideBar from '../components/sidebar'
+import LeftSidebar from '../components/left-sidebar'
 
 const mapStateToProps = state => {
 	return {
@@ -12,4 +12,4 @@ const mapDispatchToProps = dispatch => {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
+export default connect(mapStateToProps, mapDispatchToProps)(LeftSidebar);

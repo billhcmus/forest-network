@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Wall from "./Wall";
-import Navbar from "./Navbar";
+import Navbar from "./navbar";
 import UserProfile from "../containers/user-profile.js";
 import { BrowserRouter as Router } from 'react-router-dom';
 

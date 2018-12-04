@@ -94,7 +94,7 @@ body, html {
       // z-index: 10;
       .navbar-container {
         margin: 0 auto;
-        max-width: 890px;
+        max-width: 1000px;
         @media screen and (min-width: 1236px) {
           max-width: 1190px;
         }
@@ -426,7 +426,7 @@ body, html {
   text-align: center;
   .sidebar-left {
     display: inline-block;
-    max-width: 350px;
+    width: 242px;
     margin: 10px;
     vertical-align: top;
     margin-top: 50px;
@@ -441,8 +441,8 @@ body, html {
   }
   .main-right {
     display: inline-block;
-    max-width: 900px;
-    min-width: 900px;
+    max-width: 913px;
+    min-width: 913px;
     height: 100%;
     margin-top: 10px;
     vertical-align: top; 

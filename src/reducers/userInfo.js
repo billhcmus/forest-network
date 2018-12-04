@@ -10,8 +10,8 @@ const initState = {
     birthdate: 1543832873,
     other:{
         tweetCount: 10,
-        followingCount: 2,
-        followerCount: 20,
+        followingCount: 4,
+        followerCount: 4,
         likesCount:5,
     }
 };

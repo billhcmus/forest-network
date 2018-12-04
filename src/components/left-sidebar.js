@@ -5,7 +5,7 @@ import {location} from 'react-icons-kit/icomoon/location';
 import {calendar} from 'react-icons-kit/icomoon/calendar';
 import {droplet} from 'react-icons-kit/icomoon/droplet'
 
-class SideBar extends Component {
+class LeftSidebar extends Component {
 
   constructor(props) {
     super(props);
@@ -37,4 +37,4 @@ class SideBar extends Component {
   }
 }
 
-export default SideBar;
+export default LeftSidebar;
