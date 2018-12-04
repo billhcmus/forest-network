@@ -3,6 +3,7 @@ import Follow from "../containers/Follow";
 import TweetBoard from '../containers/tweets-board';
 import SideBar from '../containers/sidebar';
 import FollowingList from '../containers/following';
+import FollowersList from '../containers/followers'
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 export default class Wall extends Component {
@@ -18,6 +19,20 @@ export default class Wall extends Component {
                             </div>
                             <div className={"main-right"}>
                                 <FollowingList/>
+                            </div>
+                        </div>
+                    )}
+                  />
+
+                <Route
+                    path="/followers"
+                    children={({ match }) => (
+                        <div className={"main-content"}>
+                            <div className={"sidebar-left"}>
+                                <SideBar/>
+                            </div>
+                            <div className={"main-right"}>
+                                <FollowersList/>
                             </div>
                         </div>
                     )}

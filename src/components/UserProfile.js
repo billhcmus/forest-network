@@ -75,10 +75,10 @@ class UserProfile extends Component {
                                             </Link>
                                         </li>
                                         <li className="nav-list-item item-followers">
-                                            <a className="nav-item-link">
+                                            <Link className="nav-item-link" to="/followers">
                                                 <span className="nav-item-label">Follower</span>
                                                 <span className="nav-item-value">{this.props.userInfo.other.followerCount}</span>
-                                            </a>
+                                            </Link>
                                         </li>
                                         <li className="nav-list-item item-button">
                                             <div className="button-edit-profile">
