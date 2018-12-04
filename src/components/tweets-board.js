@@ -3,6 +3,9 @@ import {Icon} from 'antd/lib';
 import TweetItem from './tweets-item';
 
 class TweetBoard extends Component {
+    constructor(props) {
+        super(props);
+    }
     // componentDidMount() {
     //     console.log(this.props.tweets.listTweet)
     // }

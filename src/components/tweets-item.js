@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { Menu, Dropdown, Icon } from 'antd';
-import ViewTweet from '../containers/view-tweet'
+import ViewTweet from '../containers/view-tweet';
 const menu = (
   <Menu>
     <Menu.Item>

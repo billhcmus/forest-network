@@ -1,0 +1,95 @@
+.list-following {
+	display: flex;
+	flex-wrap: wrap;
+	.card{
+		border: 5px solid #e6ecf0 !important;
+	.card-head {
+		background-position: 0 50%;
+    	background-size: 100%;
+    	display: block;
+    	height: 90px;
+    	background-color: #1c94e0;
+    	img {
+    	}
+	}
+	.card-body {
+		margin-bottom: 3.5rem;
+		.avatar {
+			img {
+		    	border-radius: 50%;
+				max-width: 70px;
+				max-height: 70px;
+			}
+		    border-radius: 50%;
+			background-color: #fff;
+		    display: inline-block;
+		    margin: -45px 190px 0 -3px;
+		    padding: 3px;
+		    position: relative;
+		    vertical-align: bottom;
+		}
+
+		.card-action {
+		    display: flex;
+		    height: 35px;
+		    margin: -25px 0 0 0;
+		    position: absolute;
+		    right: 10px;
+		    vertical-align: bottom;
+		    button {
+		    	min-width: 89px;
+		    	border-radius: 100px;
+		    	border-color: transparent;
+		    	background-color: #4AB3F4;
+				    line-height: 16px;
+		    	span {
+		    		font-size: 12px;
+				    padding: 4px 12px;
+		    	}
+		    }
+
+		    .actions-group {
+				margin-left: 50px;
+		    }
+
+		}
+
+		.card-userfield {
+			color: #14171a;
+    		margin-top: 8px;
+ 	   		width: 100%;
+ 	   		text-align: left;
+ 	   		.displayName {
+ 	   			a {
+					color: #14171a;
+				    font-size: 18px;
+				    font-weight: bold;
+				    padding-right: 2px;
+				    word-break: break-all;
+ 	   			}
+ 	   			a:hover {
+ 	   				border-bottom: solid 1px;
+ 	   			}
+ 	   		}
+
+ 	   		.userName {
+ 	   			margin-bottom: 5px;
+ 	   			a {
+					color: #657786;
+				    font-size: 14px;
+				    padding-right: 2px;
+				    word-break: break-all;
+ 	   			}
+ 	   			a:hover {
+ 	   				border-bottom: solid 1px;
+ 	   			}
+ 	   		}
+ 	   		.bio {
+ 	   			p {
+ 	   				line-height: 1.25;
+ 	   			}
+ 	   		}
+		}
+	}
+}
+}
