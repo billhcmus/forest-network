@@ -82,7 +82,7 @@ class UserProfile extends Component {
                                         </li>
                                         <li className="nav-list-item item-button">
                                             <div className="button-edit-profile">
-                                                <button type="button" className="button-edit">
+                                                <button type="button" className="button-edit" onClick={(e) => this.handleEditClick(e)}>
                                                     <span className="button-text">Edit Profile</span>
                                                 </button>
                                             </div>
