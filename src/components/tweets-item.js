@@ -26,19 +26,25 @@ class TweetItem extends Component {
         };
     }
 
-    handleClick =(e)=>{
+    handleCacel =(e)=>{
+        this.setState({
+            isModalShow: false
+        })
+    }
+
+
+    handleSpanClick =(e)=>{
         this.setState({
             isModalShow: true
         })
     }
 
       render() {
-        let modal = this.state.isModalShow ? <ViewTweet/> : null;
         const itemInfo = this.props.itemInfo
         return (
           <li className="item-tweet">
-              {modal}
-            <div className="tweet-content" onClick={(e)=>this.handleClick(e)}>
+              <ViewTweet isModalShow={this.state.isModalShow} onCancel={(e)=>this.handleCacel(e)}/>
+            <div className="tweet-content" onClick={(e)=>this.handleSpanClick(e)}>
               <div className="tweet-header">
                 <a className="tweet-profile-link">
                   <img src={_.get(itemInfo,'urlAvatar')} alt="..."/>

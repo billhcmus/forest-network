@@ -1,6 +1,6 @@
 import {Layout, Menu, Icon, Input,Avatar,Button,Dropdown} from 'antd/lib';
 import React, {Component} from 'react';
-import '../css//navstyle.css'
+import '../css/navstyle.css'
 const {Header} = Layout;
 const Search = Input.Search;
 
@@ -33,7 +33,7 @@ class Navbar extends Component {
             <Layout className="layout">
                 <Header style={{
                     position: 'fixed',
-                    zIndex: 2,
+                    zIndex: 14,
                     width: '100%',
                     background: '#fff',
                     height: '46px',

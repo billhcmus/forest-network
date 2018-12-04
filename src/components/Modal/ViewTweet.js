@@ -6,21 +6,13 @@ import TweetItemDetail from "../tweets-item-detail";
 
 class ViewTweet extends Component {
 
-    state = {
-        modalVisible: true,
-    }
-
-    setModalVisible(modalVisible) {
-        this.setState({ modalVisible });
-    }
-
     render() {
         const mainTweet = this.props.tweetDetail.mainTweet;
         const listOtherTweets = this.props.tweetDetail.otherTweets;
         return (
             <Modal
-                visible={this.state.modalVisible}
-                onCancel={() => this.setModalVisible(false)}
+                visible={this.props.isModalShow}
+                onCancel={() => this.props.onCancel()}
                 footer={null}
                 style={{top:20}}
                 bodyStyle={{padding:0}}

@@ -7,6 +7,10 @@ body, html {
   font-family: "Open Sans", sans-serif;
 }
 
+.Container {
+  min-width: 613px;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -14,7 +18,7 @@ body, html {
 
 .profile-content {
   position: relative;
-  top: 48px;
+  top: 46px;
 }
 
 .profile-container {
@@ -23,7 +27,6 @@ body, html {
 .profile-container .profile-cover {
   position: relative;
   width: 100%;
-  z-index: 1;
 }
 .profile-container .profile-cover .profile-header {
   height: 320px;
@@ -41,8 +44,6 @@ body, html {
   position: absolute;
   left: 0;
   right: 0;
-  top: -9999px;
-  bottom: -9999px;
   margin: auto 0;
   width: 100%;
 }
@@ -62,7 +63,6 @@ body, html {
   left: 10px;
   position: absolute;
   transition: bottom 0.3s;
-  z-index: 3;
 }
 .profile-container .profile-cover .profile-header .avatar-container .profile-container-avatar .profile-avatar {
   background: #fff;
@@ -83,6 +83,7 @@ body, html {
   position: absolute;
   top: 0;
   width: 100%;
+  z-index: 11;
 }
 .profile-container .profile-cover .profile-Navbar {
   background-color: #fff;
@@ -381,21 +382,21 @@ body, html {
 }
 .main-content .sidebar-left {
   display: inline-block;
-  width: 250px;
+  width: 350px;
   margin: 10px;
   vertical-align: top;
   margin-top: 50px;
 }
 .main-content .content {
   display: inline-block;
-  max-width: 500px;
+  width: 613px;
   height: 100%;
   margin-top: 10px;
   vertical-align: top;
 }
 .main-content .sidebar-right {
   display: inline-block;
-  max-width: 400px;
+  width: 300px;
   background-color: #fff;
   margin: 10px;
   vertical-align: top;
