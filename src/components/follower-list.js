@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FollowItem from './follow-item';
+import FollowerItem from './following-item';
 import '../css/follow.scss';
 
 class FollowerList extends Component {
@@ -13,7 +13,7 @@ class FollowerList extends Component {
             <div className="list-follow">
                 {
                     this.props.list_follower.map((value, key)=>{
-                        return <FollowItem key={key} FollowItem={value}/>
+                        return <FollowerItem key={key} FollowItem={value}/>
                     })
                 }
             </div>

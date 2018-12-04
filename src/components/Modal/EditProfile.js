@@ -8,12 +8,17 @@ class EditProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            avatar:this.props.userInfo.avatar,
-            theme:this.props.userInfo.theme,
+            // avatar:this.props.userInfo.avatar,
+            // theme:this.props.userInfo.theme,
             userName:this.props.userInfo.displayName,
             location:this.props.userInfo.location,
             birthday:moment(this.props.userInfo.birthdate).format('MMM DD, YYYY'),
         };
+    }
+
+    saveDetail =()=>{
+        this.props.updateDetail(this.state);
+        this.props.onCancel();
     }
 
     render() {
@@ -58,7 +63,7 @@ class EditProfile extends Component {
                              </div>
                             <div className="button-edit-profile">
                                 <button type="button" className="button-save">
-                                    <span onClick={() => this.props.onCancel()}>Save Change</span>
+                                    <span onClick={() => this.saveDetail()}>Save Change</span>
                                 </button>
                             </div>
                         </div>

@@ -15,7 +15,7 @@ const menu = (
   </Menu>
 );
 
-class FollowItem extends Component {
+class FollowerItem extends Component {
 
   constructor(props) {
     super(props);
@@ -64,4 +64,4 @@ class FollowItem extends Component {
   }
 }
 
-export default FollowItem;
+export default FollowerItem;

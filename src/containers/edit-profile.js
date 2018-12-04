@@ -1,5 +1,6 @@
 import {connect} from 'react-redux';
 import EditProfile from "../components/Modal/EditProfile";
+import {updateDetail} from "../actions/index"
 
 const mapStateToProps = state => {
     return {
@@ -8,7 +9,11 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return {}
+    return {
+        updateDetail: (userDetail) => {
+            dispatch(updateDetail(userDetail))
+        }
+    }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfile)
