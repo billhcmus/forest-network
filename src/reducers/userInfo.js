@@ -1,3 +1,5 @@
+import {INCREASE_FOLLOWING} from "../constants";
+
 const initState = {
     displayName: 'Nguyễn Đình Tiến',
     userName:'Nguynnh74289770',
@@ -16,6 +18,14 @@ const initState = {
 
 export default (state = initState, action) => {
     switch (action.type) {
+        case INCREASE_FOLLOWING:
+            return {
+                ...state,
+                other: {
+                    ...state.other,
+                    followingCount: state.other.followingCount + 1
+                }
+            };
         default:
             return state
     }

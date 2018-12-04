@@ -7,10 +7,15 @@ export default class Follow extends Component {
     constructor(props) {
         super(props);
         this.handleItemClick = this.handleItemClick.bind(this);
+        this.handleFollowClick = this.handleFollowClick.bind(this);
     }
 
     handleItemClick(username) {
         this.props.dismissUserRecommend(username)
+    }
+
+    handleFollowClick() {
+        this.props.increaseFollowing();
     }
 
     render() {
@@ -31,7 +36,7 @@ export default class Follow extends Component {
                                         </div>
                                         <div className="media-body">
                                             <h4 className="media-heading">{_.get(value, "displayName")}</h4>
-                                            <button type="button" className="btn btn-outline-primary">Follow</button>
+                                            <button type="button" className="btn btn-outline-primary" onClick={() => this.handleFollowClick()}>Follow</button>
                                         </div>
                                         <div className={"dismiss"}>
                                             <button type="button" className="close" aria-label="Close" onClick={() => this.handleItemClick(_.get(value, "userName"))}>
