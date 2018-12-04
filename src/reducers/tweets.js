@@ -13,7 +13,12 @@ const initState = {
                 'CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE ' +
                 'OR OTHER DEALINGS IN THE SOFTWARE.',
             likesCount:2,
-            commentCount:2,
+            comments: [
+                {
+                    id: 1,
+                    content: "Lorens"
+                }
+            ]
         },
         {
             id:2,
@@ -28,7 +33,20 @@ const initState = {
                 'CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE ' +
                 'OR OTHER DEALINGS IN THE SOFTWARE.',
             likesCount:10,
-            commentCount:2,
+            comments: [
+                {
+                    id: 1,
+                    content: "Lorens"
+                },
+                {
+                    id: 2,
+                    content: "Lorens"
+                },
+                {
+                    id: 3,
+                    content: "Lorens"
+                }
+            ]
         },
         {
             id:2,
@@ -43,7 +61,20 @@ const initState = {
                 'CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE ' +
                 'OR OTHER DEALINGS IN THE SOFTWARE.',
             likesCount:10,
-            commentCount:1000,
+            comments: [
+                {
+                    id: 1,
+                    content: "Lorens"
+                },
+                {
+                    id: 2,
+                    content: "Lorens"
+                },
+                {
+                    id: 3,
+                    content: "Lorens"
+                }
+            ]
         }
     ]
 };
