@@ -4,12 +4,11 @@ import Navbar from "./Navbar";
 import UserProfile from "../containers/user-profile.js";
 import { BrowserRouter as Router } from 'react-router-dom';
 
-
 class App extends Component {
   render() {
     return (
 	    <Router>
-	      <div>
+	      <div className="Container">
 	        <Navbar/>
 	        <UserProfile/>
 	        <Wall/>

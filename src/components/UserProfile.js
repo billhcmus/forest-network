@@ -1,35 +1,61 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import EditProfile from  "../containers/edit-profile"
 
 class UserProfile extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isModalShow: false,
+        };
     }
+
+    handleCancelEdit =(e)=>{
+        this.setState({
+            isModalShow: false
+        })
+    }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside);
+    }
+
+
+
+    handleEditClick =(e)=>{
+        this.setState({
+            isModalShow: true
+        })
+    }
+
     componentDidMount() {
         console.log(this.props)
     }
-
     render() {
         return (
-            <div className="profile-content">
-                <div className="profile-container">
-                    <div className="profile-cover">
-                        <div className="profile-header">
-                            <div className="profile-header-bg">
-                                <img alt="Cover Photos...." src={this.props.userInfo.theme}/>
-                            </div>
+                <div className="profile-content">
+                    <EditProfile isModalShow={this.state.isModalShow} onCancel={(e)=>this.handleCancelEdit(e)}/>
+                    <div className="profile-container">
+                        <div className="profile-cover">
+                            <div className="profile-header">
+                                <div className="profile-header-bg">
+                                    <img alt="Cover Photos...." src={this.props.userInfo.theme}/>
+                                </div>
 
-                            <div className="avatar-container">
-                                <div className="profile-container-avatar">
-                                    <div className="profile-avatar">
-                                        <a href="#" className="profile-picture">
-                                            <img alt="avatar" src={this.props.userInfo.avartar}/>
-                                        </a>
+                                <div className="avatar-container">
+                                    <div className="profile-container-avatar">
+                                        <div className="profile-avatar">
+                                            <a href="#" className="profile-picture">
+                                                <img alt="avatar" src={this.props.userInfo.avatar}/>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
                         <div className="profile-Navbar">
                             <div className="navbar-container">
                                 <div className="profile-Nav">
@@ -62,12 +88,12 @@ class UserProfile extends Component {
                                             </div>
                                         </li>
                                     </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
         );
     }
 }
