@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import Follow from "../components/Follow";
+import Follow from "../components/Follow/Follow";
 
 const mapStateToProps = state => ({
     recommendList: state.RecommendReducer.recommendList,

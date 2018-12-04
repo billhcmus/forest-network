@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './style.scss'
 import _ from 'lodash';
 
 export default class Follow extends Component {
