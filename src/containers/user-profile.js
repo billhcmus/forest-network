@@ -1,5 +1,6 @@
 import {connect} from 'react-redux';
 import UserProfile from "../components/UserProfile";
+import {increaseFollowing} from "../actions";
 
 const mapStateToProps = state => {
 	return {
@@ -8,7 +9,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return {}
+    return {
+
+	}
 };
 
 

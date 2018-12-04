@@ -448,35 +448,5 @@ body, html {
     background-color: #fff;
     margin: 10px;
     vertical-align: top;
-    .follow {
-      padding: 15px;
-      .follow-title {
-        margin-bottom: 15px;
-        small {
-          padding: 5px;
-        }
-      }
-      .recommend-follower {
-        .user-item {
-          border-bottom: 1px solid #e6ecf0;
-          padding-bottom: 8px;
-          margin-top: 10px;
-          .media {
-            display: flex;
-            flex-direction: row;
-            .media-left {
-              flex-grow: 1;
-              img {
-                border-radius: 50%;
-              }
-            }
-            .media-body {
-              flex-grow: 9;
-
-            }
-          }
-        }
-      }
-    }
   }
 }
