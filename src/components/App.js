@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import Wall from "./Wall";
 import Navbar from "./Navbar";
 import UserProfile from "../containers/user-profile.js";
+import { BrowserRouter as Router } from 'react-router-dom';
+
 
 class App extends Component {
   render() {
     return (
-      <div>
-        <Navbar/>
-        <UserProfile/>
-        <Wall/>
-      </div>
+	    <Router>
+	      <div>
+	        <Navbar/>
+	        <UserProfile/>
+	        <Wall/>
+	      </div>
+	    </Router>
     );
   }
 }

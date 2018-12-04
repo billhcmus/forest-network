@@ -37,16 +37,16 @@ class UserProfile extends Component {
                                         <li className="first-item-blance">
                                         </li>
                                         <li className="nav-list-item item-tweets">
-                                            <a className="nav-item-link">
+                                            <Link className="nav-item-link" to="/">
                                                 <span className="nav-item-label">Tweets</span>
                                                 <span className="nav-item-value">{this.props.userInfo.other.tweetCount}</span>
-                                            </a>
+                                            </Link>
                                         </li>
                                         <li className="nav-list-item item-following">
-                                            <a className="nav-item-link" >
+                                            <Link className="nav-item-link" to="/following">
                                                 <span className="nav-item-label">Following</span>
                                                 <span className="nav-item-value">{this.props.userInfo.other.followingCount}</span>
-                                            </a>
+                                            </Link>
                                         </li>
                                         <li className="nav-list-item item-followers">
                                             <a className="nav-item-link">
