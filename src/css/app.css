@@ -95,6 +95,11 @@ body, html {
             line-height: 1.5;
             padding-top: 10px;
             position: relative; }
+          .profile-container .profile-cover .profile-Navbar .navbar-container .nav-list .isSelected {
+            border-bottom: solid 2px #1DA1F2; }
+            .profile-container .profile-cover .profile-Navbar .navbar-container .nav-list .isSelected .nav-item-value {
+              font-weight: 800;
+              color: #1DA1F2; }
           .profile-container .profile-cover .profile-Navbar .navbar-container .nav-list .nav-list-item:hover {
             border-bottom: solid 2px #1DA1F2; }
             .profile-container .profile-cover .profile-Navbar .navbar-container .nav-list .nav-list-item:hover .nav-item-value {

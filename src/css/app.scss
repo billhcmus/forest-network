@@ -114,7 +114,13 @@ body, html {
             padding-top: 10px;
             position: relative;
           }
-
+          .isSelected {
+            border-bottom: solid 2px #1DA1F2;
+            .nav-item-value {
+              font-weight: 800;
+              color: #1DA1F2;
+            }
+          }
           .nav-list-item:hover {
             border-bottom: solid 2px #1DA1F2;
             .nav-item-value {
