@@ -1,5 +1,6 @@
 import {connect} from 'react-redux';
 import Follow from "../components/Follow/Follow";
+import {dismissUserRecommend} from "../actions";
 
 const mapStateToProps = state => ({
     recommendList: state.RecommendReducer.recommendList,
@@ -7,7 +8,11 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = dispatch => {
-    return {}
+    return {
+        dismissUserRecommend: (username) => {
+            dispatch(dismissUserRecommend(username));
+        }
+    }
 };
 
 

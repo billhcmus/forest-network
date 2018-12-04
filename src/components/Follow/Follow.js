@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
-import './style.scss'
+import './follow-style.scss'
 import _ from 'lodash';
 
 export default class Follow extends Component {
 
-    componentDidMount() {
-        console.log(this.props)
+    constructor(props) {
+        super(props);
+        this.handleItemClick = this.handleItemClick.bind(this);
+    }
+
+    handleItemClick(username) {
+        this.props.dismissUserRecommend(username)
     }
 
     render() {
@@ -17,7 +22,7 @@ export default class Follow extends Component {
                 </h3>
                 <div className={'recommend-follower'}>
                     {
-                        this.props.recommendList.map((value, key) => {
+                        this.props.recommendList.valueSeq().map((value, key) => {
                             return (
                                 <div key={key} className="user-item">
                                     <div className="media">
@@ -27,6 +32,11 @@ export default class Follow extends Component {
                                         <div className="media-body">
                                             <h4 className="media-heading">{_.get(value, "displayName")}</h4>
                                             <button type="button" className="btn btn-outline-primary">Follow</button>
+                                        </div>
+                                        <div className={"dismiss"}>
+                                            <button type="button" className="close" aria-label="Close" onClick={() => this.handleItemClick(_.get(value, "userName"))}>
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
