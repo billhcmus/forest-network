@@ -17,7 +17,6 @@ export default class User {
     }
 
     createAccount() {
-        // 
         const key = Keypair.random();
         let secretKey = key.secret();
         let publicKey = key.publicKey();
@@ -33,6 +32,9 @@ export default class User {
         }
 
         sign(tx, secretKey);
+        let data_encoding = '0x'+encode(tx).toString('hex');
+        let querry = `https://komodo.forest.network/broadcast_tx_commit?tx=${data_encoding}`;
+        console.log(querry)
     }
 
     makePayment() {
@@ -45,12 +47,13 @@ export default class User {
             account: '',
             sequence: 1,
             memo: Buffer.alloc(0),
-            operation: 'create_account',
+            operation: 'payment',
             params: {address: address, amount: 10000},
             signature: Buffer.alloc(64, 0)
         }
 
         sign(tx, secretKey)
-        console.log(hash(tx));
+        let data_encoding = '0x'+encode(tx).toString('hex');
+        let querry = `https://komodo.forest.network/broadcast_tx_commit?tx=${data_encoding}`;
     }
 }

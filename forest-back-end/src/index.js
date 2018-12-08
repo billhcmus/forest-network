@@ -43,7 +43,7 @@ app.models = new Model(app);
 
 // console.log(tx);
 
-app.models.user.makePayment();
+app.models.user.createAccount();
 
 
 server.listen(process.env.PORT || PORT, () => {
