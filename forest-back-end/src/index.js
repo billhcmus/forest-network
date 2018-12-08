@@ -7,7 +7,7 @@ import { PORT } from './config';
 import AppRouter from './router/app-router';
 import Model from './models';
 import DataBase from './database';
-
+import {decode} from './transaction'
 const app = express();
 
 app.use(morgan('dev'));
@@ -32,8 +32,17 @@ app.models = new Model(app);
 //     throw err;
 // });
 
+// Test decode transaction
+let base64string = 'ATAdxPY3gelauaEcMyjMIuaJsiFe9bIO5kZTCil6jcMzJAwoAAAAAAAAADoQQ1RUNTIyLUNRMjAxNS8zMgEAIzDhU67FhbbPH1tOkMiwKuMPnuS98tNm/s27wMjNfWQfUT1L5St7LG3JTvNxp4fSxSsJWBVfOKJF3ptyjIHen8deWoBr+QlyXd9kKwBfBPjlDbllD9Y1Xa8zUI5OMIS9zmn0AQ==';
+let buf = new Buffer(base64string, 'base64');
+
+let tx = decode(buf);
+
+console.log(tx);
+
 server.listen(process.env.PORT || PORT, () => {
     console.log(`App is running on port ${server.address().port}`)
 });
+
 
 export default app;
