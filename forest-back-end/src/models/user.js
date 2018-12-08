@@ -23,7 +23,7 @@ export default class User {
         
         let tx = {
             version: 1,
-            account: '',
+            account: 'GDMZJFJVTR4PWYGZJEHN2USXQSEXNKET4AWDIUNJX7ZE56PUCTEY5NOO',
             sequence: 1,
             memo: Buffer.alloc(0),
             operation: 'create_account',

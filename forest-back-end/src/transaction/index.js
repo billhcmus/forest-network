@@ -41,7 +41,8 @@ function getUnsignedHash(tx) {
 
 function sign(tx, secret) {
   const key = Keypair.fromSecret(secret);
-  tx.account = key.publicKey();
+  //tx.account = key.publicKey();
+  tx.account = 'GDMZJFJVTR4PWYGZJEHN2USXQSEXNKET4AWDIUNJX7ZE56PUCTEY5NOO'
   tx.signature = key.sign(getUnsignedHash(tx));
 }
 
