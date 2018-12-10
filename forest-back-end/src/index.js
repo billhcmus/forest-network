@@ -46,10 +46,12 @@ app.models = new Model(app);
 
 // console.log(tx);
 
-//app.models.user.createAccount();
+app.models.user.createAccount();
 
-
-client.abciInfo().then((res) => console.log(res));
+function listener(value) {
+    console.log(value)
+}
+client.subscribe({}, listener).then((res) => console.log(res));
 
 server.listen(process.env.PORT || PORT, () => {
     console.log(`App is running on port ${server.address().port}`)

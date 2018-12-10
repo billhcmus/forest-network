@@ -24,7 +24,7 @@ export default class User {
         let tx = {
             version: 1,
             account: 'GBE57A6BQ3ETJGERFZFC5G6AQACCRJXQK6BRWJ254AGRHCNN2ANXQICL',
-            sequence: 3,
+            sequence: 5,
             memo: Buffer.alloc(0),
             operation: 'create_account',
             params: {address: key.publicKey()},
