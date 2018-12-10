@@ -10,6 +10,7 @@ import DataBase from './database';
 import {decode} from './transaction'
 const vstruct = require('varstruct');
 const {Keypair} = require('stellar-base');
+const {RpcClient} = require('tendermint');
 
 const app = express();
 
@@ -19,6 +20,8 @@ app.use(cors({origin: '*'}));
 app.use(bodyParse.json({
     limit: '50mb'
 }));
+
+const client = RpcClient('wss://gorilla.forest.network:443');
 
 const server = http.createServer(app);
 
@@ -43,8 +46,10 @@ app.models = new Model(app);
 
 // console.log(tx);
 
-app.models.user.createAccount();
+//app.models.user.createAccount();
 
+
+client.abciInfo().then((res) => console.log(res));
 
 server.listen(process.env.PORT || PORT, () => {
     console.log(`App is running on port ${server.address().port}`)

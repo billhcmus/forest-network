@@ -24,7 +24,7 @@ export default class User {
         let tx = {
             version: 1,
             account: 'GBE57A6BQ3ETJGERFZFC5G6AQACCRJXQK6BRWJ254AGRHCNN2ANXQICL',
-            sequence: 1,
+            sequence: 3,
             memo: Buffer.alloc(0),
             operation: 'create_account',
             params: {address: key.publicKey()},
@@ -33,7 +33,7 @@ export default class User {
 
         sign(tx, secretKey);
         let data_encoding = '0x'+encode(tx).toString('hex');
-        let querry = `https://komodo.forest.network/broadcast_tx_commit?tx=${data_encoding}`;
+        let querry = `https://gorilla.forest.network/broadcast_tx_commit?tx=${data_encoding}`;
         console.log(querry)
     }
 
