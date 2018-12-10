@@ -18,16 +18,16 @@ export default class User {
 
     createAccount() {
         const key = Keypair.random();
-        let secretKey = key.secret();
-        let publicKey = key.publicKey();
+        
+        let secretKey = 'SAN4YZ62PPL5YPWZVYFEN3D3MM64FHUVN536NCIOBZE6YUCGHWZXL5QB';
         
         let tx = {
             version: 1,
-            account: 'GDMZJFJVTR4PWYGZJEHN2USXQSEXNKET4AWDIUNJX7ZE56PUCTEY5NOO',
+            account: 'GBE57A6BQ3ETJGERFZFC5G6AQACCRJXQK6BRWJ254AGRHCNN2ANXQICL',
             sequence: 1,
             memo: Buffer.alloc(0),
             operation: 'create_account',
-            params: {address: publicKey},
+            params: {address: key.publicKey()},
             signature: Buffer.alloc(64, 0)
         }
 
