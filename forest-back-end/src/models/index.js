@@ -1,4 +1,5 @@
 import User from "./user";
+import People from "./people";
 
 /* Model là nơi tập hợp các thành phần
     User, Follower, ....
@@ -9,5 +10,6 @@ export default class Model {
     constructor(app) {
         this.app = app;
         this.user = new User(app);
+        this.people = new People(app);
     }
 }

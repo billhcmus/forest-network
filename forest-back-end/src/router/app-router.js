@@ -21,5 +21,13 @@ export default class AppRouter {
                 });
             });
         });
+
+        /**
+         * @endpoint: /api/people
+         * @method: GET
+         */
+        app.get('/api/people', (req, res, next) => {
+            app.models
+        })
     }
 }

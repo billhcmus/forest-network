@@ -21,7 +21,6 @@ export default class User {
 
     createAccount() {
         const key = Keypair.random();
-        
         let tx = {
             version: 1,
             account: '',
@@ -34,28 +33,38 @@ export default class User {
 
         sign(tx, SECRET_KEY);
         let data_encoding = '0x'+encode(tx).toString('hex');
-        let querry = `https://gorilla.forest.network/broadcast_tx_commit?tx=${data_encoding}`;
-        console.log(querry)
+
+        return new Promise((resolve, reject) => {
+            this.service.get(`broadcast_tx_commit?tx=${data_encoding}`).then(res => {
+                console.log(res.data);
+                return resolve(key.privateKey())
+            }).catch(err => {
+                return reject(err);
+            });
+        });
     }
 
     makePayment(receiver) {
         let tx = {
             version: 1,
             account: '',
-            sequence: 8,
+            sequence: 7,
             memo: Buffer.alloc(0),
             operation: 'payment',
-            params: {address: receiver, amount: 15},
+            params: {address: receiver, amount: 1},
             signature: Buffer.alloc(64, 0)
         }
 
         sign(tx, SECRET_KEY)
         let data_encoding = '0x'+encode(tx).toString('hex');
 
-        this.service.get(`broadcast_tx_commit?tx=${data_encoding}`).then(res => {
-            console.log(res.data);
-        }).catch(err => {
-            console.log(err);
+        return new Promise((resolve, reject) => {
+            this.service.get(`broadcast_tx_commit?tx=${data_encoding}`).then(res => {
+                console.log(res.data);
+                return resolve(res.data)
+            }).catch(err => {
+                return reject(err);
+            });
         })
     }
 }

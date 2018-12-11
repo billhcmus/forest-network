@@ -8,6 +8,7 @@ import AppRouter from './router/app-router';
 import Model from './models';
 import DataBase from './database';
 import {decode} from './transaction'
+import Helper from './helper';
 const vstruct = require('varstruct');
 const {Keypair} = require('stellar-base');
 const {RpcClient} = require('tendermint');
@@ -28,12 +29,13 @@ app.routes = new AppRouter(app);
 app.models = new Model(app);
 
 function listener(value) {
-    console.log(value);
+    console.log('New block added');
 }
 
 client.subscribe({query: "tm.event = \'NewBlock\'"} , listener);
 
 app.client = client;
+app.helper = new Helper();
 
 // Connect to db
 // assume that use Mongodb
@@ -46,7 +48,7 @@ app.client = client;
 // });
 
 // Test decode transaction
-// let base64string = 'ATA8i2kusx/LGR5eAZ/7L2FhJIL8wtK3QdYou1L0XkGbXSLfAAAAAAAAAAEAAQAjMB3E9jeB6Vq5oRwzKMwi5omyIV71sg7mRlMKKXqNwzMkDCjZtz7CjPZuCL8TmGDO2fjIH8UcLxNYBM2KkRb/l89C7vMg3wITL2dmGwQXihie7bgL20r1i5yu+6PO//p89GUJ';
+// let base64string = 'ATBJ34PBhsk0mJEuSi6bwIAEKKbwV4MbJ13gDROJrdAbeCBLAAAAAAAAAAoAAgArMAcDUrAgpuB1he7uBpvQO1/6vk85J8BU5hwdW4C7vCsrNPwAAAAAAAAAD47Uagnak1HZeekQ/Rhem3LtOUj9geE1SbcYEuA2oAGVfXnEWeZaQ95T7J0QUzJ3TpDeTUtqsFC6hBobL1FMwQ4=';
 // let buf = new Buffer(base64string, 'base64');
 
 // let tx = decode(buf);
@@ -56,6 +58,8 @@ app.client = client;
 //app.models.user.createAccount();
 
 //app.models.user.makePayment(ThongAccount);
+
+app.models.people.getPeopleProfile();
 
 server.listen(process.env.PORT || PORT, () => {
     console.log(`App is running on port ${server.address().port}`)
