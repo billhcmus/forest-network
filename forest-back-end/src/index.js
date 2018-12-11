@@ -12,6 +12,7 @@ import Helper from './helper';
 const vstruct = require('varstruct');
 const {Keypair} = require('stellar-base');
 const {RpcClient} = require('tendermint');
+import {SECRET_KEY} from './config';
 
 const app = express();
 
@@ -55,9 +56,9 @@ app.helper = new Helper();
 
 // console.log(tx);
 
-//app.models.user.createAccount();
+//app.models.account.createAccount();
 
-//app.models.user.makePayment(ThongAccount);
+app.models.payment.makePayment(SECRET_KEY, ThongAccount);
 
 app.models.people.getPeopleProfile();
 

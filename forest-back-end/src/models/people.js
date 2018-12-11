@@ -18,7 +18,7 @@ export default class People {
                         if (_.get(data, "operation") === 'create_account') {
                             let params = _.get(data, "params");
                             let address = _.get(params, "address");
-                            console.log(address)
+                            //console.log(address)
                         }
                     }
                 }).catch(err => {
