@@ -12,7 +12,7 @@ import Helper from './helper';
 const vstruct = require('varstruct');
 const {Keypair} = require('stellar-base');
 const {RpcClient} = require('tendermint');
-import {SECRET_KEY} from './config';
+import {SECRET_KEY, PUBLIC_KEY} from './config';
 
 const app = express();
 
@@ -58,9 +58,11 @@ app.helper = new Helper();
 
 //app.models.account.createAccount();
 
-app.models.payment.makePayment(SECRET_KEY, ThongAccount);
+//app.models.payment.makePayment(SECRET_KEY, ThongAccount);
 
-app.models.people.getPeopleProfile();
+//app.models.people.getPeopleProfile();
+let pbkey = 'GAO4J5RXQHUVVONBDQZSRTBC42E3EIK66WZA5ZSGKMFCS6UNYMZSIDBI'
+app.models.account.getAccountInfo(pbkey);
 
 server.listen(process.env.PORT || PORT, () => {
     console.log(`App is running on port ${server.address().port}`)
