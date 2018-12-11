@@ -1,1 +1,5 @@
-export const PORT = 3001
+export const PORT = 3001;
+export const API_URL = 'https://gorilla.forest.network';
+export const SECRET_KEY = 'SAN4YZ62PPL5YPWZVYFEN3D3MM64FHUVN536NCIOBZE6YUCGHWZXL5QB';
+
+export const ThongAccount = 'GADQGUVQECTOA5MF53XANG6QHNP7VPSPHET4AVHGDQOVXAF3XQVSWNH4';

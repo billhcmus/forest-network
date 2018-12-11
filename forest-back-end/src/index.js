@@ -3,7 +3,7 @@ import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
 import bodyParse from 'body-parser'
-import { PORT } from './config';
+import { PORT, ThongAccount } from './config';
 import AppRouter from './router/app-router';
 import Model from './models';
 import DataBase from './database';
@@ -21,12 +21,19 @@ app.use(bodyParse.json({
     limit: '50mb'
 }));
 
-const client = RpcClient('wss://gorilla.forest.network:443');
-
 const server = http.createServer(app);
+const client = RpcClient('wss://gorilla.forest.network:443/websocket');
 
 app.routes = new AppRouter(app);
 app.models = new Model(app);
+
+function listener(value) {
+    console.log(value);
+}
+
+client.subscribe({query: "tm.event = \'NewBlock\'"} , listener);
+
+app.client = client;
 
 // Connect to db
 // assume that use Mongodb
@@ -46,12 +53,9 @@ app.models = new Model(app);
 
 // console.log(tx);
 
-app.models.user.createAccount();
+//app.models.user.createAccount();
 
-function listener(value) {
-    console.log(value)
-}
-client.subscribe({}, listener).then((res) => console.log(res));
+//app.models.user.makePayment(ThongAccount);
 
 server.listen(process.env.PORT || PORT, () => {
     console.log(`App is running on port ${server.address().port}`)
