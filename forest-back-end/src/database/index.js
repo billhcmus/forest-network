@@ -1,7 +1,6 @@
-import {MongoClient} from 'mongodb'
+import {MongoClient} from 'mongodb';
 
-const URL='mongodb://localhost:27017/'
-
+const URL='mongodb://localhost:27017/';
 
 export default class DataBase {
     connect() {
