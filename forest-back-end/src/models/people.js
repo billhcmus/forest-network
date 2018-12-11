@@ -1,17 +1,15 @@
-import WebService from "../webservice";
 import _ from 'lodash';
 export default class People {
     constructor(app) {
         this.app = app;
-        this.service = new WebService();
         this.getPeopleProfile = this.getPeopleProfile.bind(this);
     }
 
     getPeopleProfile() {
-        this.service.get('abci_info').then(res => {
+        this.app.service.get('abci_info').then(res => {
             let height = res.data.result.response.last_block_height;
             for (let i = 1; i <= height; ++i) {
-                this.service.get(`block?height=${i}`).then(res => {
+                this.app.service.get(`block?height=${i}`).then(res => {
                     let tx = res.data.result.block.data.txs;
                     if (tx !== null) {
                         let data = this.app.helper.decodeTransaction(tx[0])

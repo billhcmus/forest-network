@@ -13,6 +13,7 @@ const vstruct = require('varstruct');
 const {Keypair} = require('stellar-base');
 const {RpcClient} = require('tendermint');
 import {SECRET_KEY, PUBLIC_KEY} from './config';
+import WebService from './webservice';
 
 const app = express();
 
@@ -37,6 +38,7 @@ client.subscribe({query: "tm.event = \'NewBlock\'"} , listener);
 
 app.client = client;
 app.helper = new Helper();
+app.service = new WebService();
 
 // Connect to db
 // assume that use Mongodb
@@ -61,8 +63,9 @@ app.helper = new Helper();
 //app.models.payment.makePayment(SECRET_KEY, ThongAccount);
 
 //app.models.people.getPeopleProfile();
-let pbkey = 'GAO4J5RXQHUVVONBDQZSRTBC42E3EIK66WZA5ZSGKMFCS6UNYMZSIDBI'
-app.models.account.getAccountInfo(pbkey);
+app.models.account.getAmount(ThongAccount).then(rs => {
+    console.log(rs)
+})
 
 server.listen(process.env.PORT || PORT, () => {
     console.log(`App is running on port ${server.address().port}`)
