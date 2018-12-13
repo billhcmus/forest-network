@@ -41,16 +41,14 @@ new DataBase().connect().then((db) => {
     console.log("Connect to database succesfully");
     var dbase = db.db("forest-network");
     app.db = dbase;
-    app.models.account.syncTxsToDB();
+    // app.models.account.syncTxsToDB();
 }).catch((err) => {
     throw err;
 });
 
 
 //app.models.account.createAccount();
-
 //app.models.payment.makePayment(SECRET_KEY, ThongAccount);
-
 //app.models.people.getPeopleProfile();
 // app.models.account.getAmount(ThongAccount).then(rs => {
 //     console.log(rs)

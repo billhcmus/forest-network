@@ -20,7 +20,6 @@ export default class Account {
     }
 
     createAccount() {
-
         return new Promise((resolve, reject) => {
             this.app.service.get(`broadcast_tx_commit?tx=${data_encoding}`).then(res => {
                 console.log(res.data);
@@ -69,76 +68,62 @@ export default class Account {
         return amount;
     }
 
-    async crawAllTx() {
-        let arrTx =[]
-        await this.app.service.get('status').then(res => {
+    async getSequence(publicKey) {
+        let account = await this.app.db.collection('account').findOne({_id: publicKey});
+        return account.sequence;
+    }
+
+
+    async syncTxsToDB() {
+        await this.app.service.get('status').then(async res => {
             let height = res.data.result.sync_info.latest_block_height;
-            let count = 0;
             console.log(height);
             for (let i = 1; i <= height; ++i) {
-                    this.app.service.get(`block?height=${i}`).then(res => {
+                    await this.app.service.get(`block?height=${i}`).then(res => {
                     let tx = res.data.result.block.data.txs;
-                    count++;
-                    console.log(count);
-                    arrTx.concat({
-                        id: i,
-                        value:tx
-                    })
+                    if (tx !== null) {
+                        let data = this.app.helper.decodeTransaction(tx[0])
+                        let operation = _.get(data, "operation");
+                        switch (operation) {
+                            case 'create_account':
+                            {
+                                console.log(i,data)
+                                let params = _.get(data, "params")
+                                let address = _.get(params, "address");
+
+                                const newAccount = {
+                                    _id: address,
+                                    sequence:0,
+                                    balance:0,
+                                }
+                                this.app.db.collection('account').insertOne(newAccount);
+                            }break;
+                            case 'payment':
+                            {
+                                console.log(i,data)
+                                let params = _.get(data, "params")
+                                let account = _.get(data, "account")
+                                let sequence = _.get(data, "sequence")
+                                let address = _.get(params, "address");
+                                let amount = _.get(params, "amount");
+
+                                //tru nguoi gui
+                                this.app.db.collection('account').findOneAndUpdate(
+                                    {_id: account},
+                                    {$set: { sequence: sequence},
+                                        $inc: { balance: -amount }
+                                    })
+                                //cong nguoi nhan
+                                this.app.db.collection('account').findOneAndUpdate(
+                                    {_id: address},
+                                    {$inc: { balance: amount }})
+                            }break;
+                        }
+                    }
                 }).catch(err =>{
                 })
             }
         }).catch(err =>{
         })
-        return arrTx;
-    }
-    async syncTxsToDB()
-    {
-        let sortTx = this.crawAllTx((arrTX) => {
-           return arrTX.sort((a,b) =>{
-               return a.id - b.id;
-           })
-        })
-        console.log(sortTx);
-        // sortTx.forEach(tx => {
-        //     if (tx.value !== null) {
-        //         let data = this.app.helper.decodeTransaction(tx.value[0])
-        //         let operation = _.get(data, "operation");
-        //         switch (operation) {
-        //             case 'create_account':
-        //             {
-        //                 console.log(i,data)
-        //                 let params = _.get(data, "params")
-        //                 let address = _.get(params, "address");
-        //
-        //                 const newAccount = {
-        //                     _id: address,
-        //                     sequence:0,
-        //                     balance:0,
-        //                 }
-        //                 this.app.db.collection('account').insertOne(newAccount);
-        //             }break;
-        //             case 'payment':
-        //             {
-        //                 console.log(i,data)
-        //                 let params = _.get(data, "params")
-        //                 let account = _.get(data, "account")
-        //                 let sequence = _.get(data, "sequence")
-        //                 let address = _.get(params, "address");
-        //                 let amount = _.get(params, "amount");
-        //
-        //                 //tru nguoi gui
-        //                 this.app.db.collection('account').findOneAndUpdate(
-        //                     {_id: account},
-        //                     {$set: { sequence: sequence},
-        //                         $inc: { balance: -amount }
-        //                     })
-        //                 //cong nguoi nhan
-        //                 this.app.db.collection('account').findOneAndUpdate(
-        //                     {_id: address},
-        //                     {$inc: { balance: amount }})
-        //             }break;
-        //         }
-        //     }
-        // })
     }
 }
