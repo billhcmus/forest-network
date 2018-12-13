@@ -11,3 +11,4 @@ export const increaseFollowing = () => (
 export const updateDetail = (userDetail) => (
     {type: CHANGE_DETAIL, userDetail: userDetail}
 );
+
