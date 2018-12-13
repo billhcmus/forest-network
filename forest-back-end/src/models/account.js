@@ -20,21 +20,6 @@ export default class Account {
     }
 
     createAccount() {
-        const key = Keypair.random();
-        let tx = {
-            version: 1,
-            account: '',
-            sequence: 6,
-            memo: Buffer.alloc(0),
-            operation: 'create_account',
-            params: {
-                address: key.publicKey()
-            },
-            signature: Buffer.alloc(64, 0)
-        }
-
-        sign(tx, SECRET_KEY);
-        let data_encoding = '0x' + encode(tx).toString('hex');
 
         return new Promise((resolve, reject) => {
             this.app.service.get(`broadcast_tx_commit?tx=${data_encoding}`).then(res => {
@@ -82,5 +67,78 @@ export default class Account {
             }
         });
         return amount;
+    }
+
+    async crawAllTx() {
+        let arrTx =[]
+        await this.app.service.get('status').then(res => {
+            let height = res.data.result.sync_info.latest_block_height;
+            let count = 0;
+            console.log(height);
+            for (let i = 1; i <= height; ++i) {
+                    this.app.service.get(`block?height=${i}`).then(res => {
+                    let tx = res.data.result.block.data.txs;
+                    count++;
+                    console.log(count);
+                    arrTx.concat({
+                        id: i,
+                        value:tx
+                    })
+                }).catch(err =>{
+                })
+            }
+        }).catch(err =>{
+        })
+        return arrTx;
+    }
+    async syncTxsToDB()
+    {
+        let sortTx = this.crawAllTx((arrTX) => {
+           return arrTX.sort((a,b) =>{
+               return a.id - b.id;
+           })
+        })
+        console.log(sortTx);
+        // sortTx.forEach(tx => {
+        //     if (tx.value !== null) {
+        //         let data = this.app.helper.decodeTransaction(tx.value[0])
+        //         let operation = _.get(data, "operation");
+        //         switch (operation) {
+        //             case 'create_account':
+        //             {
+        //                 console.log(i,data)
+        //                 let params = _.get(data, "params")
+        //                 let address = _.get(params, "address");
+        //
+        //                 const newAccount = {
+        //                     _id: address,
+        //                     sequence:0,
+        //                     balance:0,
+        //                 }
+        //                 this.app.db.collection('account').insertOne(newAccount);
+        //             }break;
+        //             case 'payment':
+        //             {
+        //                 console.log(i,data)
+        //                 let params = _.get(data, "params")
+        //                 let account = _.get(data, "account")
+        //                 let sequence = _.get(data, "sequence")
+        //                 let address = _.get(params, "address");
+        //                 let amount = _.get(params, "amount");
+        //
+        //                 //tru nguoi gui
+        //                 this.app.db.collection('account').findOneAndUpdate(
+        //                     {_id: account},
+        //                     {$set: { sequence: sequence},
+        //                         $inc: { balance: -amount }
+        //                     })
+        //                 //cong nguoi nhan
+        //                 this.app.db.collection('account').findOneAndUpdate(
+        //                     {_id: address},
+        //                     {$inc: { balance: amount }})
+        //             }break;
+        //         }
+        //     }
+        // })
     }
 }

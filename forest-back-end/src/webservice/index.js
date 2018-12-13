@@ -7,9 +7,9 @@ export default class WebService {
         this.post = this.post.bind(this);
     }
 
-    get (endpoint, options=null) {
+    get(endpoint, options=null) {
         const url = `${API_URL}/${endpoint}`;
-        return axios.get(url, options);
+        return axios.get(url)
     }
 
     post(endpoint="", data={}, options = {headers: {'Content-Type': 'application/json'}}) {

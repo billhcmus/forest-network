@@ -14,21 +14,19 @@ import {SECRET_KEY, PUBLIC_KEY} from './config';
 
 
 const app = express();
-
 app.use(morgan('dev'));
 app.use(cors({origin: '*'}));
+
 
 app.use(bodyParse.json({
     limit: '50mb'
 }));
 
 const server = http.createServer(app);
+
 const client = RpcClient('wss://gorilla.forest.network:443/websocket');
-
 function listener(value) {
-    console.log(value);
 }
-
 client.subscribe({query: "tm.event = \'NewBlock\'"} , listener);
 
 app.client = client;
@@ -43,6 +41,7 @@ new DataBase().connect().then((db) => {
     console.log("Connect to database succesfully");
     var dbase = db.db("forest-network");
     app.db = dbase;
+    app.models.account.syncTxsToDB();
 }).catch((err) => {
     throw err;
 });
@@ -53,9 +52,9 @@ new DataBase().connect().then((db) => {
 //app.models.payment.makePayment(SECRET_KEY, ThongAccount);
 
 //app.models.people.getPeopleProfile();
-app.models.account.getAmount(ThongAccount).then(rs => {
-    console.log(rs)
-});
+// app.models.account.getAmount(ThongAccount).then(rs => {
+//     console.log(rs)
+// });
 
 server.listen(process.env.PORT || PORT, () => {
     console.log(`App is running on port ${server.address().port}`)
