@@ -52,10 +52,10 @@ new DataBase().connect().then((db) => {
 
 //app.models.payment.makePayment(SECRET_KEY, ThongAccount);
 
-//app.models.people.getPeopleProfile();
-app.models.account.getAmount(ThongAccount).then(rs => {
-    console.log(rs)
-});
+app.models.people.getPeopleProfile();
+// app.models.account.getAmount(ThongAccount).then(rs => {
+//     console.log(rs)
+// });
 
 server.listen(process.env.PORT || PORT, () => {
     console.log(`App is running on port ${server.address().port}`)
