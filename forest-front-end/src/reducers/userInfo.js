@@ -32,7 +32,7 @@ export default (state = initState, action) => {
                 displayName: action.userDetail.userName,
                 location: action.userDetail.location,
                 birthdate: action.userDetail.birthday,
-            }
+            };
         default:
             return state
     }

@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import Wall from "./Wall";
-import Navbar from "./navbar";
-import UserProfile from "../containers/user-profile.js";
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Login from "./Modal/Login";
+import {PrivateRoute} from "./private-route";
+import Layout from "./layout";
 
 class App extends Component {
   render() {
     return (
 	    <Router>
-	      <div className="Container">
-	        <Navbar/>
-	        <UserProfile/>
-	        <Wall/>
-	      </div>
+				<Switch>
+					<Route exact path={"/login"} component={Login}/>
+					<PrivateRoute exact path={"/"} component={Layout}/>
+				</Switch>
 	    </Router>
     );
   }

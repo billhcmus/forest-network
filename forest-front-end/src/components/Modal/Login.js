@@ -3,8 +3,19 @@ import React, {Component} from 'react';
 const FormItem = Form.Item;
 
 class LoginForm extends Component {
-    state = {
-        modalVisible: true,
+    constructor(props) {
+        super(props);
+        this.state = {
+            modalVisible: true,
+        };
+        this.checkAuth();
+    }
+
+
+    checkAuth() {
+        if (localStorage.getItem("token")) {
+            window.location = '/';
+        }
     }
 
     setModalVisible(modalVisible) {
@@ -15,10 +26,12 @@ class LoginForm extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
+                localStorage.setItem("token", true);
+                this.props.history.push("/");
                 console.log('Received values of form: ', values);
             }
         });
-    }
+    };
 
     render() {
         const { getFieldDecorator } = this.props.form;
