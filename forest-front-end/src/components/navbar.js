@@ -1,8 +1,15 @@
 import {Layout, Menu, Icon, Input,Avatar,Button,Dropdown} from 'antd/lib';
 import React, {Component} from 'react';
-import '../css/navstyle.css'
+import _ from 'lodash';
+import '../css/navstyle.css';
 const {Header} = Layout;
 const Search = Input.Search;
+
+function handleMenuClick(e) {
+    if (_.get(e, "key") === "1") {
+        localStorage.clear();
+    }
+}
 
 const menuDrop = (
     <div style={{boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'}}>
@@ -11,7 +18,7 @@ const menuDrop = (
             <br></br>
             @nguditi
         </div>
-        <Menu >
+        <Menu onClick={handleMenuClick}>
             <Menu.Divider />
             <Menu.Item key="0">
                 <Icon type="user"/>

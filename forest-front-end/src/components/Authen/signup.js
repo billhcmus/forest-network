@@ -2,7 +2,9 @@ import React, {Component} from 'react'
 import {Form, Icon, Input, Button} from 'antd';
 import {withRouter} from "react-router-dom";
 import WebService from "../../webservice";
+import {Keypair} from 'stellar-base';
 import './auth-style.scss'
+import _ from 'lodash'
 
 const FormItem = Form.Item;
 
@@ -11,15 +13,27 @@ class RegisterForm extends Component {
         super(props);
         this.service = new WebService();
     }
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                const user = {
-                    name: values.fullName,
-                    username: values.username,
-                    password: values.password
+                const key = Keypair.random();
+                const data = {
+                    publicKey: key.publicKey()
                 };
+
+                let secretKey = key.secret();
+                console.log(secretKey);
+                this.service.post('api/user', data).then(res => {
+                    if (_.get(res.data, "code") === -1) {
+                        alert("Error Register");
+                    } else {
+                        console.log(res);
+                    }
+                }).catch(err => {
+                    console.log(err);
+                })
                 // return new Promise((resolve, reject) => {
                 //     this.service.post('api/users/signup', user).then((response) => {
                 //         store.dispatch(setStatusLogin({login: true, signup: false}));

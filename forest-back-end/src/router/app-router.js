@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default class AppRouter {
     constructor(app) {
         this.app = app;
@@ -29,6 +31,7 @@ export default class AppRouter {
         app.get('/api/people', (req, res, next) => {
             
         })
+        
         app.get('/api/sequence', (req, res, next) => {
             app.models.account.getSequence(req.query.id).then(rs => {
                 console.log(rs)
@@ -39,5 +42,20 @@ export default class AppRouter {
                 });
             });
         })
+
+        /**
+         * @endpoint: /api/user
+         * @method: POST
+         */
+        app.post('/api/user', (req, res, next) => {
+            const body = _.get(req, 'body');
+            app.models.account.createAccount(_.get(body, "publicKey")).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(304).json({
+                    err: err,
+                });
+            });
+        });
     }
 }

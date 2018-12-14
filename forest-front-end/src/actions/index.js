@@ -15,27 +15,6 @@ export const updateDetail = (userDetail) => (
 );
 
 
-export const create_account = () =>
-    (dispatch, getState) => {
-        {
-            dispatch(increaseFollowing());
-            // WebService.get(`sequence/id=${account}`).then(seq =>{
-            //     let tx = {
-            //         version: 1,
-            //         account: '',
-            //         sequence: seq+1 ,
-            //         memo: Buffer.alloc(0),
-            //         operation: 'create_account',
-            //         params: {
-            //             address: address
-            //         },
-            //     };
-            //     sign(tx, secret);
-            //     let data_encoding = '0x' + encode(tx).toString('hex');
-            // })
-        }
-    };
-
 export const payment = (address,amount,secret) =>
     (dispatch, getState) => {
         {

@@ -2,6 +2,7 @@ const {Keypair} = require('stellar-base');
 import {encode,sign} from '../transaction';
 import {SECRET_KEY,ThongAccount} from '../config';
 import _ from 'lodash';
+import { Buffer } from 'safe-buffer';
 
 export default class Account {
     constructor(app) {
@@ -19,11 +20,30 @@ export default class Account {
         })
     }
 
-    createAccount() {
+    createAccount(publicKey) {
+
+        let tx = {
+            version: 1,
+            account: '',
+            sequence: 11,
+            memo: Buffer.alloc(0),
+            operation: 'create_account',
+            params: {address: publicKey},
+            signature: Buffer.alloc(64,0)
+        }
+
+        sign(tx, SECRET_KEY);
+        let data_encoding = '0x'+encode(tx).toString('hex');
+
         return new Promise((resolve, reject) => {
             this.app.service.get(`broadcast_tx_commit?tx=${data_encoding}`).then(res => {
-                console.log(res.data);
-                return resolve(key.privateKey())
+                console.log(res)
+                if (_.get(res.data.result, "height") === "0") {
+                    let rs = {code: -1}
+                    return resolve(rs);
+                } else {
+                    return resolve(res.data)
+                }
             }).catch(err => {
                 return reject(err);
             });
