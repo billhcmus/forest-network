@@ -15,7 +15,6 @@ class LoginForm extends Component {
 
     checkAuth() {
         if (localStorage.getItem('token')) {
-            localStorage.clear();
             window.location = '/';
         }
     }
@@ -29,8 +28,8 @@ class LoginForm extends Component {
                     password: values.password
                 };
                 // this.service.post('api/users/login', user).then((response) => {
-                //     localStorage.setItem('token', response.data);
-                //     this.props.history.push('/home');
+                     localStorage.setItem('token', true);
+                     this.props.history.push('/');
                 // }).catch(err => {
                 //     const message = _.get(err, 'response.data.error.message', "Login Error!");
                 //     alert(message);
