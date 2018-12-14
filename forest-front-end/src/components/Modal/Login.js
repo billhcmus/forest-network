@@ -1,5 +1,6 @@
 import { Form, Icon, Input, Button, Modal } from 'antd';
 import React, {Component} from 'react';
+import WebService from "../../webservice";
 const FormItem = Form.Item;
 
 class LoginForm extends Component {
@@ -8,6 +9,7 @@ class LoginForm extends Component {
         this.state = {
             modalVisible: true,
         };
+        this.service = new WebService();
         this.checkAuth();
     }
 
