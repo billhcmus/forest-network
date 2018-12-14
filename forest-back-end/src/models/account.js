@@ -20,6 +20,11 @@ export default class Account {
         })
     }
 
+    async auth(publicKey) {
+       let account = await this.app.db.collection('account').findOne({_id: publicKey});
+       return account;
+    }
+
     createAccount(publicKey) {
 
         let tx = {

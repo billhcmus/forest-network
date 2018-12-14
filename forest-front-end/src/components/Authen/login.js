@@ -4,6 +4,8 @@ import {withRouter} from "react-router-dom";
 import _ from 'lodash'
 import './auth-style.scss'
 import WebService from "../../webservice";
+import { Keypair } from 'stellar-base';
+
 const FormItem = Form.Item;
 
 class LoginForm extends Component {
@@ -24,16 +26,16 @@ class LoginForm extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 const user = {
-                    secretkey: values.secretkey,
+                    publicKey: Keypair.fromSecret(values.secretkey).publicKey(),
                     password: values.password
                 };
-                // this.service.post('api/users/login', user).then((response) => {
-                     localStorage.setItem('token', true);
+                this.service.post('api/users/login', user).then((response) => {
+                     // localStorage.setItem('token', true);
                      this.props.history.push('/');
-                // }).catch(err => {
-                //     const message = _.get(err, 'response.data.error.message', "Login Error!");
-                //     alert(message);
-                // })
+                }).catch(err => {
+                    const message = _.get(err, 'response.data.error.message', "Login Error!");
+                    alert(message);
+                })
             }
         });
     };

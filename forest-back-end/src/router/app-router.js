@@ -31,6 +31,18 @@ export default class AppRouter {
         app.get('/api/people', (req, res, next) => {
             
         })
+
+        app.post('/api/users/login', (req, res, next) => {
+            console.log(req.body)
+           app.models.account.auth(req.body.publicKey).then((result)=>{
+            console.log(result)
+             return res.status(200).json(result);
+           }).catch(err =>{
+            return res.status(404).json({
+                    error: err,
+                });
+            })
+        })
         
         app.get('/api/sequence', (req, res, next) => {
             app.models.account.getSequence(req.query.id).then(rs => {
