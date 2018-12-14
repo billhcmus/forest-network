@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import EditProfile from  "../containers/edit-profile"
+import {create_account} from "../actions";
 
 class UserProfile extends Component {
     constructor(props) {

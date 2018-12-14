@@ -41,7 +41,7 @@ const UpdateAccountParams = vstruct([
   { name: 'name', type: vstruct.VarString(vstruct.UInt8) },
 ]);
 
-function encode(tx) {
+export const encode = (tx) => {
   let params, operation;
   if (tx.version !== 1) {
     throw Error('Wrong version');
@@ -86,9 +86,9 @@ function encode(tx) {
     params,
     signature: tx.signature,
   });
-}
+};
 
-function decode(data) {
+export const decode = (data) => {
   const tx = Transaction.decode(data);
   if (tx.version !== 1) {
     throw Error('Wrong version');
@@ -131,6 +131,4 @@ function decode(data) {
     params,
     signature: tx.signature,
   };
-}
-
-module.exports = { encode, decode };
+};

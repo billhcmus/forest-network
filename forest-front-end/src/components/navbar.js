@@ -28,6 +28,14 @@ const menuDrop = (
 
 
 class Navbar extends Component {
+    constructor(props) {
+        super(props);
+        this.handleTweetClick = this.handleTweetClick.bind(this);
+    }
+
+    handleTweetClick() {
+    }
+
     render() {
         return (
             <Layout className="layout">
@@ -75,7 +83,7 @@ class Navbar extends Component {
                                 <Avatar icon="user" style={{marginLeft:'16px'}}/>
                             </Dropdown>
 
-                            <Button type="primary" style={{borderRadius: '50px',fontWeight:'bold',marginLeft:'16px'}}>Tweet</Button>
+                            <Button type="primary" style={{borderRadius: '50px',fontWeight:'bold',marginLeft:'16px'}} onClick={() => this.handleTweetClick}>Tweet</Button>
                         </div>
                     </div>
                 </Header>
