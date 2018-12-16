@@ -1,6 +1,7 @@
 const {Keypair} = require('stellar-base');
 const moment = require('moment');
-import {encode,sign} from '../transaction';
+
+import {encode,sign,verify} from '../transaction';
 import {SECRET_KEY,ThongAccount} from '../config';
 import _ from 'lodash';
 import { Buffer } from 'safe-buffer';
@@ -31,8 +32,8 @@ export default class Account {
     }
 
     async auth(publicKey) {
-       let account = await this.app.db.collection('account').findOne({_id: publicKey});
-       return account;
+        let account = await this.app.db.collection('account').findOne({_id: publicKey});
+        return account;
     }
 
     async createAccount(publicKey) {
@@ -48,7 +49,7 @@ export default class Account {
         }
 
         sign(tx, SECRET_KEY);
-        let data_encoding = '0x'+encode(tx).toString('hex');
+        let data_encoding = '0x' + encode(tx).toString('hex');
 
         return new Promise((resolve, reject) => {
             this.app.service.get(`broadcast_tx_commit?tx=${data_encoding}`).then(res => {
@@ -93,11 +94,11 @@ export default class Account {
             for (let i = 0; i < rs.length; ++i) {
                 let data = this.app.helper.decodeTransaction(_.get(rs[i], "tx"));
                 if (_.get(data, "operation") === "payment")
-                if (_.get(data, "account") === publicKey) { // chuyen tien di cho address
-                    amount -= parseInt(_.get(data.params, "amount"));
-                } else {
-                    amount += parseInt(_.get(data.params, "amount"));
-                }
+                    if (_.get(data, "account") === publicKey) { // chuyen tien di cho address
+                        amount -= parseInt(_.get(data.params, "amount"));
+                    } else {
+                        amount += parseInt(_.get(data.params, "amount"));
+                    }
             }
         });
         return amount;
@@ -115,37 +116,38 @@ export default class Account {
             console.log(height);
             //Duyệt từng height
             for (let i = 1; i <= height; ++i) {
-                    await this.app.service.get(`block?height=${i}`).then(res => {
+                await this.app.service.get(`block?height=${i}`).then(res => {
+
                     let txs = res.data.result.block.data.txs;
                     let block_time = res.data.result.block.header.time;
                     if (txs !== null) {
                         //Duyệt từng tx trong list tx của block
-                        txs.foreach(async tx => {
+                        txs.forEach(async tx => {
                             try {
-                                await this.executeTx(tx,block_time);
+                                console.log(i)
+                                await this.executeTx(tx, block_time);
                             } catch (err) {
                                 console.log(err)
                             }
                         })
                     }
-                }).catch(err =>{
+                }).catch(err => {
                 })
             }
-        }).catch(err =>{
+        }).catch(err => {
         })
     }
 
-    async executeTx(tx,block_time)
-    {
+    async executeTx(tx, block_time) {
         //Verify tx có hợp lệ không, theo các trường hợp trong code server.js
-        // Check signature
-        if (!this.app.helper.verifyTransaction(tx))
-        {
-            throw Error('Wrong signature');
-        }
 
         const data = this.app.helper.decodeTransaction(tx)//decode từ buffer binary sang json
         const txSize = tx.length;
+
+        // Check signature
+        if (!verify(data)) {
+            throw Error('Wrong signature');
+        }
 
         //Get account from MongoDB
         const account = await this.app.db.collection('account').findOne({_id: data.account});
@@ -157,7 +159,7 @@ export default class Account {
 
         // Check sequence
         const nextSequence = account.sequence + 1;
-        if (!nextSequence.equals(data.sequence)) {
+        if (nextSequence !== data.sequence) {
             throw Error('Sequence mismatch');
         }
 
@@ -177,12 +179,21 @@ export default class Account {
             throw Error('Bandwidth limit exceeded');
         }
 
+        await this.app.db.collection('account').findOneAndUpdate(
+            {_id: data.account},
+            {$set: {
+                    bandwidthTime: block_time,
+                    sequence: nextSequence,
+                    bandwidth: account.bandwidth,
+                }})
+
         //Process operation
         let operation = _.get(data, "operation");
         switch (operation) {
             case 'create_account': {
                 let params = _.get(data, "params")
                 let address = _.get(params, "address");
+
                 const found = await this.app.db.collection('account').findOne({_id: address});
 
                 if (found) {
@@ -195,7 +206,9 @@ export default class Account {
                     balance: 0,
                     bandwidth: 0,
                 }
-                this.app.db.collection('account').insertOne(newAccount);
+                await this.app.db.collection('account').insertOne(newAccount);
+                console.log(`${account._id} create ${address}`);
+
             }
                 break;
             case 'payment': {
@@ -213,27 +226,20 @@ export default class Account {
                 if (amount <= 0) {
                     throw Error('Amount must be greater than 0');
                 }
-                if (new Decimal(amount).gt(account.balance)) {
+                if (amount > account.balance) {
                     throw Error('Amount must be less or equal to source balance');
                 }
 
                 //tru nguoi gui
                 await this.app.db.collection('account').findOneAndUpdate(
-                    {_id: account},
-                    {
-                        $set: {
-                            sequence: nextSequence,
-                            bandwidth: account.bandwidth,
-                            bandwidthTime: block_time,
-                        },
-                        $inc: {balance: -amount},
-                    })
+                    {_id: account._id},
+                    {$inc: {balance: -amount}})
                 //cong nguoi nhan
                 await this.app.db.collection('account').findOneAndUpdate(
                     {_id: address},
                     {$inc: {balance: amount}})
 
-                console.log(`${account.address} transfered ${amount} to ${address}`);
+                console.log(`${account._id} transfered ${amount} to ${address}`);
 
             }
                 break;
@@ -241,21 +247,28 @@ export default class Account {
                 let params = _.get(data, "params")
                 let content = _.get(params, "content");
                 let keys = _.get(params, "keys");
+                console.log(`${account._id} post content ${content} keys ${keys}`);
+
             }
                 break;
             case 'update_account': {
                 let params = _.get(data, "params")
                 let key = _.get(params, "key");
                 let value = _.get(params, "value");
+                console.log(`${account._id} update_account key ${key} value ${value}`);
+
             }
                 break;
             case 'interact': {
                 let params = _.get(data, "params")
                 let object = _.get(params, "object");
                 let content = _.get(params, "content");
+                console.log(`${account._id} interact object ${object} content ${content}`);
+
             }
                 break;
             default:
                 throw Error('Operation is not support.');
         }
+    }
 }

@@ -27,8 +27,11 @@ app.use(bodyParse.json({
 const server = http.createServer(app);
 
 const client = RpcClient('wss://gorilla.forest.network:443/websocket');
+
 function listener(value) {
+    // console.log(value)
 }
+
 client.subscribe({query: "tm.event = \'NewBlock\'"} , listener);
 
 app.client = client;
@@ -43,14 +46,25 @@ new DataBase().connect().then((db) => {
     console.log("Connect to database succesfully");
     var dbase = db.db("forest-network");
     app.db = dbase;
-    // app.models.account.syncTxsToDB();
+
+   //add the super account
+    const rootAccount = {
+        _id: 'GA6IW2JOWMP4WGI6LYAZ76ZPMFQSJAX4YLJLOQOWFC5VF5C6IGNV2IW7',
+        sequence: 0,
+        balance: Number.MAX_SAFE_INTEGER,
+        bandwidth: 0,
+    }
+    app.db.collection('account').insertOne(rootAccount);
+
+    app.models.account.syncTxsToDB();
+
 }).catch((err) => {
     throw err;
 });
 
 
 //app.models.account.createAccount();
-app.models.payment.makePaymentTest(SECRET_KEY, ThongAccount);
+// app.models.payment.makePaymentTest(SECRET_KEY, ThongAccount);
 //app.models.people.getPeopleProfile();
 // app.models.account.getAmount(ThongAccount).then(rs => {
 //     console.log(rs)
