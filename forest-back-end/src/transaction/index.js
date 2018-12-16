@@ -30,7 +30,7 @@ function decode(data) {
 }
 
 function getUnsignedHash(tx) {
-  return crypto
+  returncrypto
     .createHash('sha256')
     .update(encode({
       ...tx,

@@ -1,4 +1,4 @@
-import {decode} from '../transaction'
+import {decode,verify} from '../transaction'
 
 export default class Helper {
     constructor() {
@@ -8,5 +8,10 @@ export default class Helper {
     decodeTransaction(tx) {
         let buf = new Buffer(tx, 'base64');
         return decode(buf);
+    }
+
+    verifyTransaction(tx){
+        let buf = new Buffer(tx, 'base64');
+        return decode(verify);
     }
 }
