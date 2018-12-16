@@ -111,31 +111,41 @@ export default class Account {
 
 
     async syncTxsToDB() {
-            let status =  await this.app.service.get('status')
-            let height = status.data.result.sync_info.latest_block_height;
-            console.log(height);
-            //Duyệt từng height
-            for (let i = 1; i <= height; ++i) {
-                    let res = await this.app.service.get(`block?height=${i}`)
-                    let txs = res.data.result.block.data.txs;
-                    let block_time = res.data.result.block.header.time;
-                    if (txs !== null) {
-                        //Duyệt từng tx trong list tx của block
-                        for(let j = 0; j < txs.length; j++)
-                        {
-                            console.log("height", i)
-                            let err = await this.executeTx(txs[j], block_time);
-                            if (err)
-                                console.log(err);
-                        }
+        let beginHeight = 0;
+        let metaHeight = await this.app.db.collection('metadata').findOne({_id: 'finalHeight'});
+        if (metaHeight)
+            beginHeight = metaHeight._value;
+        else
+            await this.app.db.collection('metadata').insertOne({_id: 'finalHeight'});
+
+        let status =  await this.app.service.get('status')
+        let lastheight = status.data.result.sync_info.latest_block_height;
+        console.log("SyncTX: ",beginHeight,"-->",lastheight);
+        //Duyệt từng height
+        for (let i = beginHeight + 1; i <= lastheight; ++i) {
+                let res = await this.app.service.get(`block?height=${i}`)
+                let txs = res.data.result.block.data.txs;
+                let block_time = res.data.result.block.header.time;
+                if (txs !== null) {
+                    //Duyệt từng tx trong list tx của block
+                    for(let j = 0; j < txs.length; j++)
+                    {
+                        console.log("Height", i)
+                        let err = await this.executeTx(txs[j], block_time);
+                        if (err)
+                            console.log(err);
                     }
-            }
+                }
+        }
+        await this.app.db.collection('metadata').findOneAndUpdate(
+            {_id: 'finalHeight'},
+            {$set: {_value: +lastheight}})
+        return { code: 1 };
     }
 
     async executeTx(tx, block_time) {
         //Verify tx có hợp lệ không, theo các trường hợp trong code server.js
 
-        console.log("\nTX: ",tx)
         const data = this.app.helper.decodeTransaction(tx)//decode từ buffer binary sang json
         const txSize = tx.length;
 
@@ -157,7 +167,6 @@ export default class Account {
         if (nextSequence !== data.sequence) {
             return('Sequence mismatch');
         }
-        console.log("NextSequence: ",nextSequence)
 
         // Check memo
         if (data.memo.length > 32) {
