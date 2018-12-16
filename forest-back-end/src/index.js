@@ -1,3 +1,5 @@
+require("babel-core/register");
+require("babel-polyfill");
 import * as http from 'http'
 import express from 'express'
 import cors from 'cors'
@@ -48,11 +50,12 @@ new DataBase().connect().then((db) => {
 
 
 //app.models.account.createAccount();
-//app.models.payment.makePayment(SECRET_KEY, ThongAccount);
+app.models.payment.makePaymentTest(SECRET_KEY, ThongAccount);
 //app.models.people.getPeopleProfile();
 // app.models.account.getAmount(ThongAccount).then(rs => {
 //     console.log(rs)
 // });
+
 
 server.listen(process.env.PORT || PORT, () => {
     console.log(`App is running on port ${server.address().port}`)
