@@ -44,7 +44,7 @@ class LoginForm extends Component {
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
-                    {getFieldDecorator("secretkey", {
+                    {getFieldDecorator("secretkey", { initialValue: localStorage.getItem("SECRET_KEY"),
                         rules: [{ required: true, message: "Please input your secret key!" }]
                     })(
                         <Input

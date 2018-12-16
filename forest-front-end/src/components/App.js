@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {PrivateRoute} from "./private-route";
 import Layout from "./layout";
-import LoginAndSignUp from "./Authen";
+import LoginAndSignUp from "../containers/authentication";
 
 class App extends Component {
   render() {

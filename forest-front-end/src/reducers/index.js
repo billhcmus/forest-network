@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux';
-import userInfo from  './userInfo'
-import follower from "./follower";
-import following from "./following";
-import tweets from "./tweets";
-import tweetDetail from "./tweetDetail";
-import RecommendReducer from './RecommendReducer'
+import userInfo from './UserInfoReducer'
+import follower from "./FollowerReducer";
+import following from "./FollowingReducer";
+import tweets from "./TweetsReducer";
+import tweetDetail from "./TweetDetailReducer";
+import RecommendReducer from './RecommendReducer';
+import AuthReducer from './AuthReducer';
 
 export default combineReducers({
     userInfo,
@@ -12,5 +13,6 @@ export default combineReducers({
     following,
     tweets,
     tweetDetail,
-    RecommendReducer
+    RecommendReducer,
+    AuthReducer
 });
