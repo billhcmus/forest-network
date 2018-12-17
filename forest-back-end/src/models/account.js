@@ -19,6 +19,10 @@ export default class Account {
         return account;
     }
 
+    async getSequence(publicKey) {
+       return 3;
+    }
+
     async createAccount(publicKey) {
         let account = await this.app.db.collection('account').findOne({_id: publicKey});
 

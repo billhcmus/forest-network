@@ -46,6 +46,7 @@ export default class Synchronization {
                 await this.app.db.collection('metadata').findOneAndUpdate(
                     {_id: 'finalHeight'},
                     {$set: {_value: i}})
+
         }
         return { code: 1 };
     }
@@ -53,8 +54,8 @@ export default class Synchronization {
     async checkAndWriteToDB(tx, block_time) {
         //Verify tx có hợp lệ không, theo các trường hợp trong code server.js
 
+        const txSize =  Buffer(tx, 'base64').length;
         const data = this.app.helper.decodeTransaction(tx)//decode từ buffer binary sang json
-        const txSize = tx.length;
 
         // Check signature
         if (!verify(data)) {
@@ -117,6 +118,12 @@ export default class Synchronization {
                 bandwidth: 0,
             }
             await this.app.db.collection('account').insertOne(newAccount);
+
+            const newUser = {
+                _id: address,
+            }
+            await this.app.db.collection('user').insertOne(newUser);
+
             console.log(`${account._id} create ${address}`);
 
         }
@@ -155,6 +162,13 @@ export default class Synchronization {
             let params = _.get(data, "params")
             let content = _.get(params, "content");
             let keys = _.get(params, "keys");
+
+            const newPost = {
+                author:account._id,
+                content: content,
+                keys: keys,
+            }
+            await this.app.db.collection('post').insertOne(newPost);
             console.log(`${account._id} post content ${content} keys ${keys}`);
 
         }
@@ -162,6 +176,24 @@ export default class Synchronization {
             let params = _.get(data, "params")
             let key = _.get(params, "key");
             let value = _.get(params, "value");
+            if (key === "name")
+            {
+                await this.app.db.collection('user').findOneAndUpdate(
+                    {_id: data.account},
+                    {$set: {name: value}})
+            }
+            else if (key === "picture")
+            {
+                await this.app.db.collection('user').findOneAndUpdate(
+                    {_id: data.account},
+                    {$set: {picture: value}})
+            }
+            else if (key === "followings")
+            {
+                await this.app.db.collection('user').findOneAndUpdate(
+                    {_id: data.account},
+                    {$set: {followings: value}})
+            }
             console.log(`${account._id} update_account key ${key} value ${value}`);
 
         }
@@ -170,7 +202,6 @@ export default class Synchronization {
             let object = _.get(params, "object");
             let content = _.get(params, "content");
             console.log(`${account._id} interact object ${object} content ${content}`);
-
         }
         else
             return('Operation is not support.');

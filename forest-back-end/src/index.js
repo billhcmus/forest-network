@@ -52,6 +52,7 @@ new DataBase().connect().then((db) => {
         if (!res)
             app.db.collection('account').insertOne(rootAccount);
     });
+    app.db.collection('post').createIndex({author:1})
 
     //Sync and subcribe
     app.models.sync.syncTxsToDB().then(res=>{
