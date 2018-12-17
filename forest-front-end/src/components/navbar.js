@@ -1,7 +1,9 @@
 import {Layout, Menu, Icon, Input,Avatar,Button,Dropdown} from 'antd/lib';
+import Tweet from "../components/Modal/Tweet";
 import React, {Component} from 'react';
 import _ from 'lodash';
 import '../css/navstyle.css';
+import ViewTweet from "../containers/view-detail-tweet";
 const {Header} = Layout;
 const Search = Input.Search;
 
@@ -37,10 +39,22 @@ const menuDrop = (
 class Navbar extends Component {
     constructor(props) {
         super(props);
-        this.handleTweetClick = this.handleTweetClick.bind(this);
+        this.state = {
+            isModalShow: false,
+        };
     }
 
-    handleTweetClick() {
+    handleCacel =(e)=>{
+        this.setState({
+            isModalShow: false
+        })
+    }
+
+
+    handleTweetClick =(e)=>{
+        this.setState({
+            isModalShow: true
+        })
     }
 
     render() {
@@ -90,8 +104,9 @@ class Navbar extends Component {
                                 <Avatar icon="user" style={{marginLeft:'16px'}}/>
                             </Dropdown>
 
-                            <Button type="primary" style={{borderRadius: '50px',fontWeight:'bold',marginLeft:'16px'}} onClick={() => this.handleTweetClick}>Tweet</Button>
+                            <Button type="primary" style={{borderRadius: '50px',fontWeight:'bold',marginLeft:'16px'}} onClick={(e)=>this.handleTweetClick(e)}>Tweet</Button>
                         </div>
+                        <Tweet isModalShow={this.state.isModalShow} onCancel={(e)=>this.handleCacel(e)}/>
                     </div>
                 </Header>
             </Layout>

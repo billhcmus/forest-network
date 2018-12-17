@@ -2,25 +2,54 @@ import { Form, Icon, Input, Button, Modal } from 'antd';
 import React, {Component} from 'react';
 import "../../css/compose-tweet.scss"
 import {Menu} from "antd/lib/menu";
+import { Keypair } from 'stellar-base';
+import WebService from "../../webservice";
+import {encode,sign} from '../../transaction';
+
 
 const FormItem = Form.Item;
 
 class TweetForm extends Component {
-    state = {
-        modalVisible: true,
+
+    constructor(props) {
+        super(props);
+        this.service = new WebService();
+        this.state = {
+            content:''
+        };
     }
 
-    setModalVisible(modalVisible) {
-        this.setState({ modalVisible });
+    textChange = (e) =>{
+        this.setState({
+            content:e.target.value
+        })
     }
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log('Received values of form: ', values);
-            }
-        });
+    handleSubmit = () => {
+        console.log(this.state.content)
+        if (this.state.content.length !== 0) {
+            const secret = localStorage.getItem("token");
+            const key = Keypair.fromSecret(secret);
+            this.service.get(`api/sequence/?id=${key.publicKey()}`).then(seq =>{
+                let tx = {
+                    version: 1,
+                    account: '',
+                    sequence: seq + 1,
+                    memo: Buffer.alloc(0),
+                    operation: 'post',
+                    params: {
+                        content: {
+                            type: 1,
+                            text: this.state.content
+                        },
+                        keys: []
+                    }
+                }
+                sign(tx, secret)
+                let data_encoding = '0x'+encode(tx).toString('hex');
+                this.service.post(`/api/tweet`,{tx: data_encoding});
+            })
+        }
     }
 
     render() {
@@ -29,8 +58,8 @@ class TweetForm extends Component {
             <Modal
                 title="Compose new Tweet"
                 centered
-                visible={this.state.modalVisible}
-                onCancel={() => this.setModalVisible(false)}
+                visible={this.props.isModalShow}
+                onCancel={() => this.props.onCancel()}
                 footer={null}
                 style={{padding:0}}
             >
@@ -42,7 +71,10 @@ class TweetForm extends Component {
                    </div>
                    <div className="tweet-box-content">
                        <div className="tweet-content">
-                           <textarea className="tweet-text-area" placeholder="What's happening?" name="status"></textarea>
+                           <textarea className="tweet-text-area"
+                                     onChange={(e)=>this.textChange(e)}
+                                     placeholder="What's happening?"
+                                     name="status"></textarea>
                        </div>
 
                        <div className="tweet-toolbar">
@@ -52,7 +84,9 @@ class TweetForm extends Component {
                                </label>
                                <input type="file" id="file" accept="image/*" ref="fileUploader"/>
                            </div>
-                           <Button type="primary" style={{backgroundColor:"#1da1f2", borderRadius: '50px',fontWeight:'bold',float: 'right'}}>Tweet</Button>
+                           <Button type="primary"
+                                   onClick={this.handleSubmit}
+                                   style={{backgroundColor:"#1da1f2", borderRadius: '50px',fontWeight:'bold',float: 'right'}}>Tweet</Button>
                        </div>
                    </div>
                </div>

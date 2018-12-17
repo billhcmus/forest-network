@@ -28,12 +28,6 @@ const server = http.createServer(app);
 
 const client = RpcClient('wss://gorilla.forest.network:443/websocket');
 
-function listener(value) {
-    // console.log(value)
-}
-
-client.subscribe({query: "tm.event = \'NewBlock\'"} , listener);
-
 app.client = client;
 app.helper = new Helper();
 app.service = new WebService();
@@ -54,9 +48,19 @@ new DataBase().connect().then((db) => {
         balance: Number.MAX_SAFE_INTEGER,
         bandwidth: 0,
     }
-    app.db.collection('account').insertOne(rootAccount);
+    app.db.collection('account').findOne({_id: rootAccount._id}).then(res=>{
+        if (!res)
+            app.db.collection('account').insertOne(rootAccount);
+    });
+    app.db.collection('post').createIndex({author:1})
 
-    app.models.account.syncTxsToDB();
+    //Sync and subcribe
+    app.models.sync.syncTxsToDB().then(res=>{
+        client.subscribe({query: "tm.event = \'NewBlock\'"} , () => {
+           app.sync.account.syncTxsToDB();
+        });
+    });
+
 
 }).catch((err) => {
     throw err;

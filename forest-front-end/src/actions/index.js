@@ -1,5 +1,5 @@
 import {DISMISS_ITEM_RECOMMEND, INCREASE_FOLLOWING, CHANGE_DETAIL, CHANGE_AUTH_TAB} from "../constants";
-import {encode,sign} from '../transaction';
+// import {encode,sign} from '../transaction';
 import WebService from '../webservice'
 
 export const dismissUserRecommend = (username) => (

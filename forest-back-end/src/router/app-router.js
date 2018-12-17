@@ -15,13 +15,7 @@ export default class AppRouter {
          * @method: GET
          */
         app.get('/api/users', (req, res, next) => {
-            app.models.account.UserSayHello().then(rs => {
-                return res.status(200).json(rs);
-            }).catch(err => {
-                return res.status(404).json({
-                    error: err,
-                });
-            });
+            
         });
 
         /**
@@ -67,6 +61,21 @@ export default class AppRouter {
                 return res.status(304).json({
                     err: err,
                 });
+            });
+        });
+
+        /**
+         * @endpoint: /api/tweet
+         * @method: POST
+         */
+        app.post('/api/tweet', (req, res, next) => {
+            const body = _.get(req, 'body');
+            console.log(body)
+            this.app.service.get(`broadcast_tx_commit?tx=${body.tx}`).then(res => {
+                console.log(res.data);
+                return resolve(res.data)
+            }).catch(err => {
+                return reject(err);
             });
         });
     }
