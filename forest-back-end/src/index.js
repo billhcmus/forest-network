@@ -28,10 +28,6 @@ const server = http.createServer(app);
 
 const client = RpcClient('wss://gorilla.forest.network:443/websocket');
 
-function listener(value) {
-    app.models.account.syncTxsToDB();
-}
-
 app.client = client;
 app.helper = new Helper();
 app.service = new WebService();
@@ -55,12 +51,14 @@ new DataBase().connect().then((db) => {
     app.db.collection('account').findOne({_id: rootAccount._id}).then(res=>{
         if (!res)
             app.db.collection('account').insertOne(rootAccount);
-    })
+    });
 
     //Sync and subcribe
-    app.models.account.syncTxsToDB().then(res=>{
-        client.subscribe({query: "tm.event = \'NewBlock\'"} , listener);
-    })
+    app.models.sync.syncTxsToDB().then(res=>{
+        client.subscribe({query: "tm.event = \'NewBlock\'"} , () => {
+           app.sync.account.syncTxsToDB();
+        });
+    });
 
 
 }).catch((err) => {

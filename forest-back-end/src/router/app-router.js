@@ -15,13 +15,7 @@ export default class AppRouter {
          * @method: GET
          */
         app.get('/api/users', (req, res, next) => {
-            app.models.account.UserSayHello().then(rs => {
-                return res.status(200).json(rs);
-            }).catch(err => {
-                return res.status(404).json({
-                    error: err,
-                });
-            });
+            
         });
 
         /**

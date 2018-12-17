@@ -1,11 +1,7 @@
-const {Keypair} = require('stellar-base');
-const moment = require('moment');
-
-import {encode,sign,verify} from '../transaction';
-import {SECRET_KEY,ThongAccount} from '../config';
+import {verify} from '../transaction';
 import _ from 'lodash';
-import { Buffer } from 'safe-buffer';
 
+const moment = require('moment');
 
 const BANDWIDTH_PERIOD = 86400;
 const ACCOUNT_KEY = Buffer.from('account');
@@ -15,100 +11,19 @@ const RESERVE_RATIO = 1;
 const MAX_CELLULOSE = Number.MAX_SAFE_INTEGER;
 const NETWORK_BANDWIDTH = RESERVE_RATIO * MAX_BLOCK_SIZE * BANDWIDTH_PERIOD;
 
-export default class Account {
+export default class Synchronization {
     constructor(app) {
         this.app = app;
-        this.createAccount = this.createAccount.bind(this);
-        this.getTransaction = this.getTransaction.bind(this);
-        this.getAmount = this.getAmount.bind(this);
     }
-
-    async auth(publicKey) {
-        let account = await this.app.db.collection('account').findOne({_id: publicKey});
-        return account;
-    }
-
-    async createAccount(publicKey) {
-        let account = await this.app.db.collection('account').findOne({_id: publicKey});
-
-        let tx = {
-            version: 1,
-            account: '',
-            sequence: account.sequence + 1,
-            memo: Buffer.alloc(0),
-            operation: 'create_account',
-            params: {address: publicKey},
-        }
-
-        sign(tx, SECRET_KEY);
-        let data_encoding = '0x' + encode(tx).toString('hex');
-
-        return new Promise((resolve, reject) => {
-            this.app.service.get(`broadcast_tx_commit?tx=${data_encoding}`).then(res => {
-                console.log(res)
-                if (_.get(res.data.result, "height") === "0") {
-                    let rs = {code: -1}
-                    return resolve(rs);
-                } else {
-                    return resolve(res.data)
-                }
-            }).catch(err => {
-                return reject(err);
-            });
-        });
-    }
-
-    async getTransaction(publicKey) {
-        let transaction = [];
-        let total_count = 0;
-
-        await this.app.service.get(`tx_search?query="account='${publicKey}'"&prove=false&page=1&per_page=100`).then(res => {
-            transaction = res.data.result.txs;
-            total_count = res.data.result.total_count;
-        }).catch(err => {
-            console.log(err);
-        });
-
-        let bound = Math.ceil(total_count / 100);
-        for (let i = 2; i <= bound; ++i) {
-            await this.app.service.get(`tx_search?query="account='${publicKey}'"&prove=false&page=${i}&per_page=100`).then(res => {
-                transaction = transaction.concat(res.data.result.txs);
-            }).catch(err => {
-                console.log(err);
-            });
-        }
-        return transaction;
-    }
-
-    async getAmount(publicKey) {
-        let amount = 0;
-        await this.getTransaction(publicKey).then(rs => {
-            for (let i = 0; i < rs.length; ++i) {
-                let data = this.app.helper.decodeTransaction(_.get(rs[i], "tx"));
-                if (_.get(data, "operation") === "payment")
-                    if (_.get(data, "account") === publicKey) { // chuyen tien di cho address
-                        amount -= parseInt(_.get(data.params, "amount"));
-                    } else {
-                        amount += parseInt(_.get(data.params, "amount"));
-                    }
-            }
-        });
-        return amount;
-    }
-
-    async getSequence(publicKey) {
-        let account = await this.app.db.collection('account').findOne({_id: publicKey});
-        return account.sequence;
-    }
-
 
     async syncTxsToDB() {
         let beginHeight = 0;
         let metaHeight = await this.app.db.collection('metadata').findOne({_id: 'finalHeight'});
-        if (metaHeight)
+        if (metaHeight) {
             beginHeight = metaHeight._value;
-        else
-            await this.app.db.collection('metadata').insertOne({_id: 'finalHeight'});
+        } else {
+            await this.app.db.collection('metadata').insertOne({_id: 'finalHeight'});            
+        }
 
         let status =  await this.app.service.get('status')
         let lastheight = status.data.result.sync_info.latest_block_height;
@@ -123,19 +38,19 @@ export default class Account {
                     for(let j = 0; j < txs.length; j++)
                     {
                         console.log("Height", i)
-                        let err = await this.executeTx(txs[j], block_time);
+                        let err = await this.checkAndWriteToDB(txs[j], block_time);
                         if (err)
                             console.log(err);
                     }
                 }
+                await this.app.db.collection('metadata').findOneAndUpdate(
+                    {_id: 'finalHeight'},
+                    {$set: {_value: i}})
         }
-        await this.app.db.collection('metadata').findOneAndUpdate(
-            {_id: 'finalHeight'},
-            {$set: {_value: +lastheight}})
         return { code: 1 };
     }
 
-    async executeTx(tx, block_time) {
+    async checkAndWriteToDB(tx, block_time) {
         //Verify tx có hợp lệ không, theo các trường hợp trong code server.js
 
         const data = this.app.helper.decodeTransaction(tx)//decode từ buffer binary sang json
@@ -148,7 +63,6 @@ export default class Account {
 
         //Get account from MongoDB
         const account = await this.app.db.collection('account').findOne({_id: data.account});
-        
         // Check account
         if (!account) {
             return 'Account does not exists';
