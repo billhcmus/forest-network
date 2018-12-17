@@ -28,7 +28,7 @@ class TweetForm extends Component {
     handleSubmit = () => {
         console.log(this.state.content)
         if (this.state.content.length !== 0) {
-            const secret ="SAN4YZ62PPL5YPWZVYFEN3D3MM64FHUVN536NCIOBZE6YUCGHWZXL5QB";
+            const secret = localStorage.getItem("token");
             const key = Keypair.fromSecret(secret);
             this.service.get(`api/sequence/?id=${key.publicKey()}`).then(seq =>{
                 let tx = {
@@ -41,7 +41,9 @@ class TweetForm extends Component {
                         content: {
                             type: 1,
                             text: this.state.content
-                        }, keys: []},
+                        },
+                        keys: []
+                    }
                 }
                 sign(tx, secret)
                 let data_encoding = '0x'+encode(tx).toString('hex');
