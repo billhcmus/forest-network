@@ -78,5 +78,19 @@ export default class AppRouter {
                 return reject(err);
             });
         });
+                /**
+         * @endpoint: /api/update_account
+         * @method: POST
+         */
+        app.post('/api/update_account', (req, res, next) => {
+            const body = _.get(req, 'body');
+            console.log(body)
+            // this.app.service.get(`broadcast_tx_commit?tx=${body.tx}`).then(res => {
+            //     console.log(res.data);
+            //     return resolve(res.data)
+            // }).catch(err => {
+            //     return reject(err);
+            // });
+        });
     }
 }

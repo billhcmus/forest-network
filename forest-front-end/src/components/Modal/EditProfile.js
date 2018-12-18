@@ -19,11 +19,15 @@ class EditProfile extends Component {
         };
     }
 
-    saveDetail =()=>{
-        console.log(this.state)
+    saveDetail() {
+        console.log(this.state.userName)
+        console.log("saveDetail")
+
+
         
-            const secret = localStorage.getItem("token");
-            const key = Keypair.fromSecret(secret);
+            // const secret = localStorage.getItem("token");
+            let secretKey = "SBPESDLGQCJ2FK63GEXULOBCABLSKW4MK6X7O2463DIMH2FX6AFPPFPS"
+            const key = Keypair.fromSecret(secretKey);
             this.service.get(`api/sequence/?id=${key.publicKey()}`).then(seq =>{
                 let tx = {
                     version: 1,
@@ -32,24 +36,24 @@ class EditProfile extends Component {
                     memo: Buffer.alloc(0),
                     operation: 'update_account',
                     params: {
-                        key: 's',
+                        key: 'name',
                         value: {
                             type: Buffer,
-                            data: 's'
+                            data: 'this.state.userName'
                         },
                     }
                 }
-                sign(tx, secret)
+                console.log(tx)
+                sign(tx, secretKey)
                 let data_encoding = '0x'+encode(tx).toString('hex');
                 // this.service.post(`/api/tweet`,{tx: data_encoding});
             })
         // this.props.updateDetail(this.state);
-        this.props.onCancel();
+        // this.props.onCancel();
     }
 
     render() {
         if (this.props.isModalShow === true) {
-            console.log(this.state);
             return (
                 <div>
                     <div className="cover-edit">
