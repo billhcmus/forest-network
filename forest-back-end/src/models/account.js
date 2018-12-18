@@ -26,7 +26,8 @@ export default class Account {
     }
 
     async getSequence(publicKey) {
-       return 3;
+        let account = await this.app.db.collection('account').findOne({_id: publicKey});
+        return account.sequence;
     }
 
     async createAccount(publicKey) {
@@ -46,7 +47,6 @@ export default class Account {
 
         return new Promise((resolve, reject) => {
             this.app.service.get(`broadcast_tx_commit?tx=${data_encoding}`).then(res => {
-                console.log(res)
                 if (_.get(res.data.result, "height") === "0") {
                     let rs = {code: -1}
                     return resolve(rs);

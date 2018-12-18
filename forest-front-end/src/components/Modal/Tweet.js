@@ -4,7 +4,8 @@ import "../../css/compose-tweet.scss"
 import {Menu} from "antd/lib/menu";
 import { Keypair } from 'stellar-base';
 import WebService from "../../webservice";
-import {encode,sign} from '../../transaction';
+import {encode,sign} from '../../transaction/index';
+import _ from 'lodash'
 
 
 const FormItem = Form.Item;
@@ -26,28 +27,36 @@ class TweetForm extends Component {
     }
 
     handleSubmit = () => {
-        console.log(this.state.content)
         if (this.state.content.length !== 0) {
+            let secret = localStorage.getItem("SECRET_KEY");
             this.service.get(`api/sequence/?id=${
-                Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey()}`
+                Keypair.fromSecret(secret).publicKey()}`
             ).then(seq =>{
                 let tx = {
                     version: 1,
                     account: '',
-                    sequence: seq + 1,
+                    sequence: seq.data + 1,
                     memo: Buffer.alloc(0),
                     operation: 'post',
-                    params: {
-                        content: {
+                    params: Buffer.from(JSON.stringify({
+                        content:{
                             type: 1,
-                            text: this.state.content
+                            text: this.state.content,
                         },
-                        keys: []
-                    }
+                        keys : []
+                    }))
                 }
-                sign(tx, secret)
-                let data_encoding = '0x'+encode(tx).toString('hex');
-                this.service.post(`/api/tweet`,{tx: data_encoding});
+                console.log(tx.params);
+                sign(tx,secret);
+                console.log(tx);
+                let data_encoding = '0x' + encode(tx).toString('hex');
+                //
+                // this.service.post(`/api/tweet`,{tx: data_encoding}).then((response) => {
+                //     this.props.onCancel();
+                // }).catch(err => {
+                //     const message = _.get(err, 'response.data.error.message', "Tweet Unsuccess!");
+                //     alert(message);
+                // })
             })
         }
     }

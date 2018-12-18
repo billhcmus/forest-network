@@ -6,7 +6,7 @@ const initState = {
     balance:0,
     bandwidth:0,
     bandwidthTime: "dd/mm/yyyy",
-    avatar:'https://pbs.twimg.com/profile_images/552490918989668352/ywlPHVTJ_400x400.jpeg',
+    avatar:'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
     theme:'https://pbs.twimg.com/profile_banners/173407308/1405769923/1500x500',
     location: "Viet Nam",
     birthdate: 0,
