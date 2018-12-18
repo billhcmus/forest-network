@@ -51,7 +51,7 @@ class UserProfile extends Component {
                                     <div className="profile-container-avatar">
                                         <div className="profile-avatar">
                                             <a href="#" className="profile-picture">
-                                                <img alt="avatar" src={this.props.userInfo.avatar}/>
+                                                <img alt="avatar" src={`data:image/jpeg;base64,${this.props.userInfo.avatar}`}/>
                                             </a>
                                         </div>
                                     </div>
@@ -66,19 +66,19 @@ class UserProfile extends Component {
                                         <li className="nav-list-item item-tweets isSelected">
                                             <Link className="nav-item-link" to="/">
                                                 <span className="nav-item-label">Tweets</span>
-                                                <span className="nav-item-value">{this.props.userInfo.other.tweetCount}</span>
+                                                <span className="nav-item-value">{this.props.userInfo.tweetCount}</span>
                                             </Link>
                                         </li>
                                         <li className="nav-list-item item-following">
                                             <Link className="nav-item-link" to="/following">
                                                 <span className="nav-item-label">Following</span>
-                                                <span className="nav-item-value">{this.props.userInfo.other.followingCount}</span>
+                                                <span className="nav-item-value">{this.props.userInfo.followingCount}</span>
                                             </Link>
                                         </li>
                                         <li className="nav-list-item item-followers">
                                             <Link className="nav-item-link" to="/follower">
                                                 <span className="nav-item-label">Follower</span>
-                                                <span className="nav-item-value">{this.props.userInfo.other.followerCount}</span>
+                                                <span className="nav-item-value">{this.props.userInfo.followerCount}</span>
                                             </Link>
                                         </li>
                                         <li className="nav-list-item item-button">

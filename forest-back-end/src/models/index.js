@@ -2,6 +2,7 @@ import Account from "./account";
 import People from "./people";
 import Payment from "./payment";
 import Synchronization from "./sync";
+import User from "./user";
 
 /* Model là nơi tập hợp các thành phần
     User, Follower, ....
@@ -14,6 +15,7 @@ export default class Model {
         this.account = new Account(app);
         this.people = new People(app);
         this.payment = new Payment(app);
+        this.user = new User(app);
         this.sync = new Synchronization(app);
     }
 }

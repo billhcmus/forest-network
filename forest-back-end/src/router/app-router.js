@@ -27,9 +27,7 @@ export default class AppRouter {
         })
 
         app.post('/api/users/login', (req, res, next) => {
-            console.log(req.body)
            app.models.account.auth(req.body.publicKey).then((result)=>{
-            console.log(result)
              return res.status(200).json(result);
            }).catch(err =>{
             return res.status(404).json({
@@ -37,10 +35,30 @@ export default class AppRouter {
                 });
             })
         })
+
+
+        app.get('/api/accountInfo', (req, res, next) => {
+            app.models.account.getAccount(req.query.id).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(404).json({
+                    error: err,
+                });
+            });
+        })
+
+        app.get('/api/userInfo', (req, res, next) => {
+            app.models.user.getUser(req.query.id).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(404).json({
+                    error: err,
+                });
+            });
+        })
         
         app.get('/api/sequence', (req, res, next) => {
             app.models.account.getSequence(req.query.id).then(rs => {
-                console.log(rs)
                 return res.status(200).json(rs);
             }).catch(err => {
                 return res.status(404).json({
@@ -70,9 +88,7 @@ export default class AppRouter {
          */
         app.post('/api/tweet', (req, res, next) => {
             const body = _.get(req, 'body');
-            console.log(body)
             this.app.service.get(`broadcast_tx_commit?tx=${body.tx}`).then(res => {
-                console.log(res.data);
                 return resolve(res.data)
             }).catch(err => {
                 return reject(err);

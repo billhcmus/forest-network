@@ -3,7 +3,8 @@ import Tweet from "../components/Modal/Tweet";
 import React, {Component} from 'react';
 import _ from 'lodash';
 import '../css/navstyle.css';
-import ViewTweet from "../containers/view-detail-tweet";
+import {Keypair} from "stellar-base";
+import {updateUserInfo} from "../actions";
 const {Header} = Layout;
 const Search = Input.Search;
 
@@ -13,29 +14,6 @@ function handleMenuClick(e) {
     }
 }
 
-const menuDrop = (
-    <div style={{boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'}}>
-        <div style={{padding:'15px'}}>
-            <b>Nguyễn Đình Tiến</b>
-            <br></br>
-            @nguditi
-        </div>
-        <Menu onClick={handleMenuClick}>
-            <Menu.Divider />
-            <Menu.Item key="0">
-                <Icon type="user"/>
-                Detail
-            </Menu.Item>
-            <Menu.Item key="1">
-                <Icon type="logout"/>
-                Logout
-            </Menu.Item>
-        </Menu>
-    </div>
-
-);
-
-
 class Navbar extends Component {
     constructor(props) {
         super(props);
@@ -43,6 +21,23 @@ class Navbar extends Component {
             isModalShow: false,
         };
     }
+
+    menuDrop = (
+        <div style={{boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'}}>
+            <Menu onClick={handleMenuClick}>
+                <Menu.Divider />
+                <Menu.Item key="0">
+                    <Icon type="user"/>
+                    Detail
+                </Menu.Item>
+                <Menu.Item key="1">
+                    <Icon type="logout"/>
+                    Logout
+                </Menu.Item>
+            </Menu>
+        </div>
+
+    );
 
     handleCacel =(e)=>{
         this.setState({
@@ -55,6 +50,11 @@ class Navbar extends Component {
         this.setState({
             isModalShow: true
         })
+    }
+
+    componentWillMount()
+    {
+        this.props.updatePeopleLoginInfo(Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey());
     }
 
     render() {
@@ -100,8 +100,8 @@ class Navbar extends Component {
                                 className={'inputSearch'}
                             />
 
-                            <Dropdown overlay={menuDrop} trigger={['click']} placement="bottomRight">
-                                <Avatar icon="user" style={{marginLeft:'16px'}}/>
+                            <Dropdown overlay={this.menuDrop} trigger={['click']} placement="bottomRight">
+                                <Avatar src = {`data:image/jpeg;base64,${this.props.userInfo.avatar}`} icon="user" style={{marginLeft:'16px'}}/>
                             </Dropdown>
 
                             <Button type="primary" style={{borderRadius: '50px',fontWeight:'bold',marginLeft:'16px'}} onClick={(e)=>this.handleTweetClick(e)}>Tweet</Button>

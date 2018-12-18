@@ -13,7 +13,8 @@ class EditProfile extends Component {
         this.state = {
             // avatar:this.props.userInfo.avatar,
             // theme:this.props.userInfo.theme,
-            userName:this.props.userInfo.displayName,
+            displayName:this.props.userInfo.displayName,
+            avatar:'',
             location:this.props.userInfo.location,
             birthday:moment(this.props.userInfo.birthdate).format('MMM DD, YYYY'),
         };
@@ -50,7 +51,16 @@ class EditProfile extends Component {
             })
         // this.props.updateDetail(this.state);
         // this.props.onCancel();
+        }
+    handleChosen(event)
+    {
+        if (event.target.files && event.target.files[0]) {
+            this.setState({avatar:event.target.files[0]})
+            this.refs.saveBtn.focus();
+            event.target.value = null;
+        }
     }
+
 
     render() {
         if (this.props.isModalShow === true) {
@@ -80,7 +90,8 @@ class EditProfile extends Component {
                                         <p>Change your avatar</p>
                                     </span>
                                     </label>
-                                    <input type="file" id="fileAvatar" accept="image/*" ref="fileUploader"/>
+                                    <input type="file" id="fileAvatar" accept="image/*" ref="fileUploader" onChange={(e) =>
+                                        this.handleChosen(e)}/>
                                 </div>
                             </div>
                         </div>
@@ -92,7 +103,7 @@ class EditProfile extends Component {
                                 </button>
                              </div>
                             <div className="button-edit-profile">
-                                <button type="button" className="button-save">
+                                <button  ref={'saveBtn'} type="button" className="button-save">
                                     <span onClick={() => this.saveDetail()}>Save Change</span>
                                 </button>
                             </div>

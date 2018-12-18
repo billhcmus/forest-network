@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Navbar from "./navbar";
+import Navbar from '../containers/navbar';
 import UserProfile from '../containers/user-profile'
 import Wall from "./wall";
 

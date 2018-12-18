@@ -67,6 +67,7 @@ body, html {
             height: 200px;
             position: relative;
             width: 200px;
+            z-index: 11;
             .profile-picture {
               display: block !important;
               outline: 0;
@@ -77,7 +78,6 @@ body, html {
                 position: absolute;
                 top: 0;
                 width: 100%;
-                z-index: 11;
               }
             }
           }
@@ -355,53 +355,79 @@ body, html {
 
 //start sidebar
 .sidebar {
-  margin-top: 35px;
+  text-align: left;
+  margin-top: 20px;
   .sidebar-head {
-  padding-right: 15px;
-  padding-left: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: bold;
     .displayName {
+      text-align: center;
       margin: 0;
-      font-size: 18px;
+      font-size: 24px;
       font-weight: 800;
+      margin-bottom: 10px;
       a {
         line-height: 28px;
       }
       a:hover {
-        border-bottom: solid 2px #000;
+        color: #04dff8;
+        cursor: pointer;
       }
     }
-    .userName {
+    .address {
       color: #657786;
-      font-size: 14px;
-      line-height: 20px;
-      margin-bottom: 12px;
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      margin-bottom: 20px;
     }
-    .userName {
+    .address {
       span:hover {
-        border-bottom: solid 1px;
+        color: #04dff8;
         cursor: pointer;
+        transition-duration: 0.4s;
       }
     }
     .location {
       color: #657786;
-      font-size: 14px;
-      line-height: 20px;
-      margin-bottom: 8px;
-      position: relative
+      position: relative;
+      font-weight: bold;
+      margin-bottom: 20px;
+
     }
-    .joined-date {
+
+    .balance {
       color: #657786;
-      font-size: 14px;
-      line-height: 20px;
-      margin-bottom: 8px;
-      position: relative
+      position: relative;
+      font-weight: bold;
+      margin-bottom: 20px;
+
+    }
+
+    .bandwidth {
+      color: #657786;
+      position: relative;
+      font-weight: bold;
+      margin-bottom: 20px;
+
+    }
+
+    .bandwidthTime {
+      color: #657786;
+      position: relative;
+      font-weight: bold;
+      margin-bottom: 20px;
+
     }
     .birthdate {
       color: #657786;
-      font-size: 14px;
-      line-height: 20px;
-      margin-bottom: 8px;
-      position: relative
+      position: relative;
+      margin-bottom: 20px;
+
     }
   }
 }

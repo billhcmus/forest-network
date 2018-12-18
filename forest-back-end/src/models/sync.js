@@ -180,7 +180,7 @@ export default class Synchronization {
             {
                 await this.app.db.collection('user').findOneAndUpdate(
                     {_id: data.account},
-                    {$set: {name: value}})
+                    {$set: {name: value.toString('utf-8')}})
             }
             else if (key === "picture")
             {

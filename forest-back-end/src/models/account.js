@@ -12,9 +12,15 @@ export default class Account {
         this.createAccount = this.createAccount.bind(this);
         this.getTransaction = this.getTransaction.bind(this);
         this.getAmount = this.getAmount.bind(this);
+        this.getAccount = this.getAccount.bind(this);
     }
 
     async auth(publicKey) {
+        let account = await this.app.db.collection('account').findOne({_id: publicKey});
+        return account;
+    }
+
+    async getAccount(publicKey) {
         let account = await this.app.db.collection('account').findOne({_id: publicKey});
         return account;
     }
