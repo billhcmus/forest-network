@@ -28,9 +28,9 @@ class TweetForm extends Component {
     handleSubmit = () => {
         console.log(this.state.content)
         if (this.state.content.length !== 0) {
-            const secret = localStorage.getItem("token");
-            const key = Keypair.fromSecret(secret);
-            this.service.get(`api/sequence/?id=${key.publicKey()}`).then(seq =>{
+            this.service.get(`api/sequence/?id=${
+                Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey()}`
+            ).then(seq =>{
                 let tx = {
                     version: 1,
                     account: '',

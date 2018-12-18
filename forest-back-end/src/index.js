@@ -27,6 +27,9 @@ app.use(bodyParse.json({
 const server = http.createServer(app);
 
 const client = RpcClient('wss://gorilla.forest.network:443/websocket');
+client.ws.on("close",(err)=>{
+    console.log(err)
+})
 
 app.client = client;
 app.helper = new Helper();
@@ -57,7 +60,7 @@ new DataBase().connect().then((db) => {
     //Sync and subcribe
     app.models.sync.syncTxsToDB().then(res=>{
         client.subscribe({query: "tm.event = \'NewBlock\'"} , () => {
-           app.sync.account.syncTxsToDB();
+            app.models.sync.syncTxsToDB();
         });
     });
 

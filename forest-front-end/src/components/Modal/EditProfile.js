@@ -10,13 +10,23 @@ class EditProfile extends Component {
         this.state = {
             // avatar:this.props.userInfo.avatar,
             // theme:this.props.userInfo.theme,
-            userName:this.props.userInfo.displayName,
+            displayName:this.props.userInfo.displayName,
+            avatar:'',
             location:this.props.userInfo.location,
             birthday:moment(this.props.userInfo.birthdate).format('MMM DD, YYYY'),
         };
     }
 
-    saveDetail =()=>{
+    handleChosen(event)
+    {
+        if (event.target.files && event.target.files[0]) {
+            this.setState({avatar:event.target.files[0]})
+            this.refs.saveBtn.focus();
+            event.target.value = null;
+        }
+    }
+
+    saveDetail = () =>{
         this.props.updateDetail(this.state);
         this.props.onCancel();
     }
@@ -50,7 +60,8 @@ class EditProfile extends Component {
                                         <p>Change your avatar</p>
                                     </span>
                                     </label>
-                                    <input type="file" id="fileAvatar" accept="image/*" ref="fileUploader"/>
+                                    <input type="file" id="fileAvatar" accept="image/*" ref="fileUploader" onChange={(e) =>
+                                        this.handleChosen(e)}/>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +73,7 @@ class EditProfile extends Component {
                                 </button>
                              </div>
                             <div className="button-edit-profile">
-                                <button type="button" className="button-save">
+                                <button  ref={'saveBtn'} type="button" className="button-save">
                                     <span onClick={() => this.saveDetail()}>Save Change</span>
                                 </button>
                             </div>
@@ -72,22 +83,23 @@ class EditProfile extends Component {
                                 <div className="sidebar">
                                     <div className="sidebar-head">
                                         <div>
-                                            <input value = {this.state.userName}
-                                                   onChange={e => this.setState({ userName: e.target.value })}>
+                                            <input value = {this.state.displayName}
+                                                   placeholder="Display name"
+                                                   onChange={e => this.setState({ displayName: e.target.value })}>
                                             </input>
                                         </div>
-                                        <div>
-                                            <input value = {this.state.location}
-                                                   placeholder={'locate'}
-                                                   onChange={e => this.setState({ location: e.target.value })}>
-                                            </input>
-                                        </div>
-                                        <div>
-                                            <input value = {this.state.birthday}
-                                                   placeholder={'birthday'}
-                                                   onChange={e => this.setState({ birthday: e.target.value })}>
-                                            </input>
-                                        </div>
+                                        {/*<div>*/}
+                                            {/*<input value = {this.state.location}*/}
+                                                   {/*placeholder={'locate'}*/}
+                                                   {/*onChange={e => this.setState({ location: e.target.value })}>*/}
+                                            {/*</input>*/}
+                                        {/*</div>*/}
+                                        {/*<div>*/}
+                                            {/*<input value = {this.state.birthday}*/}
+                                                   {/*placeholder={'birthday'}*/}
+                                                   {/*onChange={e => this.setState({ birthday: e.target.value })}>*/}
+                                            {/*</input>*/}
+                                        {/*</div>*/}
                                     </div>
                                 </div>
                             </div>
