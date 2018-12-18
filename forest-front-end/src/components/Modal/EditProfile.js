@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import { Icon,Input } from 'antd';
 import '../../css/edit-profile.scss'
 import moment from "moment";
+import { Keypair } from 'stellar-base';
+import WebService from "../../webservice";
+import {encode,sign} from '../../transaction';
 
 class EditProfile extends Component {
 
@@ -17,7 +20,30 @@ class EditProfile extends Component {
     }
 
     saveDetail =()=>{
-        this.props.updateDetail(this.state);
+        console.log(this.state)
+        
+            const secret = localStorage.getItem("token");
+            const key = Keypair.fromSecret(secret);
+            this.service.get(`api/sequence/?id=${key.publicKey()}`).then(seq =>{
+                let tx = {
+                    version: 1,
+                    account: key.publicKey(),
+                    sequence: seq + 1,
+                    memo: Buffer.alloc(0),
+                    operation: 'update_account',
+                    params: {
+                        key: 's',
+                        value: {
+                            type: Buffer,
+                            data: 's'
+                        },
+                    }
+                }
+                sign(tx, secret)
+                let data_encoding = '0x'+encode(tx).toString('hex');
+                // this.service.post(`/api/tweet`,{tx: data_encoding});
+            })
+        // this.props.updateDetail(this.state);
         this.props.onCancel();
     }
 

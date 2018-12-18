@@ -30,7 +30,7 @@ class LoginForm extends Component {
                     password: values.password
                 };
                 this.service.post('api/users/login', user).then((response) => {
-                     // localStorage.setItem('token', true);
+                     localStorage.setItem('token', true);
                      this.props.history.push('/');
                 }).catch(err => {
                     const message = _.get(err, 'response.data.error.message', "Login Error!");

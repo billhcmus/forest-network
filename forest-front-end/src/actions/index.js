@@ -1,4 +1,4 @@
-import {DISMISS_ITEM_RECOMMEND, INCREASE_FOLLOWING, CHANGE_DETAIL, CHANGE_AUTH_TAB} from "../constants";
+import {DISMISS_ITEM_RECOMMEND, INCREASE_FOLLOWING, UPDATE_DETAIL, CHANGE_AUTH_TAB} from "../constants";
 // import {encode,sign} from '../transaction';
 import WebService from '../webservice'
 
@@ -11,7 +11,7 @@ export const increaseFollowing = () => (
 );
 
 export const updateDetail = (userDetail) => (
-    {type: CHANGE_DETAIL, userDetail: userDetail}
+    {type: UPDATE_DETAIL, userDetail: userDetail}
 );
 
 export const changeAuthTab = (status) => (
