@@ -10,6 +10,7 @@ class EditProfile extends Component {
 
     constructor(props) {
         super(props);
+        this.service = new WebService();
         this.state = {
             // avatar:this.props.userInfo.avatar,
             // theme:this.props.userInfo.theme,
@@ -23,9 +24,6 @@ class EditProfile extends Component {
     saveDetail() {
         console.log(this.state.userName)
         console.log("saveDetail")
-
-
-        
             // const secret = localStorage.getItem("token");
             let secretKey = "SBPESDLGQCJ2FK63GEXULOBCABLSKW4MK6X7O2463DIMH2FX6AFPPFPS"
             const key = Keypair.fromSecret(secretKey);
@@ -40,7 +38,7 @@ class EditProfile extends Component {
                         key: 'name',
                         value: {
                             type: Buffer,
-                            data: 'this.state.userName'
+                            data: this.state.displayName
                         },
                     }
                 }
@@ -51,9 +49,9 @@ class EditProfile extends Component {
             })
         // this.props.updateDetail(this.state);
         // this.props.onCancel();
-        }
-    handleChosen(event)
-    {
+    }
+   
+    handleChosen(event) {
         if (event.target.files && event.target.files[0]) {
             this.setState({avatar:event.target.files[0]})
             this.refs.saveBtn.focus();
@@ -113,8 +111,8 @@ class EditProfile extends Component {
                                 <div className="sidebar">
                                     <div className="sidebar-head">
                                         <div>
-                                            <input value = {this.state.userName}
-                                                   onChange={e => this.setState({ userName: e.target.value })}>
+                                            <input value = {this.state.displayName}
+                                                   onChange={e => this.setState({ displayName: e.target.value })}>
                                             </input>
                                         </div>
                                         <div>

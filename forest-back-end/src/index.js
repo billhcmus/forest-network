@@ -45,24 +45,24 @@ new DataBase().connect().then((db) => {
     app.db = dbase;
 
    //add the super account
-    const rootAccount = {
-        _id: 'GA6IW2JOWMP4WGI6LYAZ76ZPMFQSJAX4YLJLOQOWFC5VF5C6IGNV2IW7',
-        sequence: 0,
-        balance: Number.MAX_SAFE_INTEGER,
-        bandwidth: 0,
-    }
-    app.db.collection('account').findOne({_id: rootAccount._id}).then(res=>{
-        if (!res)
-            app.db.collection('account').insertOne(rootAccount);
-    });
-    app.db.collection('post').createIndex({author:1})
+    // const rootAccount = {
+    //     _id: 'GA6IW2JOWMP4WGI6LYAZ76ZPMFQSJAX4YLJLOQOWFC5VF5C6IGNV2IW7',
+    //     sequence: 0,
+    //     balance: Number.MAX_SAFE_INTEGER,
+    //     bandwidth: 0,
+    // }
+    // app.db.collection('account').findOne({_id: rootAccount._id}).then(res=>{
+    //     if (!res)
+    //         app.db.collection('account').insertOne(rootAccount);
+    // });
+    // app.db.collection('post').createIndex({author:1})
 
-    //Sync and subcribe
-    app.models.sync.syncTxsToDB().then(res=>{
-        client.subscribe({query: "tm.event = \'NewBlock\'"} , () => {
-            app.models.sync.syncTxsToDB();
-        });
-    });
+    // //Sync and subcribe
+    // app.models.sync.syncTxsToDB().then(res=>{
+    //     client.subscribe({query: "tm.event = \'NewBlock\'"} , () => {
+    //         app.models.sync.syncTxsToDB();
+    //     });
+    // });
 
 
 }).catch((err) => {

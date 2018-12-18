@@ -45,7 +45,7 @@ class TweetForm extends Component {
                         keys: []
                     }
                 }
-                sign(tx, secret)
+                sign(tx, localStorage.getItem("SECRET_KEY"))
                 let data_encoding = '0x'+encode(tx).toString('hex');
                 this.service.post(`/api/tweet`,{tx: data_encoding});
             })
