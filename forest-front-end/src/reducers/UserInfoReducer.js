@@ -1,4 +1,4 @@
-import {CHANGE_ACCOUNT_INFO,INCREASE_FOLLOWING,CHANGE_DETAIL,CHANGE_USER_INFO} from "../constants";
+import {CHANGE_ACCOUNT_INFO,INCREASE_FOLLOWING,CHANGE_DETAIL,CHANGE_USER_INFO,CHANGE_TWEET_COUNT,CHANGE_FOLLOWING_COUNT} from "../constants";
 
 const initState = {
     displayName: 'No',
@@ -10,23 +10,31 @@ const initState = {
     theme:'https://pbs.twimg.com/profile_banners/173407308/1405769923/1500x500',
     location: "Viet Nam",
     birthdate: 0,
-    tweetCount: 10,
-    followingCount: 4,
-    followerCount: 4,
-    likesCount:5,
+    tweetCount: 0,
+    followingCount: 0,
+    followerCount: 0,
+    likesCount:0,
 };
 
 export default (state = initState, action) => {
     switch (action.type) {
+        case CHANGE_TWEET_COUNT:
+            return{
+                ...state,
+                tweetCount: action.tweetCount
+            }
+        case CHANGE_FOLLOWING_COUNT:
+            return{
+                ...state,
+                tweetCount: action.followingCount
+            }
         case CHANGE_USER_INFO:
-            console.log(action)
             return{
                 ...state,
                 displayName: action.user.name ? action.user.name.toString('utf-8') : "Unknown",
                 avatar: action.user.picture ? action.user.picture : 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
             };
         case CHANGE_ACCOUNT_INFO:
-            console.log(action)
             return{
                 ...state,
                 userName: action.account._id,

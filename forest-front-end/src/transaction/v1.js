@@ -67,7 +67,7 @@ export function encode(tx) {
       break;
 
     case 'post':
-      params = PostParams.encode(tx.params);
+      params = PostParams.encode(tx.params)
       operation = 3;
       break;
 

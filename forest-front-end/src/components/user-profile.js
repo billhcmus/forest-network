@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import EditProfile from  "../containers/edit-profile"
-import {create_account} from "../actions";
+import {create_account, getSomeNewestTweet} from "../actions";
+import {Keypair} from "stellar-base";
 
 class UserProfile extends Component {
     constructor(props) {
@@ -33,7 +34,9 @@ class UserProfile extends Component {
         })
     }
 
-    componentDidMount() {
+    componentWillMount() {
+        let secret = localStorage.getItem("SECRET_KEY");
+        this.props.getCount( Keypair.fromSecret(secret).publicKey())
         // console.log(this.props)
     }
     render() {

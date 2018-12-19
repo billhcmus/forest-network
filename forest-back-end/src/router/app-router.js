@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import {encode, sign} from "../transaction";
+import {SECRET_KEY} from "../config";
 
 export default class AppRouter {
     constructor(app) {
@@ -88,11 +90,40 @@ export default class AppRouter {
          */
         app.post('/api/tweet', (req, res, next) => {
             const body = _.get(req, 'body');
-            this.app.service.get(`broadcast_tx_commit?tx=${body.tx}`).then(rs => {
-                return resolve(res.status(200).json(rs.data))
+            app.models.post.userPost(body.tx).then(rs => {
+                return res.status(200).json(rs);
             }).catch(err => {
-                return reject(res.status(404).json({
-                    err: err,}))
+                return res.status(304).json({
+                    err: err,
+                });
+            });
+        });
+
+        /**
+         * @endpoint: /api/tweet
+         * @method: GET
+         */
+        app.get('/api/tweet', (req, res, next) => {
+            app.models.post.getPost(req.query.id,req.query.start,req.query.count).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(304).json({
+                    err: err,
+                });
+            });
+        });
+
+        /**
+         * @endpoint: /api/tweet/count
+         * @method: GET
+         */
+        app.get('/api/tweet/count', (req, res, next) => {
+            app.models.post.getPostCount(req.query.id).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(304).json({
+                    err: err,
+                });
             });
         });
     }

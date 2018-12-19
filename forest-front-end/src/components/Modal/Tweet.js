@@ -5,6 +5,7 @@ import {Menu} from "antd/lib/menu";
 import { Keypair } from 'stellar-base';
 import WebService from "../../webservice";
 import {encode,sign} from '../../transaction/index';
+import {encodeText} from  '../../transaction/myv1'
 import _ from 'lodash'
 
 
@@ -38,25 +39,26 @@ class TweetForm extends Component {
                     sequence: seq.data + 1,
                     memo: Buffer.alloc(0),
                     operation: 'post',
-                    params: Buffer.from(JSON.stringify({
+                    params: {
                         content:{
                             type: 1,
-                            text: this.state.content,
+                            text: encodeText(this.state.content),
                         },
                         keys : []
-                    }))
+                    }
                 }
-                console.log(tx.params);
                 sign(tx,secret);
-                console.log(tx);
                 let data_encoding = '0x' + encode(tx).toString('hex');
-                //
-                // this.service.post(`/api/tweet`,{tx: data_encoding}).then((response) => {
-                //     this.props.onCancel();
-                // }).catch(err => {
-                //     const message = _.get(err, 'response.data.error.message', "Tweet Unsuccess!");
-                //     alert(message);
-                // })
+                console.log(data_encoding)
+                this.service.post(`api/tweet`,{tx: data_encoding}).then((response) => {
+                    this.props.onCancel();
+                    this.setState({
+                        content:""
+                    })
+                }).catch(err => {
+                    const message = _.get(err, 'response.data.error.message', "Tweet Unsuccess!");
+                    alert(message);
+                })
             })
         }
     }
