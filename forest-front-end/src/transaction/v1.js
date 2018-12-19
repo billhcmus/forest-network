@@ -150,7 +150,12 @@ function decode(data) {
   };
 }
 
-export default {
+export {
   encode,
   decode,
 };
+
+// module.exports = {
+//   encode,
+//   decode
+// }

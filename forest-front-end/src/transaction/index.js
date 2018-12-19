@@ -2,6 +2,9 @@ const vstruct = require('varstruct');
 const crypto = require('crypto');
 const { Keypair } = require('stellar-base');
 const v1 = require('./v1');
+// import v1 from './v1';
+// import v1 as { encode, decode } from './v1';
+
 
 const Transaction = vstruct([
   { name: 'version', type: vstruct.UInt8 },

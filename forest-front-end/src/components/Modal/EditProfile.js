@@ -22,34 +22,30 @@ class EditProfile extends Component {
     }
 
     saveDetail() {
-        console.log(this.state.displayName)
-            // let secretKey = "SBPESDLGQCJ2FK63GEXULOBCABLSKW4MK6X7O2463DIMH2FX6AFPPFPS"
             let secretKey = localStorage.getItem("SECRET_KEY")
-            console.log(secretKey)
             const key = Keypair.fromSecret(secretKey);
-            this.service.get(`api/sequence/?id=${key.publicKey()}`).then(seq =>{
-                console.log("seq" + seq);
-                // let tx = {
-                //     version: 1,
-                //     account: key.publicKey(),
-                //     sequence: seq + 1,
-                //     memo: Buffer.alloc(0),
-                //     operation: 'update_account',
-                //     params: {
-                //         key: 'name',
-                //         value: {
-                //             type: Buffer,
-                //             data: this.state.displayName
-                //         },
-                //     }
-                // }
-                // console.log(tx)
-                // sign(tx, secretKey)
-                // let data_encoding = '0x'+encode(tx).toString('hex');
-                // this.service.post(`/api/tweet`,{tx: data_encoding});
-            })
+            console.log(this.state.displayName)
+
+            // this.service.get(`api/sequence/?id=${key.publicKey()}`).then(result =>{
+            //     console.log(result.data)
+            //     let tx = {
+            //         version: 1,
+            //         account: key.publicKey(),
+            //         sequence: result.data + 1,
+            //         memo: Buffer.alloc(0),
+            //         operation: 'update_account',
+            //         params: {
+            //             key: 'name',
+            //             value: new Buffer(this.state.displayName),
+            //         },
+            //         signature: new Buffer(64)
+            //     }
+            //     sign(tx, secretKey)
+            //     let data_encoding = '0x'+ encode(tx).toString('hex');
+            //     this.service.post(`api/update_account`,{tx: data_encoding});
+            // })
         // this.props.updateDetail(this.state);
-        // this.props.onCancel();
+        this.props.onCancel();
     }
    
     handleChosen(event) {
