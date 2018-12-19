@@ -40,10 +40,10 @@ class TweetForm extends Component {
                     memo: Buffer.alloc(0),
                     operation: 'post',
                     params: {
-                        content:{
+                        content : encodeText({
                             type: 1,
-                            text: encodeText(this.state.content),
-                        },
+                            text: this.state.content,
+                        }),
                         keys : []
                     }
                 }
@@ -69,7 +69,7 @@ class TweetForm extends Component {
             <Modal
                 title="Compose new Tweet"
                 centered
-                visible={this.props.isModalShow}
+                visible={this.props.isTweetShow}
                 onCancel={() => this.props.onCancel()}
                 footer={null}
                 style={{padding:0}}

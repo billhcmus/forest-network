@@ -7,14 +7,13 @@ class TweetBoard extends Component {
     constructor(props) {
         super(props);
     }
+
     componentWillMount() {
         let secret = localStorage.getItem("SECRET_KEY");
         this.props.getSomeNewestTweet( Keypair.fromSecret(secret).publicKey())
-        // console.log(this.props)
     }
 
     render() {
-      const listTweet = this.props.tweets.listTweet;
       return (
         <div className="tweets-board-container">
           <div className="heading-title">
@@ -31,7 +30,7 @@ class TweetBoard extends Component {
             <div className="tweet-container">
               <ul className="list-tweets">
                 {
-                  !!listTweet && listTweet.map((value, key) =>{
+                  !!this.props.tweets && this.props.tweets.map((value, key) =>{
                     return (
                       <TweetItem key={key} itemInfo={value}/>
                     )

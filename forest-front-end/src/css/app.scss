@@ -264,16 +264,23 @@ body, html {
                   color: #1DA1F2;
                   border-bottom: solid 1px #1DA1F2;
                 }
-                .usernName {
+                .userName {
                   color: #657786;
                   font-size: 16px;
-
+                  overflow: hidden;
+                  display: inline-flex;
+                  text-overflow: ellipsis;
+                  max-width: 205px
+                }
+                .userName::before {
+                  content: "\00b0"
+                }
+                .time::before {
+                  color: #657786;
+                  content: "\00b0"
                 }
                 .time {
                   font-size: 16px;
-                }
-                .time::before {
-                  content: "\00b7"
                 }
               }
               .tweets-action {
@@ -360,8 +367,8 @@ body, html {
   .sidebar-head {
     padding-right: 15px;
     padding-left: 15px;
-    font-size: 18px;
-    line-height: 30px;
+    font-size: 14px;
+    line-height: 27px;
     font-weight: bold;
     .displayName {
       text-align: center;
@@ -380,11 +387,11 @@ body, html {
     .address {
       color: #657786;
       position: relative;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
       margin-bottom: 20px;
+      word-break: break-all;
+
     }
+
     .address {
       span:hover {
         color: #04dff8;

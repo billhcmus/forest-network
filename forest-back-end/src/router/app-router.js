@@ -100,6 +100,21 @@ export default class AppRouter {
         });
 
         /**
+         * @endpoint: /api/payment
+         * @method: POST
+         */
+        app.post('/api/payment', (req, res, next) => {
+            const body = _.get(req, 'body');
+            app.models.account.payment(body.tx).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(304).json({
+                    err: err,
+                });
+            });
+        });
+
+        /**
          * @endpoint: /api/tweet
          * @method: GET
          */

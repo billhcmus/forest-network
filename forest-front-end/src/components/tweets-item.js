@@ -47,9 +47,9 @@ class TweetItem extends Component {
             <div className="tweet-content" onClick={(e)=>this.handleSpanClick(e)}>
               <div className="tweet-header">
                 <a className="tweet-profile-link">
-                  <img src={_.get(itemInfo,'urlAvatar')} alt="..."/>
-                  <span className="displayName">{_.get(itemInfo,'displayName')}</span>
-                  <span className="userName"> {_.get(itemInfo,'author')} </span>
+                  <img src={itemInfo.avatar} alt="..."/>
+                  <span className="displayName">{itemInfo.name ? itemInfo.name : 'Unknown'}</span>
+                  <span className="userName"> {itemInfo.author} </span>
                   <span className="time"> 2 Dec 2018</span>
                 </a>
                   <Dropdown overlay={menu} trigger={['click']}>
@@ -62,20 +62,20 @@ class TweetItem extends Component {
               </div>
 
               <div className="tweet-text-container">
-                <p>{_.get(itemInfo,'content')}</p>
+                <p>{itemInfo.content.text}</p>
               </div>
 
               <div className="tweet-action-footer">
                 <div className="action-item action-reply">
                   <button type="button">
                     <span className="icon"><Icon type="message" /></span>
-                    <span className="actionCount">{_.get(itemInfo,'commentCount')}</span>
+                    <span className="actionCount">{itemInfo.commentCount ? itemInfo.commentCount : 0}</span>
                   </button>
                 </div>
                 <div className="action-item action-like">
                   <button type="button">
                     <span className="icon"><Icon type="heart" /></span>
-                    <span className="actionCount">{_.get(itemInfo,'likesCount')}</span>
+                    <span className="actionCount">{itemInfo.likesCount ? itemInfo.likesCount : 0}</span>
                   </button>
                 </div>
               </div>

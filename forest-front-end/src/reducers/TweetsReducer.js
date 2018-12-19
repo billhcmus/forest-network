@@ -1,17 +1,13 @@
 import {ADD_TWEET_LIST} from "../constants";
 
-const initState = {
-    listTweet:[
-    ]
-};
+const initState = [];
 
 
 export default (state = initState, action) => {
     switch (action.type) {
         case ADD_TWEET_LIST:
         {
-            console.log(action.tweets)
-            let tmp = state.listTweet;
+            let tmp = state;
             if (action.tweets) {
                 action.tweets.forEach((tweet) => {
                     tmp = [...tmp, tweet]

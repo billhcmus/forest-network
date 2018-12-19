@@ -5,6 +5,7 @@ const initState = {
     userName:'No',
     balance:0,
     bandwidth:0,
+    sequence:0,
     bandwidthTime: "dd/mm/yyyy",
     avatar:'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
     theme:'https://pbs.twimg.com/profile_banners/173407308/1405769923/1500x500',
@@ -40,7 +41,8 @@ export default (state = initState, action) => {
                 userName: action.account._id,
                 bandwidthTime: action.account.bandwidthTime ? action.account.bandwidthTime : "dd/mm/yyyy" ,
                 balance:  action.account.balance,
-                bandwidth: action.account.bandwidth
+                bandwidth: action.account.bandwidth,
+                sequence: action.account.sequence
             };
         case INCREASE_FOLLOWING:
             return {

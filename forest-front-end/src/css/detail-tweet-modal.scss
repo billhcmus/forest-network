@@ -171,7 +171,10 @@
             .userName {
               color: #657786;
               font-size: 16px;
-
+              overflow: hidden;
+              display: inline-flex;
+              text-overflow: ellipsis;
+              max-width: 200px
             }
             .time {
               font-size: 16px;

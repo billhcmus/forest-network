@@ -60,7 +60,7 @@ new DataBase().connect().then((db) => {
     //Sync and subcribe
     app.models.sync.syncTxsToDB().then(res=>{
         client.subscribe({query: "tm.event = \'NewBlock\'"} , () => {
-            // app.models.sync.syncTxsToDB();
+            app.models.sync.syncTxsToDB();
         });
     });
 
