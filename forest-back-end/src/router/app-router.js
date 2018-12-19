@@ -102,9 +102,12 @@ export default class AppRouter {
             const body = _.get(req, 'body');
             console.log(body)
             this.app.service.get(`broadcast_tx_commit?tx=${body.tx}`).then(res => {
-                console.log(res.data);
+                console.log("success")
+                console.log(res);
                 return resolve(res.data)
             }).catch(err => {
+                console.log("failed")
+                console.log(err)
                 return reject(err);
             });
         });

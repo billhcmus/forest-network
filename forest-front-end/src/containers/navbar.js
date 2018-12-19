@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import Navbar from "../components/navbar";
-import {updatePeopleLoginInfo} from "../actions";
+import {getPeopleLoginInfo} from "../actions";
 
 const mapStateToProps = state => {
     return {
@@ -10,8 +10,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        updatePeopleLoginInfo: (publicKey) => {
-            dispatch(updatePeopleLoginInfo(publicKey));
+        getPeopleLoginInfo: (publicKey) => {
+            dispatch(getPeopleLoginInfo(publicKey));
         }
     }
 };

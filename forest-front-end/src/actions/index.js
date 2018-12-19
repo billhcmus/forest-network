@@ -1,4 +1,4 @@
-import {DISMISS_ITEM_RECOMMEND, INCREASE_FOLLOWING, UPDATE_DETAIL, CHANGE_AUTH_TAB,CHANGE_ACCOUNT_INFO,CHANGE_USER_INFO} from "../constants";
+import {DISMISS_ITEM_RECOMMEND, INCREASE_FOLLOWING, UPDATE_DETAIL, CHANGE_AUTH_TAB,CHANGE_ACCOUNT_INFO,GET_USER_INFO} from "../constants";
 // import {encode,sign} from '../transaction';
 import WebService from '../webservice'
 
@@ -22,12 +22,12 @@ export const changeAcountInfo = (account) => (
     {type: CHANGE_ACCOUNT_INFO, account: account}
 );
 
-export const changeUserInfo = (user) => (
-    {type: CHANGE_USER_INFO, user: user}
+export const getUserInfo = (user) => (
+    {type: GET_USER_INFO, user: user}
 );
 
 
-export const updatePeopleLoginInfo = (publicKey) =>
+export const getPeopleLoginInfo = (publicKey) =>
     (dispatch, getState) =>{
         let service = new WebService;
         service.get(`api/accountInfo/?id=${publicKey}`).then(account =>{
@@ -36,7 +36,7 @@ export const updatePeopleLoginInfo = (publicKey) =>
         })
         service.get(`api/userInfo/?id=${publicKey}`).then(user =>{
             console.log(user)
-            dispatch(changeUserInfo(user.data))
+            dispatch(getUserInfo(user.data))
         })
     }
 

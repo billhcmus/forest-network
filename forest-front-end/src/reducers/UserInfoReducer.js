@@ -1,8 +1,8 @@
-import {CHANGE_ACCOUNT_INFO,INCREASE_FOLLOWING,UPDATE_DETAIL,CHANGE_USER_INFO} from "../constants";
+import {CHANGE_ACCOUNT_INFO,INCREASE_FOLLOWING,UPDATE_DETAIL,GET_USER_INFO} from "../constants";
 
 const initState = {
-    displayName: 'No',
-    userName:'No',
+    displayName: 'Unknown',
+    userName:'Unknown',
     balance:0,
     bandwidth:0,
     bandwidthTime: "dd/mm/yyyy",
@@ -18,13 +18,13 @@ const initState = {
 
 export default (state = initState, action) => {
     switch (action.type) {
-        case CHANGE_USER_INFO:
+        case GET_USER_INFO:
             console.log(action)
-            // return{
-            //     ...state,
-            //     displayName: action.user.name ? action.user.name.toString('utf-8') : "Unknown",
-            //     avatar: action.user.picture ? action.user.picture : 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
-            // };
+            return{
+                ...state,
+                displayName: action.user.name ? action.user.name.toString('utf-8') : "Unknown",
+                // avatar: action.user.picture ? action.user.picture : 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
+            };
             return state;
         case CHANGE_ACCOUNT_INFO:
             console.log(action)

@@ -54,7 +54,7 @@ class Navbar extends Component {
 
     componentWillMount()
     {
-        this.props.updatePeopleLoginInfo(Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey());
+        this.props.getPeopleLoginInfo(Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey());
     }
 
     render() {
