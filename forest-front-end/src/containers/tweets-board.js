@@ -5,7 +5,8 @@ import {getSomeNewestTweet} from "../actions";
 const mapStateToProps = state => {
 	return {
 		userInfo: state.userInfo,
-		tweets : state.tweets
+		tweets : state.tweets,
+		activeUser : state.activeUser
 	}
 }
 

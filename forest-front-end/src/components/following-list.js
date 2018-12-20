@@ -5,12 +5,10 @@ import '../css/follow.scss';
 class FollowingList extends Component {
 
   componentWillMount(){
-    this.props.updateListFollowing(this.props.currentUserID)
+    this.props.updateListFollowing(this.props.activeUser)
   }
 
   render() {
-
-    console.log(this.props.list_following)
     return (
       <div className="list-follow">
         { 

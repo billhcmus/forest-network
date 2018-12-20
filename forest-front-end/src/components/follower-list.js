@@ -5,7 +5,7 @@ import '../css/follow.scss';
 class FollowersList extends Component {
 
     componentWillMount(){
-        this.props.updateListFollower(this.props.currentUserID);
+        this.props.updateListFollower(this.props.activeUser);
     }
 
     render() {

@@ -5,6 +5,7 @@ import SideBar from '../containers/left-sidebar';
 import FollowingList from '../containers/following';
 import FollowerList from '../containers/followers'
 import {Route, Switch} from 'react-router-dom';
+import connect from "react-redux/es/connect/connect";
 
 export default class Wall extends Component {
     render() {
@@ -18,7 +19,7 @@ export default class Wall extends Component {
                                 <SideBar/>
                             </div>
                             <div className={"main-right"}>
-                                <FollowingList currentUserID = {this.props.currentUserID}/>
+                                <FollowingList/>
                             </div>
                         </div>
                     )}
@@ -32,7 +33,7 @@ export default class Wall extends Component {
                                 <SideBar/>
                             </div>
                             <div className={"main-right"}>
-                                <FollowerList currentUserID = {this.props.currentUserID}/>
+                                <FollowerList/>
                             </div>
                         </div>
                     )}
@@ -46,10 +47,10 @@ export default class Wall extends Component {
                                 <SideBar/>
                             </div>
                             <div className={"content"}>
-                                <TweetBoard currentUserID = {this.props.currentUserID}/>
+                                <TweetBoard/>
                             </div>
                             <div className={"sidebar-right"}>
-                                <Follow currentUserID = {this.props.currentUserID}/>
+                                <Follow/>
                             </div>
                         </div>
                     )}
@@ -59,3 +60,4 @@ export default class Wall extends Component {
         );
     }
 }
+

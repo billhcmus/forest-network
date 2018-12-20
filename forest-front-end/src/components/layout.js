@@ -2,17 +2,20 @@ import React, {Component} from 'react';
 import Navbar from '../containers/navbar';
 import UserProfile from '../containers/user-profile'
 import Wall from "./wall";
+import connect from "react-redux/es/connect/connect";
+import {activeUser} from "../actions";
+import {Keypair} from "stellar-base";
 
-export default class Layout extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-           currentUserID: ''
-        };
-    }
+class Layout extends Component {
+
     componentWillMount() {
-        if (this.props.match.params.id.length >= 20) {
-            this.setState({currentUserID:this.props.match.params.id})
+        //Cần thay thế 1 biện pháp để xác định id có phải là 1 publickey ko
+        if (this.props.match.params.id.length > 25) {
+            this.props.activeUser(this.props.match.params.id)
+        }
+        else if (localStorage.getItem("ACTIVE_USER"))
+        {
+            this.props.activeUser(localStorage.getItem("ACTIVE_USER"))
         }
     }
 
@@ -20,9 +23,27 @@ export default class Layout extends Component {
         return (
             <div className="Container">
                 <Navbar/>
-                <UserProfile currentUserID={this.state.currentUserID}/>
-                <Wall currentUserID={this.state.currentUserID}/>
+                <UserProfile/>
+                <Wall/>
             </div>
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        activeUser: (userid) => {
+            dispatch(activeUser(userid));
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);
+
+
+

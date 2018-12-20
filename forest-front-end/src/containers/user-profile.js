@@ -6,6 +6,7 @@ const mapStateToProps = state => {
 	return {
 		userInfo: state.userInfo,
 		list_following: state.following,
+		activeUser: state.activeUser,
 	}
 }
 

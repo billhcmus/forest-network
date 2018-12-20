@@ -5,6 +5,7 @@ import {updateListFollowing} from "../actions";
 const mapStateToProps = state => {
 	return {
 		list_following: state.following,
+		activeUser : state.activeUser
 	}
 }
 

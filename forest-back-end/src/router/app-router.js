@@ -26,7 +26,6 @@ export default class AppRouter {
 
         app.get('/api/accountInfo', (req, res, next) => {
             app.models.account.getAccount(req.query.id).then(rs => {
-                console.log(rs)
                 return res.status(200).json(rs);
             }).catch(err => {
                 return res.status(404).json({

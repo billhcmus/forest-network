@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom'
+import {activeUser} from "../actions";
+import connect from "react-redux/es/connect/connect";
 // const menu = (
 //   <Menu>
 //     <Menu.Item>
@@ -31,9 +33,9 @@ class FollowerItem extends Component {
                              alt="...."/>
                     </div>
                     <div className="card-action">
-                        <button className="btn btn-primary" type="button">
-                            <span>Following</span>
-                        </button>
+                        {/*<button className="btn btn-primary" type="button">*/}
+                            {/*<span>Following</span>*/}
+                        {/*</button>*/}
                         {/*<div className="actions-group">*/}
                         {/*<Dropdown overlay={menu} trigger={['click']}>*/}
                         {/*<a className="ant-dropdown-link" href="#">*/}
@@ -50,6 +52,7 @@ class FollowerItem extends Component {
                         <div className="userName">
                             <div
                                 onClick={() => {
+                                    this.props.activeUser(this.props.FollowItem.userName)
                                     this.props.history.push(`/${this.props.FollowItem.userName}`)
                                 }}>
                                 {this.props.FollowItem.userName}
@@ -63,4 +66,17 @@ class FollowerItem extends Component {
     }
 }
 
-export default withRouter(FollowerItem);
+const mapStateToProps = state => {
+    return {
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        activeUser: (userid) => {
+            dispatch(activeUser(userid));
+        }
+    }
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FollowerItem));

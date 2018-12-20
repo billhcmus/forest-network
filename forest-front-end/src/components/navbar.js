@@ -13,6 +13,7 @@ const Search = Input.Search;
 function handleMenuClick(e) {
     if (_.get(e, "key") === "1") {
         localStorage.clear();
+        window.location = `/`;
     }
 }
 
@@ -51,12 +52,14 @@ class Navbar extends Component {
 
 
     handleTweetClick =(e)=>{
+        e.preventDefault()
         this.setState({
             isTweetShow: true
         })
     }
 
     handleTransClick =(e)=>{
+        e.preventDefault()
         this.setState({
             isTransShow: true
         })
@@ -89,10 +92,11 @@ class Navbar extends Component {
                                 defaultSelectedKeys={['1']}
                                 style={{lineHeight: '44px', border: 'none'}}>
                                 <Menu.Item key="1" style={{fontWeight:'600'}}>
-                                    <Link to={"/"}>
+                                    <div  onClick={() => {
+                                        this.props.history.push(`/${Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey()}`)}}>
                                         <Icon type="home"/>
                                         Home
-                                    </Link>
+                                    </div>
                                 </Menu.Item>
                                 <Menu.Item key="2" style={{fontWeight:'600'}}>
                                     <Icon type="bell"/>

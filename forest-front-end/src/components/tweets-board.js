@@ -4,7 +4,7 @@ import TweetItem from './tweets-item';
 
 class TweetBoard extends Component {
     componentWillMount() {
-        this.props.getSomeNewestTweet(this.props.currentUserID)
+        this.props.getSomeNewestTweet(this.props.activeUser)
     }
 
     render() {

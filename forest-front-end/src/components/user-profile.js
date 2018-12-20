@@ -42,7 +42,7 @@ class UserProfile extends Component {
         let publicKey = Keypair.fromSecret(secret).publicKey();
         let seq = await this.service.get(`api/sequence/?id=${publicKey}`);
         let followings = await this.service.get(`api/followings/?id=${publicKey}&needMore=0`);
-        let newfollowings = followings.data.concat(this.props.currentUserID)
+        let newfollowings = followings.data.concat(this.props.activeUser)
         let tx = {
             version: 1,
             account: '',
@@ -75,7 +75,7 @@ class UserProfile extends Component {
         let seq = await this.service.get(`api/sequence/?id=${publicKey}`);
         let followings = await this.service.get(`api/followings/?id=${publicKey}&needMore=0`);
         let newfollowings = followings.data.filter(item=>{
-            if (this.props.currentUserID === item)
+            if (this.props.activeUser === item)
                 return false
             return true
         })
@@ -106,17 +106,31 @@ class UserProfile extends Component {
         })
     }
 
+    //Để gọi API lại khi thay đổi activeUser mà ko bị xoay vòng
+    componentWillUpdate(nextProps, nextState, nextContext) {
+        if (nextProps.activeUser && nextProps.activeUser !== this.props.activeUser)
+        {
+            this.props.getCount(nextProps.activeUser)
+            this.props.updatePeopleInfo(Keypair.fromSecret(
+                localStorage.getItem("SECRET_KEY")).publicKey(),
+                nextProps.activeUser)
+            localStorage.setItem("ACTIVE_USER",nextProps.activeUser)//Trường hợp reload trang
+        }
+    }
+
     componentWillMount() {
-        this.props.getCount(this.props.currentUserID)
-        this.props.updatePeopleInfo(Keypair.fromSecret(
-            localStorage.getItem("SECRET_KEY")).publicKey(),
-            this.props.currentUserID)
+        if (this.props.activeUser) {
+            this.props.getCount(this.props.activeUser)
+            this.props.updatePeopleInfo(Keypair.fromSecret(
+                localStorage.getItem("SECRET_KEY")).publicKey(),
+                this.props.activeUser)
+            localStorage.setItem("ACTIVE_USER",this.props.activeUser)//Trường hợp reload trang
+        }
     }
 
     render() {
-        console.log(this.props.userInfo)
         const specButton =
-            (Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey() === this.props.currentUserID)
+            (Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey() === this.props.activeUser)
                 ? <span className="button-text" onClick={(e)=>this.handleEditClick(e)}>Edit Profile</span>
                     :  (this.props.userInfo.hasFollow === 0)
                         ?  <span className="button-text" onClick={(e)=>this.handleFollowClick(e)}>Follow</span>

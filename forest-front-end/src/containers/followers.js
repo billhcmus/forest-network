@@ -4,7 +4,8 @@ import {updateListFollower} from "../actions";
 
 const mapStateToProps = state => {
 	return {
-		list_follower: state.follower
+		list_follower: state.follower,
+		activeUser : state.activeUser
 	}
 }
 

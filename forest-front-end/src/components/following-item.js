@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom'
+import connect from "react-redux/es/connect/connect";
+import ViewTweet from "./Modal/ViewTweet";
+import {activeUser} from "../actions";
 // const menu = (
 //   <Menu>
 //     <Menu.Item>
@@ -31,9 +34,9 @@ class FollowingItem extends Component {
                              alt="...."/>
                     </div>
                     <div className="card-action">
-                        <button className="btn btn-primary" type="button">
-                            <span>UnFollow</span>
-                        </button>
+                        {/*<button className="btn btn-primary" type="button">*/}
+                            {/*<span>UnFollow</span>*/}
+                        {/*</button>*/}
                     </div>
                     <div className="card-userfield">
                         <div className="displayName">
@@ -43,6 +46,7 @@ class FollowingItem extends Component {
                         <div className="userName">
                             <div
                                 onClick={() => {
+                                    this.props.activeUser(this.props.FollowItem.userName)
                                     this.props.history.push(`/${this.props.FollowItem.userName}`)
                                 }}>
                                 {this.props.FollowItem.userName}
@@ -56,4 +60,17 @@ class FollowingItem extends Component {
     }
 }
 
-export default withRouter(FollowingItem);
+const mapStateToProps = state => {
+    return {
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        activeUser: (userid) => {
+            dispatch(activeUser(userid));
+        }
+    }
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FollowingItem));

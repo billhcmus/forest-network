@@ -13,6 +13,7 @@ import {
     DISMISS_ITEM_RECOMMEND,
     INCREASE_FOLLOWING,
     SET_LOGIN_INFO,
+    SET_ACTIVE_USER,
 } from "../constants";
 // import {encode,sign} from '../transaction';
 import WebService from '../webservice'
@@ -77,13 +78,14 @@ export const toggleFollow = (hasFollow) => (
     {type: CHANGE_BUTTON_FOLLOW, hasFollow: (hasFollow === 1) ? 0 : 1}
 );
 
-
+export const activeUser = (userID) => (
+    {type: SET_ACTIVE_USER, activeUser: userID}
+);
 
 export const updatePeopleInfo = (loginKey, peopleKey) =>
     (dispatch, getState) => {
         let service = new WebService;
         service.get(`api/accountInfo/?id=${peopleKey}`).then(account => {
-            console.log("account",account)
             dispatch(changeAcountInfo(account.data))
         })
         service.get(`api/userInfo/?id=${peopleKey}`).then(user => {
