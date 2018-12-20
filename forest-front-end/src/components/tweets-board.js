@@ -9,8 +9,7 @@ class TweetBoard extends Component {
     }
 
     componentWillMount() {
-        let secret = localStorage.getItem("SECRET_KEY");
-        this.props.getSomeNewestTweet( Keypair.fromSecret(secret).publicKey())
+        this.props.getSomeNewestTweet(localStorage.getItem("CURRENT_USER"))
     }
 
     render() {

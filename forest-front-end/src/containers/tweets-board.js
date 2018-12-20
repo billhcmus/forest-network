@@ -13,7 +13,7 @@ const mapDispatchToProps = dispatch => {
 	return {
 		getSomeNewestTweet: (publicKey) => {
 			dispatch(getSomeNewestTweet(publicKey));
-		}
+		},
 	}
 };
 

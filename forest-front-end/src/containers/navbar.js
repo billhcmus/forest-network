@@ -1,17 +1,17 @@
 import {connect} from 'react-redux';
 import Navbar from "../components/navbar";
-import {updatePeopleLoginInfo} from "../actions";
+import {getLoginerInfo} from "../actions";
 
 const mapStateToProps = state => {
     return {
-        userInfo: state.userInfo
+        loginerInfo: state.LoginerReducer
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        updatePeopleLoginInfo: (publicKey) => {
-            dispatch(updatePeopleLoginInfo(publicKey));
+        getLoginerInfo: (publicKey) => {
+            dispatch(getLoginerInfo(publicKey));
         }
     }
 };

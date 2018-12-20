@@ -58,3 +58,4 @@ export const hash = (tx) => {
     .toString('hex')
     .toUpperCase();
 };
+

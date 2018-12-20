@@ -1,12 +1,12 @@
 import {Layout, Menu, Icon, Input,Avatar,Button,Dropdown} from 'antd/lib';
 import Tweet from "../components/Modal/Tweet";
 import Transfer from "../components/Modal/Transfer";
-
 import React, {Component} from 'react';
 import _ from 'lodash';
 import '../css/navstyle.css';
 import {Keypair} from "stellar-base";
 import {updateUserInfo} from "../actions";
+import {Link} from "react-router-dom";
 const {Header} = Layout;
 const Search = Input.Search;
 
@@ -64,7 +64,7 @@ class Navbar extends Component {
 
     componentWillMount()
     {
-        this.props.updatePeopleLoginInfo(Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey());
+        this.props.getLoginerInfo(Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey());
     }
 
     render() {
@@ -89,8 +89,10 @@ class Navbar extends Component {
                                 defaultSelectedKeys={['1']}
                                 style={{lineHeight: '44px', border: 'none'}}>
                                 <Menu.Item key="1" style={{fontWeight:'600'}}>
-                                    <Icon type="home"/>
-                                    Home
+                                    <Link to={"/"}>
+                                        <Icon type="home"/>
+                                        Home
+                                    </Link>
                                 </Menu.Item>
                                 <Menu.Item key="2" style={{fontWeight:'600'}}>
                                     <Icon type="bell"/>
@@ -111,7 +113,7 @@ class Navbar extends Component {
                             />
 
                             <Dropdown overlay={this.menuDrop} trigger={['click']} placement="bottomRight">
-                                <Avatar src = {`data:image/jpeg;base64,${this.props.userInfo.avatar}`} icon="user" style={{marginLeft:'16px'}}/>
+                                <Avatar src = {`data:image/jpeg;base64,${this.props.loginerInfo.avatar}`} icon="user" style={{marginLeft:'16px'}}/>
                             </Dropdown>
 
                             <Button type="primary" style={{borderRadius: '50px',fontWeight:'bold',marginLeft:'16px'}} onClick={(e)=>this.handleTransClick(e)}>Transfer</Button>

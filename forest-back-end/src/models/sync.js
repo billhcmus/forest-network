@@ -1,6 +1,8 @@
 import {verify,hash} from '../transaction';
+const crypto = require('crypto');
 import {decodeText,decodeFollowings} from '../transaction/myv1';
 import _ from 'lodash';
+const base32 = require('base32.js');
 
 const moment = require('moment');
 
@@ -170,8 +172,10 @@ export default class Synchronization {
             let keys = _.get(params, "keys");
             try {
                 const newPost = {
+                    _id: hashTx,
                     author:account._id,
                     content: decodeText(content),
+                    time: block_time,
                     keys: keys,
                 }
                 await this.app.db.collection('post').insertOne(newPost);
@@ -195,14 +199,22 @@ export default class Synchronization {
                         {_id: data.account},
                         {$set: {picture: value}})
                 } else if (key === "followings") {
-                    await this.app.db.collection('user').findOneAndUpdate(
-                        {_id: data.account},
-                        {$set: {followings: decodeFollowings(value).addresses}})
-}
+                    const list = decodeFollowings(value).addresses.map(add =>{return base32.encode(add)});
+                    list.forEach(item =>{
+                        this.app.db.collection('follow').insertOne({
+                            _id: crypto.createHash('sha256')
+                                .update(data.account + item)
+                                .digest()
+                                .toString('hex'),
+                            following: data.account,
+                            followed: item,
+                        })
+                    })
+                }
                 console.log(`${account._id} update_account key ${key} value ${value}`);
             }
             catch (e) {
-                console.log(`${account._id} update_account ERR ${key} value ${value}`);
+                console.log(`${account._id} update_account ERR: ${e}`);
             }
         }
         else if (operation === 'interact'){

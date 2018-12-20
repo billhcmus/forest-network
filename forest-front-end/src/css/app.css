@@ -248,15 +248,12 @@ body, html {
   border-bottom: solid 1px #1DA1F2;
 }
 .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link .userName {
-  color: #657786;
-  font-size: 16px;
+  color: #9ad1ff;
+  font-size: 12px;
   overflow: hidden;
-  display: inline-flex;
+  display: block;
   text-overflow: ellipsis;
-  max-width: 205px;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link .userName::before {
-  content: "°";
+  max-width: 500px;
 }
 .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link .time::before {
   color: #657786;

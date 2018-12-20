@@ -1,4 +1,5 @@
-import {CHANGE_ACCOUNT_INFO,INCREASE_FOLLOWING,CHANGE_DETAIL,CHANGE_USER_INFO,CHANGE_TWEET_COUNT,CHANGE_FOLLOWING_COUNT} from "../constants";
+import {CHANGE_ACCOUNT_INFO,INCREASE_FOLLOWING,CHANGE_DETAIL,CHANGE_USER_INFO,
+    CHANGE_TWEET_COUNT,CHANGE_FOLLOWING_COUNT,CHANGE_FOLLOWER_COUNT,CHANGE_BUTTON_FOLLOW} from "../constants";
 
 const initState = {
     displayName: 'No',
@@ -14,11 +15,16 @@ const initState = {
     tweetCount: 0,
     followingCount: 0,
     followerCount: 0,
-    likesCount:0,
+    hasFollow:0,
 };
 
 export default (state = initState, action) => {
     switch (action.type) {
+        case CHANGE_BUTTON_FOLLOW:
+            return{
+                ...state,
+                hasFollow: action.hasFollow
+            }
         case CHANGE_TWEET_COUNT:
             return{
                 ...state,
@@ -27,7 +33,12 @@ export default (state = initState, action) => {
         case CHANGE_FOLLOWING_COUNT:
             return{
                 ...state,
-                tweetCount: action.followingCount
+                followingCount: action.followingCount
+            }
+        case CHANGE_FOLLOWER_COUNT:
+            return{
+                ...state,
+                followerCount: action.followerCount
             }
         case CHANGE_USER_INFO:
             return{

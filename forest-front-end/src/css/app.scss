@@ -265,15 +265,12 @@ body, html {
                   border-bottom: solid 1px #1DA1F2;
                 }
                 .userName {
-                  color: #657786;
-                  font-size: 16px;
+                  color: #9ad1ff;
+                  font-size: 12px;
                   overflow: hidden;
-                  display: inline-flex;
+                  display: block;
                   text-overflow: ellipsis;
-                  max-width: 205px
-                }
-                .userName::before {
-                  content: "\00b0"
+                  max-width: 500px
                 }
                 .time::before {
                   color: #657786;

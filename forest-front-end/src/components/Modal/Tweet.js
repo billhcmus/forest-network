@@ -50,7 +50,7 @@ class TweetForm extends Component {
                 sign(tx,secret);
                 let data_encoding = '0x' + encode(tx).toString('hex');
                 console.log(data_encoding)
-                this.service.post(`api/tweet`,{tx: data_encoding}).then((response) => {
+                this.service.post(`api/sendTx`,{tx: data_encoding}).then((response) => {
                     this.props.onCancel();
                     this.setState({
                         content:""

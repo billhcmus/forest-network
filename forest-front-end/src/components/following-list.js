@@ -8,6 +8,10 @@ class FollowingList extends Component {
     super(props);
   }
 
+  componentWillMount(){
+    this.props.updateListFollowing(localStorage.getItem("CURRENT_USER"))
+  }
+
   render() {
     return (
       <div className="list-follow">

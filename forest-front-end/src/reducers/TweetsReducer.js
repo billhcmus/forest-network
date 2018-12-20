@@ -7,7 +7,7 @@ export default (state = initState, action) => {
     switch (action.type) {
         case ADD_TWEET_LIST:
         {
-            let tmp = state;
+            let tmp = [];
             if (action.tweets) {
                 action.tweets.forEach((tweet) => {
                     tmp = [...tmp, tweet]

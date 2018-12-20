@@ -56,6 +56,9 @@ new DataBase().connect().then((db) => {
             app.db.collection('account').insertOne(rootAccount);
     });
     app.db.collection('post').createIndex({author:1})
+    app.db.collection('follow').createIndex({following:1})
+    app.db.collection('follow').createIndex({followed:1})
+
 
     //Sync and subcribe
     app.models.sync.syncTxsToDB().then(res=>{

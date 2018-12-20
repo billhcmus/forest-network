@@ -74,14 +74,15 @@
 
  	   		.userName {
  	   			margin-bottom: 5px;
- 	   			a {
-					color: #657786;
+ 	   			div {
+					color: #00e9e8;
 				    font-size: 14px;
 				    padding-right: 2px;
 				    word-break: break-all;
  	   			}
- 	   			a:hover {
- 	   				border-bottom: solid 1px;
+ 	   			div:hover {
+					cursor: pointer;
+ 	   				border-bottom: solid 2px;
  	   			}
  	   		}
  	   		.bio {
