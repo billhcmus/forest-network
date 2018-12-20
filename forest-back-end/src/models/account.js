@@ -53,7 +53,6 @@ export default class Account {
         }
 
         sign(tx, SECRET_KEY);
-        let data_encoding = '0x' + encode(tx).toString('hex');
 
         return new Promise((resolve, reject) => {
             this.app.service.get(`broadcast_tx_commit?tx=${data_encoding}`).then(res => {

@@ -67,18 +67,12 @@ new DataBase().connect().then((db) => {
         });
     });
 
-
 }).catch((err) => {
     throw err;
 });
 
-
-//app.models.account.createAccount();
-// app.models.payment.makePaymentTest(SECRET_KEY, ThongAccount);
-//app.models.people.getPeopleProfile();
-// app.models.account.getAmount(ThongAccount).then(rs => {
-//     console.log(rs)
-// });
+//TEST PIC
+// *******app.models.user.updateAccount();
 
 
 server.listen(process.env.PORT || PORT, () => {
