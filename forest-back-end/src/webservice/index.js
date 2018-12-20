@@ -14,6 +14,12 @@ export default class WebService {
 
     post(endpoint="", data={}, options = {headers: {'Content-Type': 'application/json'}}) {
         const url = `${API_URL}/${endpoint}`;
+
+        console.log(data)
         return axios.post(url, data, options);
     }
+    // post(endpoint="", data={}, options = {headers: {'Content-Type': 'multipart/form-data'}}) {
+    //     const url = `${API_URL}/${endpoint}`;
+    //     return axios.post(url, data, options);
+    // }
 }
