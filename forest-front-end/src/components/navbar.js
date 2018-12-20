@@ -1,4 +1,4 @@
-import {Layout, Menu, Icon, Input,Avatar,Button,Dropdown} from 'antd/lib';
+import {Avatar, Button, Dropdown, Icon, Input, Layout, Menu} from 'antd/lib';
 import Tweet from "../components/Modal/Tweet";
 import Transfer from "../components/Modal/Transfer";
 import React, {Component} from 'react';
@@ -7,6 +7,7 @@ import '../css/navstyle.css';
 import {Keypair} from "stellar-base";
 import {updateUserInfo} from "../actions";
 import {Link} from "react-router-dom";
+
 const {Header} = Layout;
 const Search = Input.Search;
 

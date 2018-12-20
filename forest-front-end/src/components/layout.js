@@ -4,10 +4,15 @@ import UserProfile from '../containers/user-profile'
 import Wall from "./wall";
 
 export default class Layout extends Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+           currentUserID: ''
+        };
+    }
     componentWillMount() {
-        if (this.props.match.params.id.length >= 25) {
-            localStorage.setItem("CURRENT_USER", this.props.match.params.id)
+        if (this.props.match.params.id.length >= 20) {
+            this.setState({currentUserID:this.props.match.params.id})
         }
     }
 
@@ -15,8 +20,8 @@ export default class Layout extends Component {
         return (
             <div className="Container">
                 <Navbar/>
-                <UserProfile/>
-                <Wall/>
+                <UserProfile currentUserID={this.state.currentUserID}/>
+                <Wall currentUserID={this.state.currentUserID}/>
             </div>
         );
     }

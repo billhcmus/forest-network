@@ -1,9 +1,17 @@
-import {CHANGE_ACCOUNT_INFO,INCREASE_FOLLOWING,CHANGE_DETAIL,CHANGE_USER_INFO,
-    CHANGE_TWEET_COUNT,CHANGE_FOLLOWING_COUNT,CHANGE_FOLLOWER_COUNT,CHANGE_BUTTON_FOLLOW} from "../constants";
+import {
+    CHANGE_ACCOUNT_INFO,
+    CHANGE_BUTTON_FOLLOW,
+    CHANGE_DETAIL,
+    CHANGE_FOLLOWER_COUNT,
+    CHANGE_FOLLOWING_COUNT,
+    CHANGE_TWEET_COUNT,
+    CHANGE_USER_INFO,
+    INCREASE_FOLLOWING,
+} from "../constants";
 
 const initState = {
-    displayName: 'No',
-    userName:'No',
+    displayName: '',
+    userName:'',
     balance:0,
     bandwidth:0,
     sequence:0,
@@ -23,29 +31,34 @@ export default (state = initState, action) => {
         case CHANGE_BUTTON_FOLLOW:
             return{
                 ...state,
-                hasFollow: action.hasFollow
+                hasFollow: action.hasFollow ? action.hasFollow : 0
             }
+            break;
         case CHANGE_TWEET_COUNT:
             return{
                 ...state,
-                tweetCount: action.tweetCount
+                tweetCount: action.tweetCount ? action.tweetCount : 0
             }
+            break;
         case CHANGE_FOLLOWING_COUNT:
             return{
                 ...state,
-                followingCount: action.followingCount
+                followingCount: action.followingCount ? action.followingCount : 0
             }
+            break;
         case CHANGE_FOLLOWER_COUNT:
             return{
                 ...state,
-                followerCount: action.followerCount
+                followerCount: action.followerCount ? action.followerCount : 0
             }
+            break;
         case CHANGE_USER_INFO:
             return{
                 ...state,
                 displayName: action.user.name ? action.user.name.toString('utf-8') : "Unknown",
                 avatar: action.user.picture ? action.user.picture : 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
             };
+            break;
         case CHANGE_ACCOUNT_INFO:
             return{
                 ...state,
@@ -55,18 +68,24 @@ export default (state = initState, action) => {
                 bandwidth: action.account.bandwidth,
                 sequence: action.account.sequence
             };
+            break;
+
         case INCREASE_FOLLOWING:
             return {
                 ...state,
                 followingCount: state.followingCount + 1
             };
+            break;
+
         case CHANGE_DETAIL:
             return {
                 ...state,
-                displayName: action.userDetail.userName,
+                displayName: action.userDetail.displayName,
                 location: action.userDetail.location,
                 birthdate: action.userDetail.birthday,
             };
+            break;
+
         default:
             return state
     }

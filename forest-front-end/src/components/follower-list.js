@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import FollowerItem from './follower-item';
 import '../css/follow.scss';
 
@@ -9,7 +9,7 @@ class FollowersList extends Component {
     }
 
     componentWillMount(){
-        this.props.updateListFollower(localStorage.getItem("CURRENT_USER"));
+        this.props.updateListFollower(this.props.currentUserID);
     }
 
     render() {

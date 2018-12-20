@@ -26,6 +26,7 @@ export default class AppRouter {
 
         app.get('/api/accountInfo', (req, res, next) => {
             app.models.account.getAccount(req.query.id).then(rs => {
+                console.log(rs)
                 return res.status(200).json(rs);
             }).catch(err => {
                 return res.status(404).json({
@@ -74,7 +75,7 @@ export default class AppRouter {
          * @method: GET
          */
         app.get('/api/followings', (req, res, next) => {
-            app.models.follow.getFollowings(req.query.id).then(rs => {
+            app.models.follow.getFollowings(req.query.id, req.query.needMore).then(rs => {
                 return res.status(200).json(rs);
             }).catch(err => {
                 return res.status(404).json({
@@ -161,7 +162,7 @@ export default class AppRouter {
          * @endpoint: /api/tweet/count
          * @method: GET
          */
-        app.get('/api/tweet/count', (req, res, next) => {
+        app.get('/api/tweetCount', (req, res, next) => {
             app.models.post.getPostCount(req.query.id).then(rs => {
                 return res.status(200).json(rs);
             }).catch(err => {

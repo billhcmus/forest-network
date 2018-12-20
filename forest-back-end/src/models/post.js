@@ -29,7 +29,7 @@ export default class Post {
     }
 
     async getPostCount(publicKey) {
-        let count = await this.app.db.collection('post').find({author: publicKey}).count();
-        return count;
+        let post = await this.app.db.collection('post').find({author: publicKey});
+        return post.count();
     }
 }

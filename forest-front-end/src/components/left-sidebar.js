@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import moment from 'moment';
-import { Icon } from 'react-icons-kit';
-import {location,calendar,droplet,coinDollar,meter,user,plus} from 'react-icons-kit/icomoon';
+import {Icon} from 'react-icons-kit';
+import {calendar, coinDollar, droplet, location, meter, plus, user} from 'react-icons-kit/icomoon';
 
 const BANDWIDTH_PERIOD = 86400;
 const MAX_BLOCK_SIZE = 22020096;

@@ -131,9 +131,7 @@ export default class Synchronization {
                 _id: address,
             }
             await this.app.db.collection('user').insertOne(newUser);
-
             console.log(`${account._id} create ${address}`);
-
         }
         else if (operation ===  'payment') {
             let params = _.get(data, "params")
@@ -200,11 +198,13 @@ export default class Synchronization {
                         {$set: {picture: value}})
                 } else if (key === "followings") {
                     const list = decodeFollowings(value).addresses.map(add =>{return base32.encode(add)});
+                    await this.app.db.collection('follow').deleteMany({following: data.account})
                     list.forEach(item =>{
                         this.app.db.collection('follow').insertOne({
                             _id: crypto.createHash('sha256')
                                 .update(data.account + item)
                                 .digest()
+                                .slice(0, 20)
                                 .toString('hex'),
                             following: data.account,
                             followed: item,

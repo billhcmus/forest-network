@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Icon,Input } from 'antd';
+import {Icon} from 'antd';
 import '../../css/edit-profile.scss'
 import moment from "moment";
 
@@ -48,7 +48,7 @@ class EditProfile extends Component {
                                     <p>Change your header photo</p>
                                 </span>
                             </label>
-                            <input type="file" id="fileTheme" accept="image/*" ref="fileUploader"/>
+                            {/*<input type="file" id="fileTheme" accept="image/*" ref="fileUploader"/>*/}
                         </div>
 
                         <div className="profile-edit-avatar">

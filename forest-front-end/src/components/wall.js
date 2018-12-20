@@ -4,7 +4,7 @@ import TweetBoard from '../containers/tweets-board';
 import SideBar from '../containers/left-sidebar';
 import FollowingList from '../containers/following';
 import FollowerList from '../containers/followers'
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 
 export default class Wall extends Component {
     render() {
@@ -18,7 +18,7 @@ export default class Wall extends Component {
                                 <SideBar/>
                             </div>
                             <div className={"main-right"}>
-                                <FollowingList/>
+                                <FollowingList currentUserID = {this.props.currentUserID}/>
                             </div>
                         </div>
                     )}
@@ -32,7 +32,7 @@ export default class Wall extends Component {
                                 <SideBar/>
                             </div>
                             <div className={"main-right"}>
-                                <FollowerList/>
+                                <FollowerList currentUserID = {this.props.currentUserID}/>
                             </div>
                         </div>
                     )}
@@ -46,10 +46,10 @@ export default class Wall extends Component {
                                 <SideBar/>
                             </div>
                             <div className={"content"}>
-                                <TweetBoard/>
+                                <TweetBoard currentUserID = {this.props.currentUserID}/>
                             </div>
                             <div className={"sidebar-right"}>
-                                <Follow/>
+                                <Follow currentUserID = {this.props.currentUserID}/>
                             </div>
                         </div>
                     )}

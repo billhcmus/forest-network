@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {Icon} from 'antd/lib';
 import TweetItem from './tweets-item';
-import {Keypair} from "stellar-base";
 
 class TweetBoard extends Component {
     constructor(props) {
@@ -9,7 +8,7 @@ class TweetBoard extends Component {
     }
 
     componentWillMount() {
-        this.props.getSomeNewestTweet(localStorage.getItem("CURRENT_USER"))
+        this.props.getSomeNewestTweet(this.props.currentUserID)
     }
 
     render() {

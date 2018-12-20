@@ -1,11 +1,11 @@
-import { Form, Icon, Input, Button, Modal } from 'antd';
+import {Button, Form, Icon, Modal} from 'antd';
 import React, {Component} from 'react';
 import "../../css/compose-tweet.scss"
 import {Menu} from "antd/lib/menu";
-import { Keypair } from 'stellar-base';
+import {Keypair} from 'stellar-base';
 import WebService from "../../webservice";
-import {encode,sign} from '../../transaction/index';
-import {encodeText} from  '../../transaction/myv1'
+import {encode, sign} from '../../transaction/index';
+import {encodeText} from '../../transaction/myv1'
 import _ from 'lodash'
 
 

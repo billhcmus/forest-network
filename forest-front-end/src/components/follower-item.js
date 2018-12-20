@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Menu, Dropdown, Icon} from 'antd';
-import {Link, withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 // const menu = (
 //   <Menu>
 //     <Menu.Item>
@@ -30,7 +29,11 @@ class FollowerItem extends Component {
                     }
                 </a>
                 <div className="card-body">
-                    <img src={`data:image/jpeg;base64,${this.props.FollowItem.avatar}`} alt="...."/>
+                    <div className="avatar">
+                        <img src={`data:image/jpeg;base64,
+                        ${this.props.FollowItem.avatar?this.props.FollowItem.avatar:'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='}`}
+                             alt="...."/>
+                    </div>
                     <div className="card-action">
                         <button className="btn btn-primary" type="button">
                             <span>Following</span>

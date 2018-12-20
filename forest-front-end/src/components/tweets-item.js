@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import _ from 'lodash';
-import { Menu, Dropdown, Icon } from 'antd';
+import React, {Component} from 'react';
+import {Icon} from 'antd';
 import ViewTweet from '../containers/view-detail-tweet';
+import moment from "moment";
 // const menu = (
 //   <Menu>
 //     <Menu.Item>
@@ -34,9 +34,9 @@ class TweetItem extends Component {
 
 
     handleSpanClick =(e)=>{
-        this.setState({
-            isModalShow: true
-        })
+        // this.setState({
+        //     isModalShow: true
+        // })
     }
 
       render() {
@@ -47,9 +47,9 @@ class TweetItem extends Component {
             <div className="tweet-content" onClick={(e)=>this.handleSpanClick(e)}>
               <div className="tweet-header">
                 <a className="tweet-profile-link">
-                    <img src={`data:image/jpeg;base64,${itemInfo.avatar}`} alt="..."/>
+                    <img src={`data:image/jpeg;base64,${itemInfo.avatar?itemInfo.avatar:'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='}`} alt="..."/>
                     <span className="displayName">{itemInfo.displayName ? itemInfo.displayName : 'Unknown'}</span>
-                    <span className="time"> 2 Dec 2018</span>
+                    <span className="time"> {moment(itemInfo.time).format('hh:mm,DD MMM,YYYY')}</span>
                     <span className="userName"> {itemInfo.author} </span>
                 </a>
                   {/*<Dropdown overlay={menu} trigger={['click']}>*/}

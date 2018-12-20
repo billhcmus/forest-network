@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import _ from 'lodash';
-import { Menu, Dropdown, Icon } from 'antd';
+import {Dropdown, Icon, Menu} from 'antd';
 import "../css/detail-tweet-modal.scss"
 
 
