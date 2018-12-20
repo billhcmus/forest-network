@@ -39,22 +39,22 @@ export default class Wall extends Component {
                 />
 
                 <Route
-                    exact
-                    path="/"
+                    exact path="/:id"
                     children={({ match }) => (
-                      <div className={"main-content"}>
-                        <div className={"sidebar-left"}>
-                            <SideBar/>
+                        <div className={"main-content"}>
+                            <div className={"sidebar-left"}>
+                                <SideBar/>
+                            </div>
+                            <div className={"content"}>
+                                <TweetBoard/>
+                            </div>
+                            <div className={"sidebar-right"}>
+                                <Follow/>
+                            </div>
                         </div>
-                        <div className={"content"}>
-                            <TweetBoard/>
-                        </div>
-                        <div className={"sidebar-right"}>
-                            <Follow/>
-                        </div>
-                    </div>
                     )}
-                  />
+                />
+
             </Switch>
         );
     }

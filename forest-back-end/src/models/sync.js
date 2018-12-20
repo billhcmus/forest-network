@@ -1,11 +1,12 @@
-import {verify} from '../transaction';
+import {verify,hash} from '../transaction';
+const crypto = require('crypto');
+import {decodeText,decodeFollowings} from '../transaction/myv1';
 import _ from 'lodash';
+const base32 = require('base32.js');
 
 const moment = require('moment');
 
 const BANDWIDTH_PERIOD = 86400;
-const ACCOUNT_KEY = Buffer.from('account');
-const OBJECT_KEY = Buffer.from('object');
 const MAX_BLOCK_SIZE = 22020096;
 const RESERVE_RATIO = 1;
 const MAX_CELLULOSE = Number.MAX_SAFE_INTEGER;
@@ -56,6 +57,7 @@ export default class Synchronization {
 
         const txSize =  Buffer(tx, 'base64').length;
         const data = this.app.helper.decodeTransaction(tx)//decode từ buffer binary sang json
+        const hashTx = hash(data);
 
         // Check signature
         if (!verify(data)) {
@@ -89,6 +91,12 @@ export default class Synchronization {
         account.bandwidth = Math.ceil(Math.max(0, (BANDWIDTH_PERIOD - diff) / BANDWIDTH_PERIOD) * account.bandwidth + txSize);
         if (account.bandwidth > bandwidthLimit) {
             return('Bandwidth limit exceeded');
+        }
+
+        // Check bandwidth usage < account balance
+        const blockedAmount = Math.ceil(account.bandwidth / NETWORK_BANDWIDTH * MAX_CELLULOSE);
+        if (account.balance < blockedAmount) {
+            return('Account balance must greater blocked amount due to bandwidth used');
         }
 
         await this.app.db.collection('account').findOneAndUpdate(
@@ -162,40 +170,52 @@ export default class Synchronization {
             let params = _.get(data, "params")
             let content = _.get(params, "content");
             let keys = _.get(params, "keys");
-
-            const newPost = {
-                author:account._id,
-                content: content,
-                keys: keys,
+            try {
+                const newPost = {
+                    _id: hashTx,
+                    author:account._id,
+                    content: decodeText(content),
+                    time: block_time,
+                    keys: keys,
+                }
+                await this.app.db.collection('post').insertOne(newPost);
+                console.log(`${account._id} post type ${newPost.content.type} text ${newPost.content.text} keys ${keys}`);
             }
-            await this.app.db.collection('post').insertOne(newPost);
-            console.log(`${account._id} post content ${content} keys ${keys}`);
-
+            catch (err) {
+                console.log(`${account._id} post ERR content ${content}`);
+            }
         }
         else if (operation === 'update_account'){
             let params = _.get(data, "params")
             let key = _.get(params, "key");
             let value = _.get(params, "value");
-            if (key === "name")
-            {
-                await this.app.db.collection('user').findOneAndUpdate(
-                    {_id: data.account},
-                    {$set: {name: value.toString('utf-8')}})
+            try {
+                if (key === "name") {
+                    await this.app.db.collection('user').findOneAndUpdate(
+                        {_id: data.account},
+                        {$set: {name: value.toString('utf-8')}})
+                } else if (key === "picture") {
+                    await this.app.db.collection('user').findOneAndUpdate(
+                        {_id: data.account},
+                        {$set: {picture: value}})
+                } else if (key === "followings") {
+                    const list = decodeFollowings(value).addresses.map(add =>{return base32.encode(add)});
+                    list.forEach(item =>{
+                        this.app.db.collection('follow').insertOne({
+                            _id: crypto.createHash('sha256')
+                                .update(data.account + item)
+                                .digest()
+                                .toString('hex'),
+                            following: data.account,
+                            followed: item,
+                        })
+                    })
+                }
+                console.log(`${account._id} update_account key ${key} value ${value}`);
             }
-            else if (key === "picture")
-            {
-                await this.app.db.collection('user').findOneAndUpdate(
-                    {_id: data.account},
-                    {$set: {picture: value}})
+            catch (e) {
+                console.log(`${account._id} update_account ERR: ${e}`);
             }
-            else if (key === "followings")
-            {
-                await this.app.db.collection('user').findOneAndUpdate(
-                    {_id: data.account},
-                    {$set: {followings: value}})
-            }
-            console.log(`${account._id} update_account key ${key} value ${value}`);
-
         }
         else if (operation === 'interact'){
             let params = _.get(data, "params")
@@ -206,5 +226,23 @@ export default class Synchronization {
         else
             return('Operation is not support.');
 
+
+        // Add transaction to db
+        let tags = []; //to search
+        if (data.account) {
+            tags.push({ key: "account", value: data.account});
+        }
+        if (data.params && data.params.address && data.params.address !== data.account) {
+            tags.push({ key: "account", value: data.params.address});
+        }
+        // if (data.params && data.params.object) {
+        //     tags.push({ key: OBJECT_KEY, value: Buffer.from(data.params.object) });
+        // }
+        const newTransaction = {
+            _id: hashTx,
+            tags:tags,
+            tx:data
+        }
+        await this.app.db.collection('transaction').insertOne(newTransaction);
     }
 }

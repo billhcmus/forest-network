@@ -1,7 +1,16 @@
-# Release notes
+﻿# Release notes
+
+## Bug cần sửa
+- Chuyển đổi giữa các tab tweet, following , follower
+- Chuyển đổi giữa trang cá nhân khác nhau
+## Cần làm
+- Hiển thị ngày trên bài post, đã có lưu trong sync(Nhớ xóa chạy lại DB)
+- Tăng tốc độ chạy DB lần đầu
+- Xem danh sách các transaction
+- Hiển thị bài đăng của những người mình follow trên newfeed
+
 
 ## Front-end
-
 - Mục đích là dùng css thay vì import scss
 - Yêu cầu: cài sass
 - Chạy command sau:

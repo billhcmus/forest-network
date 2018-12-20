@@ -1,10 +1,12 @@
 import {Layout, Menu, Icon, Input,Avatar,Button,Dropdown} from 'antd/lib';
 import Tweet from "../components/Modal/Tweet";
+import Transfer from "../components/Modal/Transfer";
 import React, {Component} from 'react';
 import _ from 'lodash';
 import '../css/navstyle.css';
 import {Keypair} from "stellar-base";
 import {updateUserInfo} from "../actions";
+import {Link} from "react-router-dom";
 const {Header} = Layout;
 const Search = Input.Search;
 
@@ -18,7 +20,8 @@ class Navbar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isModalShow: false,
+            isTweetShow: false,
+            isTransShow: false,
         };
     }
 
@@ -39,22 +42,29 @@ class Navbar extends Component {
 
     );
 
-    handleCacel =(e)=>{
+    handleCancel =(e)=>{
         this.setState({
-            isModalShow: false
+            isTweetShow: false,
+            isTransShow: false
         })
     }
 
 
     handleTweetClick =(e)=>{
         this.setState({
-            isModalShow: true
+            isTweetShow: true
+        })
+    }
+
+    handleTransClick =(e)=>{
+        this.setState({
+            isTransShow: true
         })
     }
 
     componentWillMount()
     {
-        this.props.getPeopleLoginInfo(Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey());
+        this.props.getLoginerInfo(Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey());
     }
 
     render() {
@@ -79,8 +89,10 @@ class Navbar extends Component {
                                 defaultSelectedKeys={['1']}
                                 style={{lineHeight: '44px', border: 'none'}}>
                                 <Menu.Item key="1" style={{fontWeight:'600'}}>
-                                    <Icon type="home"/>
-                                    Home
+                                    <Link to={"/"}>
+                                        <Icon type="home"/>
+                                        Home
+                                    </Link>
                                 </Menu.Item>
                                 <Menu.Item key="2" style={{fontWeight:'600'}}>
                                     <Icon type="bell"/>
@@ -101,12 +113,16 @@ class Navbar extends Component {
                             />
 
                             <Dropdown overlay={this.menuDrop} trigger={['click']} placement="bottomRight">
-                                <Avatar src = {`data:image/jpeg;base64,${this.props.userInfo.avatar}`} icon="user" style={{marginLeft:'16px'}}/>
+                                <Avatar src = {`data:image/jpeg;base64,${this.props.loginerInfo.avatar}`} icon="user" style={{marginLeft:'16px'}}/>
                             </Dropdown>
+
+                            <Button type="primary" style={{borderRadius: '50px',fontWeight:'bold',marginLeft:'16px'}} onClick={(e)=>this.handleTransClick(e)}>Transfer</Button>
 
                             <Button type="primary" style={{borderRadius: '50px',fontWeight:'bold',marginLeft:'16px'}} onClick={(e)=>this.handleTweetClick(e)}>Tweet</Button>
                         </div>
-                        <Tweet isModalShow={this.state.isModalShow} onCancel={(e)=>this.handleCacel(e)}/>
+                        <Tweet isTweetShow={this.state.isTweetShow} onCancel={(e)=>this.handleCancel(e)}/>
+                        <Transfer isTransShow={this.state.isTransShow} onCancel={(e)=>this.handleCancel(e)}/>
+
                     </div>
                 </Header>
             </Layout>

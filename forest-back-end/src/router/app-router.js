@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import {encode, sign} from "../transaction";
+import {SECRET_KEY} from "../config";
 
 export default class AppRouter {
     constructor(app) {
@@ -10,21 +12,6 @@ export default class AppRouter {
     setupRouter() {
         const app = this.app;
 
-        /**
-         * @endpoint: /api/users
-         * @method: GET
-         */
-        app.get('/api/users', (req, res, next) => {
-            
-        });
-
-        /**
-         * @endpoint: /api/people
-         * @method: GET
-         */
-        app.get('/api/people', (req, res, next) => {
-            
-        })
 
         app.post('/api/users/login', (req, res, next) => {
            app.models.account.auth(req.body.publicKey).then((result)=>{
@@ -56,7 +43,8 @@ export default class AppRouter {
                 });
             });
         })
-        
+
+
         app.get('/api/sequence', (req, res, next) => {
             app.models.account.getSequence(req.query.id).then(rs => {
                 return res.status(200).json(rs);
@@ -68,15 +56,13 @@ export default class AppRouter {
         })
 
         /**
-         * @endpoint: /api/user
-         * @method: POST
+         * @endpoint: /api/followingsCount
+         * @method: GET
          */
-        app.post('/api/user', (req, res, next) => {
-            const body = _.get(req, 'body');
-            app.models.account.createAccount(_.get(body, "publicKey")).then(rs => {
+        app.get('/api/followingsCount', (req, res, next) => {
+            app.models.follow.getFollowingCount(req.query.id).then(rs => {
                 return res.status(200).json(rs);
             }).catch(err => {
-                console.log(err)
                 return res.status(304).json({
                     err: err,
                 });
@@ -84,15 +70,104 @@ export default class AppRouter {
         });
 
         /**
-         * @endpoint: /api/tweet
+         * @endpoint: /api/followings
+         * @method: GET
+         */
+        app.get('/api/followings', (req, res, next) => {
+            app.models.follow.getFollowings(req.query.id).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(404).json({
+                    error: err,
+                });
+            });
+        })
+
+
+        /**
+         * @endpoint: /api/followersCount
+         * @method: GET
+         */
+        app.get('/api/followersCount', (req, res, next) => {
+            app.models.follow.getFollowerCount(req.query.id).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(304).json({
+                    err: err,
+                });
+            });
+        });
+
+        /**
+         * @endpoint: /api/followers
+         * @method: GET
+         */
+        app.get('/api/followers', (req, res, next) => {
+            app.models.follow.getFollowers(req.query.id).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(404).json({
+                    error: err,
+                });
+            });
+        })
+
+        /**
+         * @endpoint: /api/isfollow
+         * @method: GET
+         */
+        app.get('/api/isfollow', (req, res, next) => {
+            app.models.follow.checkFollow(req.query.address1,req.query.address2).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(304).json({
+                    err: err,
+                });
+            });
+        });
+
+
+        /**
+         * @endpoint: /api/sendTx
          * @method: POST
          */
-        app.post('/api/tweet', (req, res, next) => {
+        app.post('/api/sendTx', (req, res, next) => {
             const body = _.get(req, 'body');
-            this.app.service.get(`broadcast_tx_commit?tx=${body.tx}`).then(res => {
-                return resolve(res.data)
+            app.models.post.userPost(body.tx).then(rs => {
+                return res.status(200).json(rs);
             }).catch(err => {
-                return reject(err);
+                return res.status(304).json({
+                    err: err,
+                });
+            });
+        });
+
+
+        /**
+         * @endpoint: /api/tweet
+         * @method: GET
+         */
+        app.get('/api/tweet', (req, res, next) => {
+            app.models.post.getPost(req.query.id,req.query.start,req.query.count).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(304).json({
+                    err: err,
+                });
+            });
+        });
+
+        /**
+         * @endpoint: /api/tweet/count
+         * @method: GET
+         */
+        app.get('/api/tweet/count', (req, res, next) => {
+            app.models.post.getPostCount(req.query.id).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(304).json({
+                    err: err,
+                });
             });
         });
                 /**

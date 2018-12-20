@@ -1,15 +1,20 @@
 import {connect} from 'react-redux';
 import TweetBoard from "../components/tweets-board";
+import {getSomeNewestTweet} from "../actions";
 
 const mapStateToProps = state => {
 	return {
-		tweets: state.tweets
+		userInfo: state.userInfo,
+		tweets : state.tweets
 	}
-};
-
+}
 
 const mapDispatchToProps = dispatch => {
-    return {}
+	return {
+		getSomeNewestTweet: (publicKey) => {
+			dispatch(getSomeNewestTweet(publicKey));
+		},
+	}
 };
 
 

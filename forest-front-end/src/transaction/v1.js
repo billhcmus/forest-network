@@ -44,7 +44,7 @@ const InteractParams = vstruct([
   // React if '', like, love, haha, anrgy, sad, wow
 ]);
 
-function encode(tx) {
+export function encode(tx) {
   let params, operation;
   if (tx.version !== 1) {
     throw Error('Wrong version');
@@ -67,7 +67,7 @@ function encode(tx) {
       break;
 
     case 'post':
-      params = PostParams.encode(tx.params);
+      params = PostParams.encode(tx.params)
       operation = 3;
       break;
 
@@ -99,7 +99,7 @@ function encode(tx) {
   });
 }
 
-function decode(data) {
+export function decode(data) {
   const tx = Transaction.decode(data);
   if (tx.version !== 1) {
     throw Error('Wrong version');
@@ -154,8 +154,3 @@ export {
   encode,
   decode,
 };
-
-// module.exports = {
-//   encode,
-//   decode
-// }

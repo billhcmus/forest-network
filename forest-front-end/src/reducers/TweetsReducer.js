@@ -1,56 +1,20 @@
-const initState = {
-    listTweet:[
-        {
-            id:1,
-            urlAvatar: "https://pbs.twimg.com/profile_images/552490918989668352/ywlPHVTJ_400x400.jpeg",
-            displayName: "JBThong",
-            author:'@Nguynnh74289770',
-            time:1543641338,
-            content:'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, ' +
-                'EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, ' +
-                'FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR ' +
-                'COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF ' +
-                'CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE ' +
-                'OR OTHER DEALINGS IN THE SOFTWARE.',
-            likesCount:2,
-            commentCount:12,
-        },
-        {
-            id:2,
-            urlAvatar: "https://pbs.twimg.com/profile_images/552490918989668352/ywlPHVTJ_400x400.jpeg",
-            author:'@Nguynnh74289770',
-            displayName: "JBThong",
-            time:15436414000,
-            content:'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, ' +
-                'EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, ' +
-                'FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR ' +
-                'COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF ' +
-                'CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE ' +
-                'OR OTHER DEALINGS IN THE SOFTWARE.',
-            likesCount:10,
-            commentCount:12,
-        },
-        {
-            id:2,
-            urlAvatar: "https://pbs.twimg.com/profile_images/552490918989668352/ywlPHVTJ_400x400.jpeg",
-            author:'@Nguynnh74289770',
-            displayName: "JBThong",
-            time:15436414000,
-            content:'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, ' +
-                'EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, ' +
-                'FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR ' +
-                'COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF ' +
-                'CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE ' +
-                'OR OTHER DEALINGS IN THE SOFTWARE.',
-            likesCount:10,
-            commentCount:12,
-        }
-    ]
-};
+import {ADD_TWEET_LIST} from "../constants";
+
+const initState = [];
 
 
 export default (state = initState, action) => {
     switch (action.type) {
+        case ADD_TWEET_LIST:
+        {
+            let tmp = [];
+            if (action.tweets) {
+                action.tweets.forEach((tweet) => {
+                    tmp = [...tmp, tweet]
+                })
+            }
+            return tmp
+        }
         default:
             return state
     }

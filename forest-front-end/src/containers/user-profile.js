@@ -1,15 +1,22 @@
 import {connect} from 'react-redux';
 import UserProfile from "../components/user-profile";
-import {increaseFollowing} from "../actions";
+import {getCount, getSomeNewestTweet, updatePeopleInfo} from "../actions";
 
 const mapStateToProps = state => {
 	return {
-		userInfo: state.userInfo
+		userInfo: state.userInfo,
+		list_following: state.following,
 	}
 }
 
 const mapDispatchToProps = dispatch => {
     return {
+		getCount: (publicKey) => {
+			dispatch(getCount(publicKey));
+		},
+		updatePeopleInfo:(loginKey,peopleKey) => {
+			dispatch(updatePeopleInfo(loginKey,peopleKey));
+		},
 
 	}
 };

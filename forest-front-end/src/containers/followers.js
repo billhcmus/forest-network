@@ -1,14 +1,19 @@
 import {connect} from 'react-redux';
-import FollowersList from '../components/following-list'
+import FollowersList from '../components/follower-list'
+import {updateListFollower} from "../actions";
 
 const mapStateToProps = state => {
 	return {
-		list_following: state.follower.listFollower
+		list_follower: state.follower
 	}
 }
 
 const mapDispatchToProps = dispatch => {
-    return {}
+    return {
+		updateListFollower:(publicKey) => {
+			dispatch(updateListFollower(publicKey));
+		}
+	}
 };
 
 

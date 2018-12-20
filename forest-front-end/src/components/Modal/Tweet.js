@@ -4,7 +4,9 @@ import "../../css/compose-tweet.scss"
 import {Menu} from "antd/lib/menu";
 import { Keypair } from 'stellar-base';
 import WebService from "../../webservice";
-import {encode,sign} from '../../transaction';
+import {encode,sign} from '../../transaction/index';
+import {encodeText} from  '../../transaction/myv1'
+import _ from 'lodash'
 
 
 const FormItem = Form.Item;
@@ -26,28 +28,37 @@ class TweetForm extends Component {
     }
 
     handleSubmit = () => {
-        console.log(this.state.content)
         if (this.state.content.length !== 0) {
+            let secret = localStorage.getItem("SECRET_KEY");
             this.service.get(`api/sequence/?id=${
-                Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey()}`
+                Keypair.fromSecret(secret).publicKey()}`
             ).then(seq =>{
                 let tx = {
                     version: 1,
                     account: '',
-                    sequence: seq + 1,
+                    sequence: seq.data + 1,
                     memo: Buffer.alloc(0),
                     operation: 'post',
                     params: {
-                        content: {
+                        content : encodeText({
                             type: 1,
-                            text: this.state.content
-                        },
-                        keys: []
+                            text: this.state.content,
+                        }),
+                        keys : []
                     }
                 }
-                sign(tx, localStorage.getItem("SECRET_KEY"))
-                let data_encoding = '0x'+encode(tx).toString('hex');
-                this.service.post(`/api/tweet`,{tx: data_encoding});
+                sign(tx,secret);
+                let data_encoding = '0x' + encode(tx).toString('hex');
+                console.log(data_encoding)
+                this.service.post(`api/sendTx`,{tx: data_encoding}).then((response) => {
+                    this.props.onCancel();
+                    this.setState({
+                        content:""
+                    })
+                }).catch(err => {
+                    const message = _.get(err, 'response.data.error.message', "Tweet Unsuccess!");
+                    alert(message);
+                })
             })
         }
     }
@@ -58,7 +69,7 @@ class TweetForm extends Component {
             <Modal
                 title="Compose new Tweet"
                 centered
-                visible={this.props.isModalShow}
+                visible={this.props.isTweetShow}
                 onCancel={() => this.props.onCancel()}
                 footer={null}
                 style={{padding:0}}

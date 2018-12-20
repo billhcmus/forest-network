@@ -67,7 +67,7 @@ function encode(tx) {
             break;
 
         case 'post':
-            params = PostParams.encode(tx.params);
+            params = PostParams.encode(tx.params)
             operation = 3;
             break;
 
@@ -87,7 +87,6 @@ function encode(tx) {
         default:
             throw Error('Unspport operation');
     }
-
     return Transaction.encode({
         version: 1,
         account: Buffer.from(base32.decode(tx.account)),
