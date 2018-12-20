@@ -4,10 +4,6 @@ import '../css/follow.scss';
 
 class FollowingList extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount(){
     this.props.updateListFollowing(this.props.currentUserID)
   }

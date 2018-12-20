@@ -33,32 +33,27 @@ export default (state = initState, action) => {
                 ...state,
                 hasFollow: action.hasFollow ? action.hasFollow : 0
             }
-            break;
         case CHANGE_TWEET_COUNT:
             return{
                 ...state,
                 tweetCount: action.tweetCount ? action.tweetCount : 0
             }
-            break;
         case CHANGE_FOLLOWING_COUNT:
             return{
                 ...state,
                 followingCount: action.followingCount ? action.followingCount : 0
             }
-            break;
         case CHANGE_FOLLOWER_COUNT:
             return{
                 ...state,
                 followerCount: action.followerCount ? action.followerCount : 0
             }
-            break;
         case CHANGE_USER_INFO:
             return{
                 ...state,
                 displayName: action.user.name ? action.user.name.toString('utf-8') : "Unknown",
                 avatar: action.user.picture ? action.user.picture : 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
             };
-            break;
         case CHANGE_ACCOUNT_INFO:
             return{
                 ...state,
@@ -68,14 +63,12 @@ export default (state = initState, action) => {
                 bandwidth: action.account.bandwidth,
                 sequence: action.account.sequence
             };
-            break;
 
         case INCREASE_FOLLOWING:
             return {
                 ...state,
                 followingCount: state.followingCount + 1
             };
-            break;
 
         case CHANGE_DETAIL:
             return {
@@ -84,7 +77,6 @@ export default (state = initState, action) => {
                 location: action.userDetail.location,
                 birthdate: action.userDetail.birthday,
             };
-            break;
 
         default:
             return state

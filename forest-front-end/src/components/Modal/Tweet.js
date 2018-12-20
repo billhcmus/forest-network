@@ -1,15 +1,12 @@
-import {Button, Form, Icon, Modal} from 'antd';
+import {Button, Icon, Modal} from 'antd';
 import React, {Component} from 'react';
 import "../../css/compose-tweet.scss"
-import {Menu} from "antd/lib/menu";
 import {Keypair} from 'stellar-base';
 import WebService from "../../webservice";
 import {encode, sign} from '../../transaction/index';
 import {encodeText} from '../../transaction/myv1'
 import _ from 'lodash'
 
-
-const FormItem = Form.Item;
 
 class TweetForm extends Component {
 
@@ -64,7 +61,6 @@ class TweetForm extends Component {
     }
 
     render() {
-        const { getFieldDecorator } = this.props.form;
         return (
             <Modal
                 title="Compose new Tweet"
@@ -106,4 +102,4 @@ class TweetForm extends Component {
         );
     }
 }
-export default Form.create()(TweetForm);
+export default TweetForm;

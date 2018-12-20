@@ -5,7 +5,6 @@ import React, {Component} from 'react';
 import _ from 'lodash';
 import '../css/navstyle.css';
 import {Keypair} from "stellar-base";
-import {updateUserInfo} from "../actions";
 import {Link} from "react-router-dom";
 
 const {Header} = Layout;

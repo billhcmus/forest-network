@@ -24,7 +24,6 @@ export default class RecommendFollow extends Component {
             <div className={'follow'}>
                 <h3 className="follow-title">
                     Who to follow
-                    <small> <span>&#183;</span> <a href="#">Refresh</a> <span>&#183;</span> <a href="#">View all</a></small>
                 </h3>
                 <div className={'recommend-follower'}>
                     {

@@ -16,18 +16,14 @@ import {withRouter} from 'react-router-dom'
 
 class FollowingItem extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className="card" style={{width: '23rem'}}>
-                <a className="card-img-top card-head" href="#">
+                <div className="card-img-top card-head" href="#">
                     {!!this.props.FollowItem.theme &&
-                    <img className="card-img-top" src={this.props.FollowItem.theme}/>
+                    <img className="card-img-top" alt="theme" src={this.props.FollowItem.theme}/>
                     }
-                </a>
+                </div>
                 <div className="card-body">
                     <div className="avatar">
                         <img src={`data:image/jpeg;base64,

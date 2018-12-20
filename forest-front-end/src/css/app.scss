@@ -373,12 +373,11 @@ body, html {
       font-size: 24px;
       font-weight: 800;
       margin-bottom: 10px;
-      a {
+      div {
         line-height: 28px;
       }
-      a:hover {
+      div:hover {
         color: #04dff8;
-        cursor: pointer;
       }
     }
     .address {
@@ -392,7 +391,6 @@ body, html {
     .address {
       span:hover {
         color: #04dff8;
-        cursor: pointer;
         transition-duration: 0.4s;
       }
     }

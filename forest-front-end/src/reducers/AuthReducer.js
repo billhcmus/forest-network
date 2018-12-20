@@ -12,7 +12,6 @@ export default (state = initState, action) => {
                 login: action.payload.login,
                 signup: action.payload.signup
             };
-            break;
         default:
             return state
     }

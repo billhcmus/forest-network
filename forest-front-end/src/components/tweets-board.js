@@ -3,10 +3,6 @@ import {Icon} from 'antd/lib';
 import TweetItem from './tweets-item';
 
 class TweetBoard extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentWillMount() {
         this.props.getSomeNewestTweet(this.props.currentUserID)
     }
@@ -16,12 +12,12 @@ class TweetBoard extends Component {
         <div className="tweets-board-container">
           <div className="heading-title">
             <div className="space-content"></div>
-            <div className="title-content">
-              <ul className="title-toggle">
-                <li className="title-item"><a>Tweets</a></li>
-                <li className="title-item"><a>Tweets & Replace</a></li>
-              </ul>
-            </div>
+            {/*<div className="title-content">*/}
+              {/*<ul className="title-toggle">*/}
+                {/*<li className="title-item">Tweets</li>*/}
+                {/*<li className="title-item">Tweets & Replace</li>*/}
+              {/*</ul>*/}
+            {/*</div>*/}
           </div>
 
           <div className="tweets-timeline">

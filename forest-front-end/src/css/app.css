@@ -336,12 +336,11 @@ body, html {
   font-weight: 800;
   margin-bottom: 10px;
 }
-.sidebar .sidebar-head .displayName a {
+.sidebar .sidebar-head .displayName div {
   line-height: 28px;
 }
-.sidebar .sidebar-head .displayName a:hover {
+.sidebar .sidebar-head .displayName div:hover {
   color: #04dff8;
-  cursor: pointer;
 }
 .sidebar .sidebar-head .address {
   color: #657786;
@@ -351,7 +350,6 @@ body, html {
 }
 .sidebar .sidebar-head .address span:hover {
   color: #04dff8;
-  cursor: pointer;
   transition-duration: 0.4s;
 }
 .sidebar .sidebar-head .location {

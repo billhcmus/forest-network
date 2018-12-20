@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 import {Icon} from 'react-icons-kit';
-import {calendar, coinDollar, droplet, location, meter, plus, user} from 'react-icons-kit/icomoon';
+import {calendar, coinDollar, meter, plus, user} from 'react-icons-kit/icomoon';
 
 const BANDWIDTH_PERIOD = 86400;
 const MAX_BLOCK_SIZE = 22020096;
@@ -10,11 +10,6 @@ const MAX_CELLULOSE = Number.MAX_SAFE_INTEGER;
 const NETWORK_BANDWIDTH = RESERVE_RATIO * MAX_BLOCK_SIZE * BANDWIDTH_PERIOD;
 
 class LeftSidebar extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const bandwidthLimit = Math.ceil(this.props.userInfo.balance / MAX_CELLULOSE * NETWORK_BANDWIDTH);
 
@@ -22,7 +17,7 @@ class LeftSidebar extends Component {
       <div className="sidebar">
         <div className="sidebar-head">
           <h1 className="displayName">
-            <a>{this.props.userInfo.displayName}</a>
+            <div>{this.props.userInfo.displayName}</div>
           </h1>
           <div className="address">
             <Icon icon={user} size={32}/>

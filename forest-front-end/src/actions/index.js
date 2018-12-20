@@ -13,7 +13,6 @@ import {
     DISMISS_ITEM_RECOMMEND,
     INCREASE_FOLLOWING,
     SET_LOGIN_INFO,
-    TOOGLE_BUTTON_FOLLOW,
 } from "../constants";
 // import {encode,sign} from '../transaction';
 import WebService from '../webservice'
@@ -77,7 +76,6 @@ export const updateButtonFollow = (exists) => (
 export const toggleFollow = (hasFollow) => (
     {type: CHANGE_BUTTON_FOLLOW, hasFollow: (hasFollow === 1) ? 0 : 1}
 );
-
 
 
 

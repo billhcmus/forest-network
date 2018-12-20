@@ -115,7 +115,6 @@ class UserProfile extends Component {
 
     render() {
         console.log(this.props.userInfo)
-        let secret = localStorage.getItem("SECRET_KEY");
         const specButton =
             (Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey() === this.props.currentUserID)
                 ? <span className="button-text" onClick={(e)=>this.handleEditClick(e)}>Edit Profile</span>
@@ -137,9 +136,9 @@ class UserProfile extends Component {
                                 <div className="avatar-container">
                                     <div className="profile-container-avatar">
                                         <div className="profile-avatar">
-                                            <a href="#" className="profile-picture">
+                                            <div className="profile-picture">
                                                 <img alt="avatar" src={`data:image/jpeg;base64,${this.props.userInfo.avatar}`}/>
-                                            </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

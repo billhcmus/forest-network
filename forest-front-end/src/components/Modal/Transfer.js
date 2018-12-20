@@ -1,7 +1,6 @@
 import {Button, Form, Icon, Input, Modal} from 'antd';
 import React, {Component} from 'react';
 import "../../css/compose-tweet.scss"
-import {Menu} from "antd/lib/menu";
 import {Keypair} from 'stellar-base';
 import WebService from "../../webservice";
 import {encode, sign} from '../../transaction/index';
