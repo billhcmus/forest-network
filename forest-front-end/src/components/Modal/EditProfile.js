@@ -26,7 +26,6 @@ class EditProfile extends Component {
             const key = Keypair.fromSecret(secretKey);
             console.log(this.state.displayName)
             console.log(this.state.avatar)
-           
 
             // if(this.state.displayName !== this.props.userInfo.displayName) {
             //     this.service.get(`api/sequence/?id=${key.publicKey()}`).then(result =>{
@@ -49,31 +48,31 @@ class EditProfile extends Component {
             //     })
             // }
 
-            if(this.state.avatar !== '') {
-                console.log("avatar")
-                this.service.get(`api/sequence/?id=${key.publicKey()}`).then(result =>{
-                    console.log(result.data)
-                    let tx = {
-                        version: 1,
-                        account: key.publicKey(),
-                        sequence: result.data + 1,
-                        memo: Buffer.alloc(0),
-                        operation: 'update_account',
-                        params: {
-                            key: 'picture',
-                            value: new Buffer(this.state.avatar)
-                        },
-                        signature: new Buffer(64)
-                    }
-                    sign(tx, secretKey)
-                    console.log(tx)
-                    let data_encoding = '0x'+ encode(tx).toString('hex');
-                    this.service.post(`api/update_account`,{tx: data_encoding}).then(rs => {
-                        console.log(rs)
-                    })
-                    .catch(err =>{console.log(err)})
-                })
-            }
+            // if(this.state.avatar !== '') {
+            //     console.log("avatar")
+            //     this.service.get(`api/sequence/?id=${key.publicKey()}`).then(result =>{
+            //         console.log(result.data)
+            //         let tx = {
+            //             version: 1,
+            //             account: key.publicKey(),
+            //             sequence: result.data + 1,
+            //             memo: Buffer.alloc(0),
+            //             operation: 'update_account',
+            //             params: {
+            //                 key: 'picture',
+            //                 value: new Buffer(this.state.avatar, 'binary')
+            //             },
+            //             signature: new Buffer(64)
+            //         }
+            //         sign(tx, secretKey)
+            //         console.log(tx)
+            //         let data_encoding = '0x'+ encode(tx).toString('hex');
+            //         this.service.post(`api/update_account`,{tx: data_encoding}).then(rs => {
+            //             console.log(rs)
+            //         })
+            //         .catch(err =>{console.log(err)})
+            //     })
+            // }
 
         // this.props.updateDetail(this.state);
         this.props.onCancel();

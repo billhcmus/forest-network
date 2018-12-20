@@ -18,20 +18,34 @@ export default class User {
 
     updateAccount() {
         try {  
+            console.log("updateAccount")
             var pic = fs.readFileSync('./src/models/chau.jpg');
 
-            let data = new Buffer(pic);
+            // let data = new Buffer(pic);
+            console.log(pic)
 
+            // let tx = {
+            //     version: 1,
+            //     account: '',
+            //     sequence: 19,
+            //     memo: Buffer.alloc(0),
+            //     operation: 'update_account',
+            //     params: {key: 'picture', value: data},
+            // }
             let tx = {
                 version: 1,
-                account: '',
-                sequence: 19,
+                account: 'GADQGUVQECTOA5MF53XANG6QHNP7VPSPHET4AVHGDQOVXAF3XQVSWNH4',
+                sequence: 11,
                 memo: Buffer.alloc(0),
                 operation: 'update_account',
-                params: {key: 'picture', value: data},
+                params: {
+                    key: 'picture',
+                    value: new Buffer(pic)
+                },
+                signature: new Buffer(64)
             }
         
-            sign(tx, SECRET_KEY);
+            sign(tx, 'SBPESDLGQCJ2FK63GEXULOBCABLSKW4MK6X7O2463DIMH2FX6AFPPFPS');
             let data_encoding = '0x' + encode(tx).toString('hex');
 
             const config = {
@@ -40,21 +54,21 @@ export default class User {
                 }
             }
 
-            return new Promise((resolve, reject) => {
-                this.app.service.post('broadcast_tx_commit', querystring.stringify({tx: data_encoding}), config)
-                .then(res => {
-                    console.log(res.data.result);
-                    if (_.get(res.data.result, "height") === "0") {
-                        let rs = {code: -1}
-                        return resolve(rs);
-                    } else {
-                        console.log(res.data);
-                        return resolve(res.data)
-                    }
-                }).catch(err => {
-                    return reject(err);
-                });
-            });
+            // return new Promise((resolve, reject) => {
+            //     this.app.service.post('broadcast_tx_commit', querystring.stringify({tx: data_encoding}), config)
+            //     .then(res => {
+            //         console.log(res.data.result);
+            //         if (_.get(res.data.result, "height") === "0") {
+            //             let rs = {code: -1}
+            //             return resolve(rs);
+            //         } else {
+            //             console.log(res.data);
+            //             return resolve(res.data)
+            //         }
+            //     }).catch(err => {
+            //         return reject(err);
+            //     });
+            // });
         } catch(e) {
             console.log('Error:', e.stack);
         }

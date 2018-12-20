@@ -37,6 +37,8 @@ app.service = new WebService();
 app.routes = new AppRouter(app);
 app.models = new Model(app);
 
+// app.models.user.updateAccount();
+
 // Connect to db
 // assume that use Mongodb
 new DataBase().connect().then((db) => {
@@ -44,7 +46,7 @@ new DataBase().connect().then((db) => {
     var dbase = db.db("forest-network");
     app.db = dbase;
 
-   //add the super account
+   // add the super account
     const rootAccount = {
         _id: 'GA6IW2JOWMP4WGI6LYAZ76ZPMFQSJAX4YLJLOQOWFC5VF5C6IGNV2IW7',
         sequence: 0,
