@@ -1,8 +1,21 @@
-import {DISMISS_ITEM_RECOMMEND, INCREASE_FOLLOWING, UPDATE_DETAIL,
-    CHANGE_AUTH_TAB,CHANGE_ACCOUNT_INFO,ADD_TWEET_LIST,CHANGE_USER_INFO, GET_USER_INFO,
-    CHANGE_FOLLOWING_COUNT,CHANGE_TWEET_COUNT,SET_LOGIN_INFO,CHANGE_FOLLOWING_LIST,
-    CHANGE_FOLLOWER_COUNT,CHANGE_FOLLOWER_LIST,CHANGE_BUTTON_FOLLOW} from "../constants";
-// import {encode,sign} from '../transaction';
+import {
+    DISMISS_ITEM_RECOMMEND, 
+    INCREASE_FOLLOWING,
+    UPDATE_DETAIL,
+    CHANGE_AUTH_TAB,
+    CHANGE_ACCOUNT_INFO,
+    ADD_TWEET_LIST,
+    CHANGE_USER_INFO,
+    GET_USER_INFO,
+    CHANGE_FOLLOWING_COUNT,
+    CHANGE_TWEET_COUNT,
+    SET_LOGIN_INFO,
+    CHANGE_FOLLOWING_LIST,
+    CHANGE_FOLLOWER_COUNT,
+    CHANGE_FOLLOWER_LIST,
+    CHANGE_BUTTON_FOLLOW } 
+from "../constants";
+
 import WebService from '../webservice'
 
 export const dismissUserRecommend = (username) => (
@@ -25,8 +38,8 @@ export const changeAcountInfo = (account) => (
     {type: CHANGE_ACCOUNT_INFO, account: account}
 );
 
-export const getUserInfo = (user) => (
-    {type: GET_USER_INFO, user: user}
+export const changeUserInfo = (user) => (
+    {type: CHANGE_USER_INFO, user: user}
 );
 
 export const addTweetList = (tweets) => (
@@ -69,6 +82,7 @@ export const updatePeopleInfo = (loginKey,peopleKey) =>
             dispatch(changeAcountInfo(account.data))
         })
         service.get(`api/userInfo/?id=${peopleKey}`).then(user =>{
+            console.log(user.data)
             dispatch(changeUserInfo(user.data))
         })
         service.get(`api/isfollow/?address1=${loginKey}&address2=${peopleKey}`).then(exists =>{

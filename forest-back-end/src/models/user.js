@@ -41,7 +41,8 @@ export default class User {
             }
 
             return new Promise((resolve, reject) => {
-                this.app.service.post('broadcast_tx_commit', querystring.stringify({tx: data_encoding}), config).then(res => {
+                this.app.service.post('broadcast_tx_commit', querystring.stringify({tx: data_encoding}), config)
+                .then(res => {
                     console.log(res.data.result);
                     if (_.get(res.data.result, "height") === "0") {
                         let rs = {code: -1}

@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import {encode, sign} from "../transaction";
 import {SECRET_KEY} from "../config";
+var querystring = require('querystring');
+
 
 export default class AppRouter {
     constructor(app) {
@@ -177,14 +179,46 @@ export default class AppRouter {
         app.post('/api/update_account', (req, res, next) => {
             const body = _.get(req, 'body');
             console.log(body)
-            this.app.service.post(`broadcast_tx_commit?tx=${body.tx}`).then(result => {
-                console.log(res);
-                return res.status(200).json(result)
-            }).catch(err => {
-                console.log("failed")
-                console.log(err)
-                return res.status(304).json({erorr: err});
-            });
+            const config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }
+
+            this.app.service.post('broadcast_tx_commit', querystring.stringify({tx: body}), config)
+                .then(res => {
+                    console.log(res.data.result);
+                    if (_.get(res.data.result, "height") === "0") {
+                        let rs = {code: -1}
+                        res.status(200).json({'result': rs,'status': 'update name success'})
+                    } else {
+                        console.log(res.data);
+                        res.status(304)
+                            .json({'status': 'update failed',
+                                   'errors': err 
+                        })
+                    }
+                }).catch(err => {
+                    res.status(304)
+                        .json({'status': 'update failed',
+                               'errors': err 
+                    })
+                });
+
+            // this.app.service.post(`broadcast_tx_commit?tx=${body.tx}`).then(result => {
+            //     console.log("success")
+            //     console.log(result.data.result);
+            //     res.status(200).json({'status': 'update name success'})
+
+            // }).catch(err => {
+            //     console.log(err.data)
+            //     res.status(304)
+            //         .json({'status': 'update failed',
+            //                'errors': err 
+            //     })
+            // });
         });
     }
 }
+
+
