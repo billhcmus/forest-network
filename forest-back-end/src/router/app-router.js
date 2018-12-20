@@ -76,6 +76,7 @@ export default class AppRouter {
             app.models.account.createAccount(_.get(body, "publicKey")).then(rs => {
                 return res.status(200).json(rs);
             }).catch(err => {
+                console.log(err)
                 return res.status(304).json({
                     err: err,
                 });
@@ -101,14 +102,13 @@ export default class AppRouter {
         app.post('/api/update_account', (req, res, next) => {
             const body = _.get(req, 'body');
             console.log(body)
-            this.app.service.get(`broadcast_tx_commit?tx=${body.tx}`).then(res => {
-                console.log("success")
+            this.app.service.post(`broadcast_tx_commit?tx=${body.tx}`).then(result => {
                 console.log(res);
-                return resolve(res.data)
+                return res.status(200).json(result)
             }).catch(err => {
                 console.log("failed")
                 console.log(err)
-                return reject(err);
+                return res.status(304).json({erorr: err});
             });
         });
     }
