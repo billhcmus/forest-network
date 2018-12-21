@@ -3,7 +3,6 @@ import {encode, sign} from "../transaction";
 import {SECRET_KEY} from "../config";
 var querystring = require('querystring');
 
-
 export default class AppRouter {
     constructor(app) {
         this.app = app;
@@ -178,19 +177,21 @@ export default class AppRouter {
          */
         app.post('/api/update_account', (req, res, next) => {
             const body = _.get(req, 'body');
-            console.log(body)
-            const config = {
+            // console.log(body)
+            const content_type = {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             }
+            console.log(querystring.stringify({tx: body}))
 
-            this.app.service.post('broadcast_tx_commit', querystring.stringify({tx: body}), config)
+            this.app.service.post('broadcast_tx_commit', querystring.stringify({tx: body}), content_type)
                 .then(res => {
+                    console.log(res.data);
                     console.log(res.data.result);
                     if (_.get(res.data.result, "height") === "0") {
                         let rs = {code: -1}
-                        res.status(200).json({'result': rs,'status': 'update name success'})
+                        res.status(200).json({'result': rs,'status': 'update success'})
                     } else {
                         console.log(res.data);
                         res.status(304)
@@ -205,10 +206,10 @@ export default class AppRouter {
                     })
                 });
 
-            // this.app.service.post(`broadcast_tx_commit?tx=${body.tx}`).then(result => {
+            // this.app.service.get(`broadcast_tx_commit?tx=${body.tx}`).then(result => {
             //     console.log("success")
             //     console.log(result.data.result);
-            //     res.status(200).json({'status': 'update name success'})
+            //     res.status(200).json({'status': 'update success'})
 
             // }).catch(err => {
             //     console.log(err.data)

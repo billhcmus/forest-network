@@ -43,36 +43,35 @@ class EditProfile extends Component {
             //             signature: new Buffer(64)
             //         }
             //         sign(tx, secretKey)
-            //         let data_encoding = '0x'+ encode(tx).toString('hex');
-            //         this.service.post(`api/update_account`,{tx: data_encoding});
+            //         let data_encoding = Buffer.from(encode(tx)).toString("base64");
+            //         // let data_encoding = '0x'+ encode(tx).toString('hex');
+            //         console.log(data_encoding)
+            //         this.service.post(`api/update_account`,{tx: data_encoding})
             //     })
             // }
 
-            // if(this.state.avatar !== '') {
-            //     console.log("avatar")
-            //     this.service.get(`api/sequence/?id=${key.publicKey()}`).then(result =>{
-            //         console.log(result.data)
-            //         let tx = {
-            //             version: 1,
-            //             account: key.publicKey(),
-            //             sequence: result.data + 1,
-            //             memo: Buffer.alloc(0),
-            //             operation: 'update_account',
-            //             params: {
-            //                 key: 'picture',
-            //                 value: new Buffer(this.state.avatar, 'binary')
-            //             },
-            //             signature: new Buffer(64)
-            //         }
-            //         sign(tx, secretKey)
-            //         console.log(tx)
-            //         let data_encoding = '0x'+ encode(tx).toString('hex');
-            //         this.service.post(`api/update_account`,{tx: data_encoding}).then(rs => {
-            //             console.log(rs)
-            //         })
-            //         .catch(err =>{console.log(err)})
-            //     })
-            // }
+            if(this.state.avatar !== '') {
+                console.log("avatar")
+                this.service.get(`api/sequence/?id=${key.publicKey()}`).then(result =>{
+                    console.log(result.data)
+                    let tx = {
+                        version: 1,
+                        account: key.publicKey(),
+                        sequence: result.data + 1,
+                        memo: Buffer.alloc(0),
+                        operation: 'update_account',
+                        params: {
+                            key: 'picture',
+                            value: new Buffer(this.state.avatar, 'binary')
+                        },
+                        signature: new Buffer(64)
+                    }
+                    sign(tx, secretKey)
+                    let data_encoding = '0x'+ encode(tx).toString('hex');
+                    // let data_encoding = Buffer.from(encode(tx)).toString("base64");
+                    this.service.post(`api/update_account`,{tx: data_encoding})
+                })
+            }
 
         // this.props.updateDetail(this.state);
         this.props.onCancel();
@@ -123,6 +122,7 @@ class EditProfile extends Component {
                                     </label>
                                     <input type="file" id="fileAvatar" accept="image/*" ref="fileUploader" onChange={(e) =>
                                         this.handleChosen(e)}/>
+                                        {/*<img src={{this.state.ava}}/>*/}
                                 </div>
                             </div>
                         </div>

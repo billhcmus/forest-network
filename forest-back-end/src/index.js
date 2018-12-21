@@ -37,8 +37,6 @@ app.service = new WebService();
 app.routes = new AppRouter(app);
 app.models = new Model(app);
 
-// app.models.user.updateAccount();
-
 // Connect to db
 // assume that use Mongodb
 new DataBase().connect().then((db) => {

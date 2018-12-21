@@ -54,7 +54,7 @@ export default (state = initState, action) => {
             return{
                 ...state,
                 displayName: action.user.name ? action.user.name.toString('utf-8') : "Unknown",
-                // avatar: action.user.picture ? action.user.picture : 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
+                avatar: action.user.picture ? action.user.picture : 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
             };
             return state;
         case CHANGE_ACCOUNT_INFO:
