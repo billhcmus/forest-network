@@ -12,6 +12,8 @@ function handleMenuClick(e) {
     if (_.get(e, "key") === "1") {
         localStorage.clear();
         window.location = `/`;
+    } else if (_.get(e, "key") === "0") {
+        window.location = `/${Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey()}`;
     }
 }
 
@@ -46,22 +48,22 @@ class Navbar extends Component {
             isTweetShow: false,
             isTransShow: false
         })
-    }
+    };
 
 
     handleTweetClick =(e)=>{
-        e.preventDefault()
+        e.preventDefault();
         this.setState({
             isTweetShow: true
         })
-    }
+    };
 
     handleTransClick =(e)=>{
-        e.preventDefault()
+        e.preventDefault();
         this.setState({
             isTransShow: true
         })
-    }
+    };
 
     componentWillMount()
     {
@@ -91,7 +93,7 @@ class Navbar extends Component {
                                 style={{lineHeight: '44px', border: 'none'}}>
                                 <Menu.Item key="1" style={{fontWeight:'600'}}>
                                     <div  onClick={() => {
-                                        this.props.history.push(`/${Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey()}`)}}>
+                                        window.location = `/${Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey()}`}}>
                                         <Icon type="home"/>
                                         Home
                                     </div>

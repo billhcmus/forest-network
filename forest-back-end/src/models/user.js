@@ -20,15 +20,16 @@ export default class User {
         try {  
             var pic = fs.readFileSync('./src/models/chau.jpg');
 
-            let data = new Buffer(pic);
+            let name = "Jarvis";
+            let data = new Buffer(name.toString('utf-8'));
 
             let tx = {
                 version: 1,
                 account: '',
-                sequence: 19,
+                sequence: 48,
                 memo: Buffer.alloc(0),
                 operation: 'update_account',
-                params: {key: 'picture', value: data},
+                params: {key: 'name', value: data},
             }
         
             sign(tx, SECRET_KEY);

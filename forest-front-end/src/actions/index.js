@@ -12,7 +12,7 @@ import {
     CHANGE_USER_INFO,
     DISMISS_ITEM_RECOMMEND,
     INCREASE_FOLLOWING,
-    SET_LOGIN_INFO,
+    SET_USER_INFO,
     SET_ACTIVE_USER,
 } from "../constants";
 
@@ -58,8 +58,8 @@ export const changeCountFollower = (count) => (
     {type: CHANGE_FOLLOWER_COUNT, followerCount: count}
 );
 
-export const setLoginInfo = (publicKey) => (
-    {type: SET_LOGIN_INFO, loginer: publicKey}
+export const setUserInfo = (user) => (
+    {type: SET_USER_INFO, payload: user}
 );
 
 export const changeListFollowing = (followings) => (
@@ -116,7 +116,7 @@ export const getLoginerInfo = (publicKey) =>
     (dispatch, getState) => {
         let service = new WebService();
         service.get(`api/userInfo/?id=${publicKey}`).then(user => {
-            dispatch(setLoginInfo(user.data))
+            dispatch(setUserInfo(user.data))
         })
     };
 
