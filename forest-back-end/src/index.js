@@ -55,9 +55,17 @@ new DataBase().connect().then((db) => {
         if (!res)
             app.db.collection('account').insertOne(rootAccount);
     });
+    app.db.collection('user').findOne({_id: rootAccount._id}).then(res=>{
+        if (!res)
+            app.db.collection('user').insertOne({_id:'GA6IW2JOWMP4WGI6LYAZ76ZPMFQSJAX4YLJLOQOWFC5VF5C6IGNV2IW7'});
+    });
+    //Init index DB
     app.db.collection('post').createIndex({author:1})
     app.db.collection('follow').createIndex({following:1})
     app.db.collection('follow').createIndex({followed:1})
+    app.db.collection('comment').createIndex({object:1})
+    app.db.collection('reaction').createIndex({object:1})
+    app.db.collection('reaction').createIndex({author:1})
 
 
     //Sync and subcribe

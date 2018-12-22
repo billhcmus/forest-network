@@ -54,7 +54,6 @@ export const hash = (tx) => {
   return tx.hash = crypto.createHash('sha256')
     .update(encode(tx))
     .digest()
-    .slice(0, 20)
     .toString('hex')
     .toUpperCase();
 };

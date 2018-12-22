@@ -148,7 +148,7 @@ export default class AppRouter {
          * @method: GET
          */
         app.get('/api/tweet', (req, res, next) => {
-            app.models.post.getPost(req.query.id,req.query.start,req.query.count).then(rs => {
+            app.models.post.getPost(req.query.id,req.query.loginer,req.query.start,req.query.count).then(rs => {
                 return res.status(200).json(rs);
             }).catch(err => {
                 return res.status(304).json({
@@ -170,6 +170,7 @@ export default class AppRouter {
                 });
             });
         });
+
 
     }
 }

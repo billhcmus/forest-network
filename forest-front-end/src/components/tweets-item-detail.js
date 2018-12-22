@@ -1,22 +1,10 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
-import {Dropdown, Icon, Menu} from 'antd';
+import {comment, thumbsOUp, heartO} from 'react-icons-kit/fa';
+import {happy, angry, sad, calendar, shocked} from 'react-icons-kit/icomoon';
 import "../css/detail-tweet-modal.scss"
+import {Icon} from "react-icons-kit";
 
-
-const menu = (
-    <Menu>
-        <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">1st menu item</a>
-        </Menu.Item>
-        <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">2nd menu item</a>
-        </Menu.Item>
-        <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">3rd menu item</a>
-        </Menu.Item>
-    </Menu>
-);
 
 class TweetItemDetail extends Component {
 
@@ -29,13 +17,6 @@ class TweetItemDetail extends Component {
                     <span className="displayName">{_.get(itemInfo,'displayName')}</span>
                     <div style={{display:"block"}}>
                         <span className="userName"> {_.get(itemInfo,'author')} </span>
-                        <Dropdown overlay={menu} trigger={['click']}>
-                            <div className="tweets-action action-item action-drop">
-                                <button type="button">
-                                    <span className="icon "> <Icon type="down" style={{fontSize: '14px'}}/></span>
-                                </button>
-                            </div>
-                        </Dropdown>
                     </div>
                 </div>
 
@@ -46,21 +27,50 @@ class TweetItemDetail extends Component {
                 <span className="time"> 2 Dec 2018</span>
 
                 <div className="moreStat">
-                    <span className="countStat">{_.get(itemInfo,'commentCount')} Retweet</span>
-                    <span className="countStat">{_.get(itemInfo,'likesCount')} Likes</span>
+                    <span className="countStat">{_.get(itemInfo,'likesCount')} Reactions</span>
                 </div>
 
                 <div className="tweet-action-footer">
                     <div className="action-item action-reply">
                         <button type="button">
-                            <span className="icon"><Icon type="message" /></span>
-                            <span className="actionCount">{_.get(itemInfo,'commentCount')}</span>
+                            <Icon icon={comment}/>
+                            <span className="actionCount">{itemInfo.comment ? itemInfo.comment : 0}</span>
                         </button>
                     </div>
                     <div className="action-item action-like">
                         <button type="button">
-                            <span className="icon"><Icon type="heart" /></span>
-                            <span className="actionCount">{_.get(itemInfo,'likesCount')}</span>
+                            <Icon icon={thumbsOUp}/>
+                            <span className="actionCount">{itemInfo.like ? itemInfo.like : 0}</span>
+                        </button>
+                    </div>
+                    <div className="action-item action-love">
+                        <button type="button">
+                            <Icon icon={heartO}/>
+                            <span className="actionCount">{itemInfo.love ? itemInfo.love : 0}</span>
+                        </button>
+                    </div>
+                    <div className="action-item action-haha">
+                        <button type="button">
+                            <Icon icon={happy}/>
+                            <span className="actionCount">{itemInfo.haha ? itemInfo.haha : 0}</span>
+                        </button>
+                    </div>
+                    <div className="action-item action-wow">
+                        <button type="button">
+                            <Icon icon={shocked}/>
+                            <span className="actionCount">{itemInfo.wow ? itemInfo.wow : 0}</span>
+                        </button>
+                    </div>
+                    <div className="action-item action-sad">
+                        <button type="button">
+                            <Icon icon={sad}/>
+                            <span className="actionCount">{itemInfo.sad ? itemInfo.sad : 0}</span>
+                        </button>
+                    </div>
+                    <div className="action-item action-angry">
+                        <button type="button">
+                            <Icon icon={angry}/>
+                            <span className="actionCount">{itemInfo.angry ? itemInfo.angry : 0}</span>
                         </button>
                     </div>
                 </div>

@@ -6,7 +6,7 @@ import tweets from "./TweetsReducer";
 import tweetDetail from "./TweetDetailReducer";
 import RecommendReducer from './RecommendReducer';
 import AuthReducer from './AuthReducer';
-import LoginerReducer from  './LoginerReducer'
+import loginer from  './LoginerReducer'
 import activeUser from './ActiveUserReducer'
 
 export default combineReducers({
@@ -17,6 +17,6 @@ export default combineReducers({
     tweetDetail,
     RecommendReducer,
     AuthReducer,
-    LoginerReducer,
+    loginer,
     activeUser,
 });

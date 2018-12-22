@@ -41,6 +41,7 @@ class TransferForm extends Component {
                     sign(tx,secret);
                     let data_encoding = '0x' + encode(tx).toString('hex');
                     this.service.post(`api/sendTx`,{tx: data_encoding}).then((response) => {
+                        alert("Payment Success!");
                         this.props.onCancel();
                     }).catch(err => {
                         const message = _.get(err, 'response.data.error.message', "Payment Unsuccess!");

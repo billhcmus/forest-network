@@ -20,6 +20,6 @@ export default class Model {
         this.user = new User(app);
         this.sync = new Synchronization(app);
         this.post = new Post(app);
-        this.follow = new Follow(app)
+        this.follow = new Follow(app);
     }
 }

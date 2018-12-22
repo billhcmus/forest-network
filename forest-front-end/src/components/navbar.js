@@ -5,7 +5,6 @@ import React, {Component} from 'react';
 import _ from 'lodash';
 import '../css/navstyle.css';
 import {Keypair} from "stellar-base";
-import {Link} from "react-router-dom";
 
 const {Header} = Layout;
 const Search = Input.Search;
@@ -93,7 +92,8 @@ class Navbar extends Component {
                                 style={{lineHeight: '44px', border: 'none'}}>
                                 <Menu.Item key="1" style={{fontWeight:'600'}}>
                                     <div  onClick={() => {
-                                        this.props.history.push(`/${Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey()}`)}}>
+                                        window.location = `/${ Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey()}`;}
+                                    }>
                                         <Icon type="home"/>
                                         Home
                                     </div>
@@ -124,7 +124,7 @@ class Navbar extends Component {
 
                             <Button type="primary" style={{borderRadius: '50px',fontWeight:'bold',marginLeft:'16px'}} onClick={(e)=>this.handleTweetClick(e)}>Tweet</Button>
                         </div>
-                        <Tweet isTweetShow={this.state.isTweetShow} onCancel={(e)=>this.handleCancel(e)}/>
+                        <Tweet loginerAvatar={this.props.loginerInfo.avatar} isTweetShow={this.state.isTweetShow} onCancel={(e)=>this.handleCancel(e)}/>
                         <Transfer isTransShow={this.state.isTransShow} onCancel={(e)=>this.handleCancel(e)}/>
 
                     </div>

@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import {Icon} from 'antd/lib';
 import TweetItem from './tweets-item';
+import {Keypair} from "stellar-base";
 
 class TweetBoard extends Component {
     componentWillMount() {
-        this.props.getSomeNewestTweet(this.props.activeUser)
+        this.props.getSomeNewestTweet(this.props.activeUser,Keypair.fromSecret(
+            localStorage.getItem("SECRET_KEY")).publicKey())
     }
 
     render() {

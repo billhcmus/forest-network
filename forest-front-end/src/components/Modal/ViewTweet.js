@@ -8,13 +8,14 @@ class ViewTweet extends Component {
 
     render() {
         const mainTweet = this.props.tweetDetail.mainTweet;
-        const listOtherTweets = this.props.tweetDetail.otherTweets;
+        const listComments = this.props.tweetDetail.otherTweets;
         return (
             <Modal
                 visible={this.props.isModalShow}
                 onCancel={() => this.props.onCancel()}
                 footer={null}
                 style={{top:20}}
+                width = {700}
                 bodyStyle={{padding:0}}
             >
                 <div className="tweet-container">
@@ -23,7 +24,7 @@ class ViewTweet extends Component {
                     </div>
                     <ul className="list-tweets">
                         {
-                            !!listOtherTweets && listOtherTweets.map((value, key) =>{
+                            !!listComments && listComments.map((value, key) =>{
                                 return (
                                     <TweetItem key={key} itemInfo={value}/>
                                 )

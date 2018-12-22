@@ -6,14 +6,14 @@ const mapStateToProps = state => {
 	return {
 		userInfo: state.userInfo,
 		tweets : state.tweets,
-		activeUser : state.activeUser
+		activeUser : state.activeUser,
 	}
 }
 
 const mapDispatchToProps = dispatch => {
 	return {
-		getSomeNewestTweet: (publicKey) => {
-			dispatch(getSomeNewestTweet(publicKey));
+		getSomeNewestTweet: (publicKey,loginer) => {
+			dispatch(getSomeNewestTweet(publicKey,loginer));
 		},
 	}
 };

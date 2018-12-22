@@ -46,7 +46,17 @@
     ::placeholder {
       color: #c1c6cb;
     }
-
+    .comment-text-area
+    {
+      border-radius: 10px;
+      width: 100%;
+      min-height: 40px;
+      padding: 8px;
+      border-color: azure;
+      border-width: 2px;
+      font-size: 12px;
+      font-weight: 500;
+    }
   }
 
   .tweet-toolbar

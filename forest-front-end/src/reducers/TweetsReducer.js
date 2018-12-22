@@ -9,8 +9,11 @@ export default (state = initState, action) => {
         {
             let tmp = [];
             if (action.tweets) {
+                console.log(action.tweets)
                 action.tweets.forEach((tweet) => {
-                    tmp = [...tmp, tweet]
+                    if (tweet) {
+                        tmp = [...tmp, tweet]
+                    }
                 })
             }
             return tmp

@@ -64,4 +64,9 @@ export default class User {
         return user;
     }
 
+    async getInteractsCount(publicKey,object) {
+        let post = await this.app.db.collection('post').find({author: publicKey});
+        return post.count();
+    }
+
 }

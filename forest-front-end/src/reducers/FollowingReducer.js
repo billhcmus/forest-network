@@ -8,11 +8,13 @@ export default (state = initState, action) => {
             let tmp = [];
             if (action.followings) {
                 action.followings.forEach((user) => {
-                    tmp = [...tmp, {
-                        userName: user._id,
-                        avatar: user.picture,
-                        displayName:user.name
-                    }]
+                    if (user) {
+                        tmp = [...tmp, {
+                            userName: user._id,
+                            avatar: user.picture,
+                            displayName: user.name
+                        }]
+                    }
                 })
             }
             return tmp
