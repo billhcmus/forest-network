@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
 import {comment, thumbsOUp, heartO} from 'react-icons-kit/fa';
-import {happy, angry, sad, calendar, shocked} from 'react-icons-kit/icomoon';
+import {happy, angry, sad, shocked} from 'react-icons-kit/icomoon';
 import "../css/detail-tweet-modal.scss"
 import {Icon} from "react-icons-kit";
 

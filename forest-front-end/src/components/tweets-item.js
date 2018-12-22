@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Icon} from 'react-icons-kit';
 import {comment, thumbsOUp, heartO} from 'react-icons-kit/fa';
-import {happy, angry, sad, calendar,shocked} from 'react-icons-kit/icomoon';
+import {happy, angry, sad,shocked} from 'react-icons-kit/icomoon';
 import ViewTweet from '../containers/view-detail-tweet';
 import Comment from '../components/Modal/Comment';
 import moment from "moment";
@@ -23,7 +23,7 @@ class TweetItem extends Component {
         };
     }
 
-    handleCacel = (e) => {
+    handleCancel = (e) => {
         this.setState({
             isModalShow: false
         })
@@ -71,7 +71,6 @@ class TweetItem extends Component {
             sign(tx,secret);
             let data_encoding = '0x' + encode(tx).toString('hex');
             this.service.post(`api/sendTx`,{tx: data_encoding}).then((response) => {
-                this.props.onCancel();
                 alert('Successs');
             }).catch(err => {
                 const message = _.get(err, 'response.data.error.message', "React Unsuccess!");
@@ -92,7 +91,7 @@ class TweetItem extends Component {
         const itemInfo = this.props.itemInfo
         return (
             <li className="item-tweet">
-                <ViewTweet isModalShow={this.state.isModalShow} onCancel={(e) => this.handleCacel(e)}/>
+                <ViewTweet isModalShow={this.state.isModalShow} onCancel={(e) => this.handleCancel(e)}/>
                 <Comment object={itemInfo._id} isCommentShow={this.state.isCommentShow} onCancel={(e) => this.handleCommentCacel(e)}/>
                 <div className="tweet-content" onClick={(e) =>this.handleSpanClick(e)}>
                     <div className="tweet-header">

@@ -1,4 +1,4 @@
-import {Button, Icon, Modal} from 'antd';
+import {Button, Modal} from 'antd';
 import React, {Component} from 'react';
 import "../../css/compose-tweet.scss"
 import {Keypair} from 'stellar-base';
