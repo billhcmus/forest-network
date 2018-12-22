@@ -10,7 +10,7 @@ class App extends Component {
     return (
 	    <Router>
 				<Switch>
-					<Route exact path={["/login","/"]} component={LoginAndSignUp}/>
+					<Route exact path={"/"} component={LoginAndSignUp}/>
 					<PrivateRoute exact path={"/:id"} component={Layout}/>
 				</Switch>
 	    </Router>

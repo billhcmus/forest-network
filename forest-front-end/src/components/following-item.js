@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom'
 import connect from "react-redux/es/connect/connect";
-import ViewTweet from "./Modal/ViewTweet";
 import {activeUser} from "../actions";
 // const menu = (
 //   <Menu>

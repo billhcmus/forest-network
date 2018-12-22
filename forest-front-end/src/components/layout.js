@@ -4,7 +4,6 @@ import UserProfile from '../containers/user-profile'
 import Wall from "./wall";
 import connect from "react-redux/es/connect/connect";
 import {activeUser} from "../actions";
-import {Keypair} from "stellar-base";
 
 class Layout extends Component {
 

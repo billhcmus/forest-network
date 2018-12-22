@@ -1,23 +1,23 @@
 import {CHANGE_FOLLOWING_LIST} from "../constants";
 
-const initState =[]
+const initState =[];
 
 export default (state = initState, action) => {
     switch (action.type) {
         case CHANGE_FOLLOWING_LIST:
-            let tmp = [];
+            let newState = [];
             if (action.followings) {
                 action.followings.forEach((user) => {
                     if (user) {
-                        tmp = [...tmp, {
+                        newState = [...newState, {
                             userName: user._id,
                             avatar: user.picture,
-                            displayName: user.name
+                            displayName:user.name
                         }]
                     }
-                })
+                });
             }
-            return tmp
+            return newState;
         default:
             return state
     }

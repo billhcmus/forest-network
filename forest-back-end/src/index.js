@@ -80,7 +80,7 @@ new DataBase().connect().then((db) => {
 });
 
 //TEST PIC
-// *******app.models.user.updateAccount();
+//app.models.user.updateAccount();
 
 
 server.listen(process.env.PORT || PORT, () => {

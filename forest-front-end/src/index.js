@@ -13,7 +13,7 @@ import 'antd/dist/antd.css';
 const store = createStore(
     rootReducer,
     applyMiddleware(thunk)
-);;
+);
 
 
 ReactDOM.render(

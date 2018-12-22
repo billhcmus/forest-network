@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Icon} from 'antd';
 import '../../css/edit-profile.scss'
-import moment from "moment";
 
 class EditProfile extends Component {
 
@@ -13,14 +12,14 @@ class EditProfile extends Component {
             displayName:this.props.userInfo.displayName,
             avatar:'',
             location:this.props.userInfo.location,
-            birthday:moment(this.props.userInfo.birthdate).format('MMM DD, YYYY'),
+
         };
     }
 
     handleChosen(event)
     {
         if (event.target.files && event.target.files[0]) {
-            this.setState({avatar:event.target.files[0]})
+            this.setState({avatar:event.target.files[0]});
             this.refs.saveBtn.focus();
             event.target.value = null;
         }

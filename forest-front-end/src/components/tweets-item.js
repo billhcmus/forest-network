@@ -10,19 +10,6 @@ import {encodeReact} from "../transaction/myv1";
 import {encode, sign} from "../transaction";
 import _ from "lodash";
 import WebService from "../webservice";
-// const menu = (
-//   <Menu>
-//     <Menu.Item>
-//       <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">1st menu item</a>
-//     </Menu.Item>
-//     <Menu.Item>
-//       <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">2nd menu item</a>
-//     </Menu.Item>
-//     <Menu.Item>
-//       <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">3rd menu item</a>
-//     </Menu.Item>
-//   </Menu>
-// );
 
 
 class TweetItem extends Component {
@@ -54,7 +41,6 @@ class TweetItem extends Component {
             isCommentShow: true
         })
     }
-
 
     handleSpanClick = (e) => {
         e.stopPropagation()
@@ -108,7 +94,6 @@ class TweetItem extends Component {
             <li className="item-tweet">
                 <ViewTweet isModalShow={this.state.isModalShow} onCancel={(e) => this.handleCacel(e)}/>
                 <Comment object={itemInfo._id} isCommentShow={this.state.isCommentShow} onCancel={(e) => this.handleCommentCacel(e)}/>
-
                 <div className="tweet-content" onClick={(e) =>this.handleSpanClick(e)}>
                     <div className="tweet-header">
                         <div className="tweet-profile-link">
