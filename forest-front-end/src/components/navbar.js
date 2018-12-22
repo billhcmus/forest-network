@@ -5,8 +5,6 @@ import React, {Component} from 'react';
 import _ from 'lodash';
 import '../css/navstyle.css';
 import {Keypair} from "stellar-base";
-import {Link} from "react-router-dom";
-
 const {Header} = Layout;
 const Search = Input.Search;
 

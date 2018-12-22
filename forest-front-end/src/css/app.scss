@@ -229,7 +229,6 @@ body, html {
         list-style: none;
         .item-tweet {
           background: #fff;
-          padding: 10px;
           border-bottom: 1px solid #e6ecf0;
           // background-clip: padding-box;
           padding: 9px 12px;
@@ -454,7 +453,7 @@ body, html {
   text-align: center;
   .sidebar-left {
     display: inline-block;
-    width: 242px;
+    width: 300px;
     margin: 10px;
     vertical-align: top;
     margin-top: 50px;
@@ -462,7 +461,6 @@ body, html {
   }
   .content {
     display: inline-block;
-    width: 613px;
     height: 100%;
     margin-top: 10px;
     vertical-align: top;
@@ -473,7 +471,7 @@ body, html {
     min-width: 913px;
     height: 100%;
     margin-top: 10px;
-    vertical-align: top; 
+    vertical-align: top;
   }
   .sidebar-right {
     display: inline-block;

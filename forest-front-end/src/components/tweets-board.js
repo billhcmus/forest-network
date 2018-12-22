@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Icon} from 'antd/lib';
+import {Icon} from 'antd';
 import TweetItem from './tweets-item';
 
 class TweetBoard extends Component {

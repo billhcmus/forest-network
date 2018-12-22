@@ -11,10 +11,9 @@ export const encode = (tx) => {
   switch (tx.version) {
     case 1:
       return v1.encode(tx);
-
     default:
       throw Error('Unsupport version');
-  };
+  }
 };
 
 export const decode = (data) => {
@@ -22,8 +21,6 @@ export const decode = (data) => {
   switch (versionTx.version) {
     case 1:
       return v1.decode(data);
-      break;
-    
     default:
       throw Error('Unsupport version');
   }

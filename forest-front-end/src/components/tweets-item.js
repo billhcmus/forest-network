@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Icon} from 'antd';
 import ViewTweet from '../containers/view-detail-tweet';
-import moment from "moment";
 // const menu = (
 //   <Menu>
 //     <Menu.Item>
@@ -40,7 +39,7 @@ class TweetItem extends Component {
     }
 
       render() {
-        const itemInfo = this.props.itemInfo
+        const itemInfo = this.props.itemInfo;
         return (
           <li className="item-tweet">
               <ViewTweet isModalShow={this.state.isModalShow} onCancel={(e)=>this.handleCacel(e)}/>
@@ -49,7 +48,7 @@ class TweetItem extends Component {
                 <div className="tweet-profile-link">
                     <img src={`data:image/jpeg;base64,${itemInfo.avatar?itemInfo.avatar:'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='}`} alt="..."/>
                     <span className="displayName">{itemInfo.displayName ? itemInfo.displayName : 'Unknown'}</span>
-                    <span className="time"> {moment(itemInfo.time).format('hh:mm,DD MMM,YYYY')}</span>
+                    <span className="time"> </span>
                     <span className="userName"> {itemInfo.author} </span>
                 </div>
                   {/*<Dropdown overlay={menu} trigger={['click']}>*/}

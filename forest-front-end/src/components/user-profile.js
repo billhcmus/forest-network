@@ -21,7 +21,7 @@ class UserProfile extends Component {
         this.setState({
             isModalShow: false
         })
-    }
+    };
 
     componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside);
@@ -36,13 +36,14 @@ class UserProfile extends Component {
         this.setState({
             isModalShow: true
         })
-    }
+    };
+
     handleFollowClick = async (e) =>{
         let secret = localStorage.getItem("SECRET_KEY");
         let publicKey = Keypair.fromSecret(secret).publicKey();
         let seq = await this.service.get(`api/sequence/?id=${publicKey}`);
         let followings = await this.service.get(`api/followings/?id=${publicKey}&needMore=0`);
-        let newfollowings = followings.data.concat(this.props.activeUser)
+        let newfollowings = followings.data.concat(this.props.activeUser);
         let tx = {
             version: 1,
             account: '',
@@ -78,7 +79,8 @@ class UserProfile extends Component {
             if (this.props.activeUser === item)
                 return false
             return true
-        })
+        });
+
         let tx = {
             version: 1,
             account: '',
@@ -93,7 +95,7 @@ class UserProfile extends Component {
                     })
                 })
             }
-        }
+        };
         sign(tx,secret);
         let data_encoding = '0x' + encode(tx).toString('hex');
 

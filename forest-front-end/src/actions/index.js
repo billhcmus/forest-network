@@ -15,7 +15,7 @@ import {
     SET_LOGIN_INFO,
     SET_ACTIVE_USER,
 } from "../constants";
-// import {encode,sign} from '../transaction';
+
 import WebService from '../webservice'
 
 export const dismissUserRecommend = (username) => (
@@ -84,61 +84,61 @@ export const activeUser = (userID) => (
 
 export const updatePeopleInfo = (loginKey, peopleKey) =>
     (dispatch, getState) => {
-        let service = new WebService;
+        let service = new WebService();
         service.get(`api/accountInfo/?id=${peopleKey}`).then(account => {
             dispatch(changeAcountInfo(account.data))
-        })
+        });
         service.get(`api/userInfo/?id=${peopleKey}`).then(user => {
             dispatch(changeUserInfo(user.data))
-        })
+        });
         service.get(`api/isfollow/?address1=${loginKey}&address2=${peopleKey}`).then(exists => {
             dispatch(updateButtonFollow(exists.data))
         })
-    }
+    };
 
 export const updateListFollowing = (publicKey) =>
     (dispatch, getState) => {
-        let service = new WebService;
+        let service = new WebService();
         service.get(`api/followings/?id=${publicKey}&needMore=1`).then(followings => {
             dispatch(changeListFollowing(followings.data))
         })
-    }
+    };
 
 export const updateListFollower = (publicKey) =>
     (dispatch, getState) => {
-        let service = new WebService;
+        let service = new WebService();
         service.get(`api/followers/?id=${publicKey}`).then(followers => {
             dispatch(changeListFollower(followers.data))
         })
-    }
+    };
 
 export const getLoginerInfo = (publicKey) =>
     (dispatch, getState) => {
-        let service = new WebService;
+        let service = new WebService();
         service.get(`api/userInfo/?id=${publicKey}`).then(user => {
             dispatch(setLoginInfo(user.data))
         })
-    }
+    };
 
 export const getSomeNewestTweet = (publicKey) =>
     (dispatch, getState) => {
-        let service = new WebService;
+        let service = new WebService();
         service.get(`api/tweet/?id=${publicKey}&start=0&count=5`).then(tweets => {
             dispatch(addTweetList(tweets.data))
         })
-    }
+    };
 
 export const getCount = (publicKey) =>
     (dispatch, getState) => {
-        let service = new WebService;
+        let service = new WebService();
         service.get(`api/tweetCount?id=${publicKey}`).then(count => {
             dispatch(changeCountTweet(count.data))
-        })
+        });
         service.get(`api/followingsCount?id=${publicKey}`).then(count => {
             dispatch(changeCountFollowing(count.data))
-        })
+        });
         service.get(`api/followersCount?id=${publicKey}`).then(count => {
             dispatch(changeCountFollower(count.data))
         })
-    }
+    };
 

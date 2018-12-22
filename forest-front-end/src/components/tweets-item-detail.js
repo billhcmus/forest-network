@@ -21,7 +21,7 @@ const menu = (
 class TweetItemDetail extends Component {
 
     render() {
-        const itemInfo = this.props.itemInfo
+        const itemInfo = this.props.itemInfo;
         return (
             <div className="tweet-content">
                 <img src={_.get(itemInfo,'urlAvatar')} alt="..."/>
