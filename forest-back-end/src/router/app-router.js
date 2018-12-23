@@ -128,12 +128,12 @@ export default class AppRouter {
 
 
         /**
-         * @endpoint: /api/sendTx
+         * @endpoint: /api/posts
          * @method: POST
          */
-        app.post('/api/sendTx', (req, res, next) => {
+        app.post('/api/posts', (req, res, next) => {
             const body = _.get(req, 'body');
-            app.models.post.userPost(body.tx).then(rs => {
+            app.models.interact.createPost(body.tx).then(rs => {
                 return res.status(200).json(rs);
             }).catch(err => {
                 return res.status(304).json({
@@ -148,7 +148,7 @@ export default class AppRouter {
          * @method: GET
          */
         app.get('/api/tweet', (req, res, next) => {
-            app.models.post.getPost(req.query.id,req.query.loginer,req.query.start,req.query.count).then(rs => {
+            app.models.interact.getPost(req.query.id,req.query.loginer,req.query.start,req.query.count).then(rs => {
                 return res.status(200).json(rs);
             }).catch(err => {
                 return res.status(304).json({
@@ -162,7 +162,7 @@ export default class AppRouter {
          * @method: GET
          */
         app.get('/api/tweetCount', (req, res, next) => {
-            app.models.post.getPostCount(req.query.id).then(rs => {
+            app.models.interact.getPostCount(req.query.id).then(rs => {
                 return res.status(200).json(rs);
             }).catch(err => {
                 return res.status(304).json({
@@ -176,7 +176,7 @@ export default class AppRouter {
          * @method: GET
          */
         app.get('/api/tweetCount', (req, res, next) => {
-            app.models.post.getPostCount(req.query.id).then(rs => {
+            app.models.interact.getPostCount(req.query.id).then(rs => {
                 return res.status(200).json(rs);
             }).catch(err => {
                 return res.status(304).json({
@@ -190,7 +190,7 @@ export default class AppRouter {
          * @method: GET
          */
         app.get('/api/tweetDetail', (req, res, next) => {
-            app.models.post.getPostDetail(req.query.object,req.query.loginer,req.query.start,req.query.count).then(rs => {
+            app.models.interact.getPostDetail(req.query.object,req.query.loginer,req.query.start,req.query.count).then(rs => {
                 return res.status(200).json(rs);
             }).catch(err => {
                 return res.status(304).json({
@@ -198,8 +198,5 @@ export default class AppRouter {
                 });
             });
         });
-
-
-
     }
 }

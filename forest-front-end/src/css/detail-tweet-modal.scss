@@ -1,6 +1,15 @@
 .tweet-container {
   position: relative;
 
+  .view-more{
+    margin: 5px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .view-more:hover{
+    cursor: pointer;
+    color: #00a7f8;
+  }
 
   .tweets-action {
     float: right;

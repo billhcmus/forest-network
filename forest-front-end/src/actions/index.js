@@ -16,7 +16,8 @@ import {
     SET_USER_INFO,
     SET_ACTIVE_USER,
     CHANGE_TWEET_DETAIL_COMMENT,
-    CHANGE_TWEET_DETAIL_MAIN
+    CHANGE_TWEET_DETAIL_MAIN,
+    ADD_TWEET_DETAIL_COMMENT
 } from "../constants";
 
 import WebService from '../webservice'
@@ -97,12 +98,24 @@ export const changeTweetDetailComment = (comments) => (
     {type: CHANGE_TWEET_DETAIL_COMMENT, comments: comments}
 );
 
+export const addTweetDetailComment = (comments) =>(
+    {type: ADD_TWEET_DETAIL_COMMENT, comments: comments}
+);
+
 export const getDetailTweet = (object, loginer) =>
     (dispatch, getState) => {
         dispatch(changeTweetDetailMain(object))
         let service = new WebService();
-        service.get(`api/tweetDetail/?object=${object._id}&loginer=${loginer}&start=0&count=10`).then(postDetail => {
+        service.get(`api/tweetDetail/?object=${object._id}&loginer=${loginer}&start=0&count=5`).then(postDetail => {
             dispatch(changeTweetDetailComment(postDetail.data))
+        });
+    };
+
+export const getMoreDetailTweet = (object, loginer,offset) =>
+    (dispatch, getState) => {
+        let service = new WebService();
+        service.get(`api/tweetDetail/?object=${object._id}&loginer=${loginer}&start=${offset}&count=5`).then(postDetail => {
+            dispatch(addTweetDetailComment(postDetail.data))
         });
     };
 
@@ -147,7 +160,7 @@ export const getLoginerInfo = (publicKey) =>
 export const getSomeNewestTweet = (publicKey,loginerKey) =>
     (dispatch, getState) => {
         let service = new WebService;
-        service.get(`api/tweet/?id=${publicKey}&loginer=${loginerKey}&start=0&count=15`).then(tweets => {
+        service.get(`api/tweet/?id=${publicKey}&loginer=${loginerKey}&start=0&count=10`).then(tweets => {
             dispatch(initTweetList(tweets.data))
         })
     };
@@ -155,7 +168,7 @@ export const getSomeNewestTweet = (publicKey,loginerKey) =>
 export const getSomeMoreTweet = (publicKey,loginerKey,offset) =>
     (dispatch, getState) => {
         let service = new WebService;
-        service.get(`api/tweet/?id=${publicKey}&loginer=${loginerKey}&start=${offset}&count=15`).then(tweets => {
+        service.get(`api/tweet/?id=${publicKey}&loginer=${loginerKey}&start=${offset}&count=10`).then(tweets => {
             dispatch(addTweetList(tweets.data))
         })
     };

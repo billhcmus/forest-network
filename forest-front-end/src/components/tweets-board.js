@@ -25,8 +25,10 @@ class TweetBoard extends Component {
         const wrappedElement = document.getElementById('a-scroll');
         if (this.isBottom(wrappedElement)) {
             console.log('Loadmore');
-            this.props.getSomeMoreTweet(this.props.activeUser,Keypair.fromSecret(
-                localStorage.getItem("SECRET_KEY")).publicKey(),this.props.tweets.length)
+            if (this.props.tweets.length > 0) {
+                this.props.getSomeMoreTweet(this.props.activeUser, Keypair.fromSecret(
+                    localStorage.getItem("SECRET_KEY")).publicKey(), this.props.tweets.length)
+            }
         }
     };
 

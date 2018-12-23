@@ -1,4 +1,4 @@
-import {CHANGE_TWEET_DETAIL_COMMENT,CHANGE_TWEET_DETAIL_MAIN} from "../constants";
+import {CHANGE_TWEET_DETAIL_COMMENT,CHANGE_TWEET_DETAIL_MAIN,ADD_TWEET_DETAIL_COMMENT} from "../constants";
 const initState = {
     comments:[]
 }
@@ -11,19 +11,33 @@ export default (state = initState, action) => {
                 ...state,
                 main: action.main
             }
-        case CHANGE_TWEET_DETAIL_COMMENT:
+        case CHANGE_TWEET_DETAIL_COMMENT: {
             let tmp = {
                 ...state,
-                comments:[]
+                comments: []
             };
             if (action.comments) {
                 action.comments.forEach((comment) => {
                     if (comment) {
-                        tmp.comments = [...tmp.comments,comment]
+                        tmp.comments = [...tmp.comments, comment]
                     }
                 })
             }
             return tmp
+        }
+        case ADD_TWEET_DETAIL_COMMENT: {
+            let tmp = {
+                ...state,
+            };
+            if (action.comments) {
+                action.comments.forEach((comment) => {
+                    if (comment) {
+                        tmp.comments = [...tmp.comments, comment]
+                    }
+                })
+            }
+            return tmp
+        }
         default:
             return state
     }
