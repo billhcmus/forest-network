@@ -28,12 +28,12 @@ class Navbar extends Component {
     }
 
     menuDrop = (
-        <div style={{boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'}}>
+        <div style={{boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',width: '150px'}}>
             <Menu onClick={handleMenuClick}>
                 <Menu.Divider />
                 <Menu.Item key="0">
                     <Icon type="user"/>
-                    Detail
+                    Profile
                 </Menu.Item>
                 <Menu.Item key="1">
                     <Icon type="logout"/>

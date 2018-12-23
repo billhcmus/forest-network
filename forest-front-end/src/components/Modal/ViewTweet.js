@@ -30,7 +30,7 @@ class ViewTweet extends Component {
                 >
                     <div className="tweet-container">
                         <div className="main-tweet">
-                            <TweetItemDetail itemInfo={mainTweet}/>
+                            <TweetItemDetail activeUser={this.props.activeUser} itemInfo={mainTweet}/>
                         </div>
                         <ul className="list-tweets">
                             {

@@ -104,8 +104,13 @@ class TweetItem extends Component {
                                     src={`data:image/jpeg;base64,${itemInfo.avatar ? itemInfo.avatar : 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='}`}
                                     alt="..."/>
                                 <span
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+                                        if (this.props.activeUser !== itemInfo.author)
+                                            window.location =`/${itemInfo.author}`
+                                    }}
                                     className="displayName">{itemInfo.displayName ? itemInfo.displayName : 'Unknown'}</span>
-                                <span className="time"> {moment(itemInfo.time).format('HH:mm,DD MMM,YYYY')}</span>
+                                <span className="time"> {moment(itemInfo.time).format('HH:mm, DD MMM, YYYY')}</span>
                                 <span className="userName"> {itemInfo.author} </span>
                             </div>
                             {/*<Dropdown overlay={menu} trigger={['click']}>*/}

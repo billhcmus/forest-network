@@ -83,7 +83,13 @@ class TweetItemDetail extends Component {
                 <Comment objectid={itemInfo._id} isCommentShow={this.state.isCommentShow} onCancel={(e) => this.handleCommentCancel(e)}/>
                 <img src={`data:image/jpeg;base64,${itemInfo.avatar ? itemInfo.avatar : 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='}`} alt="..."/>
                 <div className="name">
-                    <span className="displayName">{itemInfo.displayName}</span>
+                    <span
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            if (this.props.activeUser !== itemInfo.author)
+                                window.location =`/${itemInfo.author}`
+                        }}
+                        className="displayName">{itemInfo.displayName}</span>
                     <div style={{display:"block"}}>
                         <span className="userName"> {itemInfo.author} </span>
                     </div>
@@ -93,7 +99,7 @@ class TweetItemDetail extends Component {
                     <p>{itemInfo.content.text}</p>
                 </div>
 
-                <span className="time"> {moment(itemInfo.time).format('HH:mm,DD MMM,YYYY')}</span>
+                <span className="time"> {moment(itemInfo.time).format('HH:mm, DD MMM, YYYY')}</span>
 
                 <div className="moreStat">
                     <span className="countStat">{countSum} Reactions</span>

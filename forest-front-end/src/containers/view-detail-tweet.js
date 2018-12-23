@@ -4,7 +4,8 @@ import {getMoreDetailTweet} from "../actions";
 
 const mapStateToProps = state => {
     return {
-        tweetDetail: state.tweetDetail
+        tweetDetail: state.tweetDetail,
+        activeUser: state.activeUser,
     }
 };
 
