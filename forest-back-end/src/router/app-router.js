@@ -198,5 +198,19 @@ export default class AppRouter {
                 });
             });
         });
+
+        /**
+         * @endpoint: /api/payments
+         * @method: GET
+         */
+        app.get('/api/payments', (req, res, next) => {
+            app.models.payment.getPayments(req.query.id,req.query.start,req.query.count).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(404).json({
+                    error: err,
+                });
+            });
+        })
     }
 }

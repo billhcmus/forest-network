@@ -26,7 +26,7 @@ app.use(bodyParse.json({
 
 const server = http.createServer(app);
 
-const client = RpcClient('wss://gorilla.forest.network:443/websocket');
+const client = RpcClient('wss://dragonfly.forest.network:443/websocket');
 client.ws.on("close",(err)=>{
     console.log(err)
 })
@@ -66,6 +66,7 @@ new DataBase().connect().then((db) => {
     app.db.collection('comment').createIndex({object:1})
     app.db.collection('reaction').createIndex({object:1})
     app.db.collection('reaction').createIndex({author:1})
+    app.db.collection('transaction').createIndex({operation:1})
 
 
     //Sync and subcribe

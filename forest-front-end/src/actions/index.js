@@ -19,7 +19,8 @@ import {
     CHANGE_TWEET_DETAIL_MAIN,
     ADD_TWEET_DETAIL_COMMENT,
     ADD_FOLLOWING_LIST,
-    ADD_FOLLOWER_LIST
+    ADD_FOLLOWER_LIST,
+    CHANGE_PAYMENT_LIST
 } from "../constants";
 
 import WebService from '../webservice'
@@ -112,6 +113,10 @@ export const addMoreListFollowing = (followings) =>(
     {type: ADD_FOLLOWING_LIST, followings: followings}
 );
 
+export const changeListPayment = (payments) => (
+    {type: CHANGE_PAYMENT_LIST, payments: payments}
+);
+
 export const getDetailTweet = (object, loginer) =>
     (dispatch, getState) => {
         dispatch(changeTweetDetailMain(object))
@@ -119,6 +124,14 @@ export const getDetailTweet = (object, loginer) =>
         service.get(`api/tweetDetail/?object=${object._id}&loginer=${loginer}&start=0&count=5`).then(postDetail => {
             dispatch(changeTweetDetailComment(postDetail.data))
         });
+    };
+
+export const updatePayment = (publicKey) =>
+    (dispatch, getState) => {
+        let service = new WebService();
+        service.get(`api/payments/?id=${publicKey}&start=0&count=20`).then(payments => {
+            dispatch(changeListPayment(payments.data))
+        })
     };
 
 export const getMoreDetailTweet = (object, loginer,offset) =>

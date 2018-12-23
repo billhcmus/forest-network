@@ -23,7 +23,7 @@ export default class Synchronization {
         if (metaHeight) {
             beginHeight = metaHeight._value;
         } else {
-            await this.app.db.collection('metadata').insertOne({_id: 'finalHeight'});            
+            await this.app.db.collection('metadata').insertOne({_id: 'finalHeight',_value:0});
         }
 
         let status =  await this.app.service.get('status')
@@ -39,7 +39,7 @@ export default class Synchronization {
                     for(let j = 0; j < txs.length; j++)
                     {
                         console.log("Height", i)
-                        let err = await this.checkAndWriteToDB(txs[j], block_time);
+                        let err = await this.checkAndWriteToDB(i, txs[j], block_time);
                         if (err)
                             console.log(err);
                     }
@@ -52,7 +52,7 @@ export default class Synchronization {
         return { code: 1 };
     }
 
-    async checkAndWriteToDB(tx, block_time) {
+    async checkAndWriteToDB(block, tx, block_time) {
         //Verify tx có hợp lệ không, theo các trường hợp trong code server.js
 
         const txSize =  Buffer(tx, 'base64').length;
@@ -277,6 +277,9 @@ export default class Synchronization {
         try {
             const newTransaction = {
                 _id: hashTx,
+                block:block,
+                operation:operation,
+                time:block_time,
                 tags:tags,
                 tx:data
             }

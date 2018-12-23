@@ -2,20 +2,27 @@
   border-radius: 21px;
 }
 
-@media screen and (max-width: 768px)
+@media screen and (max-width: 786px)
 {
-  .menu{
-    max-width: 100px;
+  .container {
+    max-width: 600px !important;
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 992px)
+{
+  .menu{
+    max-width: 50px;
+  }
+}
+
+@media screen and (min-width: 992px) {
   .container {
     width: auto;
     min-width: 424px;
   }
   .menu {
-    width: 280px;
+    width: 415px;
   }
 }
 
@@ -25,7 +32,7 @@
     min-width: 424px;
   }
   .menu{
-    width: 280px;
+    width: 415px;
   }
 }
 
