@@ -141,7 +141,7 @@ export const getLoginerInfo = (publicKey) =>
 
 export const getSomeNewestTweet = (publicKey,loginerKey) =>
     (dispatch, getState) => {
-        let service = new WebService;
+        let service = new WebService();
         service.get(`api/tweet/?id=${publicKey}&loginer=${loginerKey}&start=0&count=5`).then(tweets => {
             dispatch(addTweetList(tweets.data))
         })

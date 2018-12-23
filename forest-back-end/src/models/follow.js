@@ -45,6 +45,4 @@ export default class Follow {
         })
         return Promise.all(res)
     }
-
-
 }

@@ -2,15 +2,15 @@ import {encode, sign} from "../transaction";
 import {SECRET_KEY} from "../config";
 import _ from "lodash";
 
-export default class Post {
+export default class Interact {
     constructor(app) {
         this.app = app;
-        this.userPost = this.userPost.bind(this);
+        this.createPost = this.createPost.bind(this);
         this.getPost = this.getPost.bind(this);
         this.getPostCount = this.getPostCount.bind(this);
     }
 
-    async userPost(tx) {
+    async createPost(tx) {
         let res = await this.app.service.get(`broadcast_tx_commit?tx=${tx}`);
         if (_.get(res.data.result, "height") === "0") {
             return {code: -1}
