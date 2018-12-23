@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import EditProfile from "../components/Modal/EditProfile";
-import {updateUserInfo} from "../actions/index"
+import {getUserInfo} from "../actions/index"
 
 const mapStateToProps = state => {
     return {
@@ -10,8 +10,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        updateUserInfo: (publicKey) => {
-            dispatch(updateUserInfo(publicKey))
+        getUserInfo: (publicKey) => {
+            dispatch(getUserInfo(publicKey))
         }
     }
 };

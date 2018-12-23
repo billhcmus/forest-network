@@ -6,8 +6,7 @@ import {
     CHANGE_TWEET_COUNT,
     CHANGE_FOLLOWING_COUNT,
     CHANGE_FOLLOWER_COUNT,
-    CHANGE_BUTTON_FOLLOW,
-    UPDATE_DETAIL
+    CHANGE_BUTTON_FOLLOW
 } 
 from "../constants";
 
@@ -70,13 +69,6 @@ export default (state = initState, action) => {
             return {
                 ...state,
                 followingCount: state.followingCount + 1
-            };
-        case UPDATE_DETAIL:
-            return {
-                ...state,
-                displayName: action.userDetail.userName,
-                location: action.userDetail.location,
-                birthdate: action.userDetail.birthday,
             };
         default:
             return state

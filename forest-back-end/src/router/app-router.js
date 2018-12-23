@@ -174,54 +174,40 @@ export default class AppRouter {
             });
         });
                 /**
-         * @endpoint: /api/update_account
+         * @endpoint: /api/user_info
          * @method: POST
          */
-        app.post('/api/update_account', (req, res, next) => {
+        app.post('/api/user_info', (req, res, next) => {
             const body = _.get(req, 'body');
             const content_type = {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             }
-            console.log(body)
             this.app.service.post('broadcast_tx_commit', querystring.stringify(body), content_type)
                 .then(rs => {
-                        // return Promise.resolve('Done step two');
                     if (_.get(rs.data.result, "height") === "0") {
                         let statu_code = {code: -1}
-                        return res.status(304)
-                            .json({'status': 'update failed',
-                                   'errors': rs 
+                        res.status(304)
+                            .json({status: 'update failed',
+                                   errors: rs.data.result 
                         })
 
                     } else {
                         console.log("else")
                         console.log(rs.data.result);
-                        return res.status(200).json({'result': rs,'status': 'update success'})
+                        res.status(200).json({
+                            status: 'update success',
+                            result: rs.data.result
+                        })
                     }
                 }).catch(err => {
-                    return res.status(304)
-                        .json({'status': 'update failed',
-                               'errors': err 
+                    res.status(304)
+                        .json({status: 'update failed',
+                               errors: err.data 
                     })
                 });
 
-            // return new Promise((resolve, reject) => {
-            //     this.app.service.post('broadcast_tx_commit', querystring.stringify(body), content_type)
-            //     .then(res => {
-            //         console.log(res.data.result);
-            //         if (_.get(res.data.result, "height") === "0") {
-            //             let rs = {code: -1}
-            //             return Promise.resolve(rs)
-
-            //         } else {
-            //             return Promise.resolve(res.data)
-            //         }
-            //     }).catch(err => {
-            //         return reject(err);
-            //     });
-            // });
         });
     }
 }

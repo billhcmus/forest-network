@@ -4,7 +4,7 @@ import '../../css/edit-profile.scss'
 import moment from "moment";
 import { Keypair } from 'stellar-base';
 import WebService from "../../webservice";
-import {encode,sign} from '../../transaction';
+import { encode,sign } from '../../transaction';
 
 class EditProfile extends Component {
 
@@ -13,9 +13,7 @@ class EditProfile extends Component {
         this.service = new WebService();
         this.state = {
             avatar:this.props.userInfo.avatar,
-            // theme:this.props.userInfo.theme,
             displayName: this.props.userInfo.displayName,
-            // avatar:'',
             location:this.props.userInfo.location,
             birthday:moment(this.props.userInfo.birthdate).format('MMM DD, YYYY'),
         };
@@ -23,12 +21,11 @@ class EditProfile extends Component {
 
     saveDetail() {
             let secretKey = localStorage.getItem("SECRET_KEY")
-            const key = Keypair.fromSecret(secretKey);
-            console.log(this.state.displayName)
-            console.log(this.state.avatar)
+            let key = Keypair.fromSecret(secretKey);
 
             if(this.state.displayName !== this.props.userInfo.displayName) {
                 this.service.get(`api/sequence/?id=${key.publicKey()}`).then(result =>{
+                    console.log(result.data)
                         let tx = {
                             version: 1,
                             account: key.publicKey(),
@@ -44,34 +41,43 @@ class EditProfile extends Component {
                         sign(tx, secretKey)
                         let data_encoding = '0x'+ encode(tx).toString('hex');
                         console.log(data_encoding)
-                        this.service.post(`api/update_account`,{tx: data_encoding}).then((res) => {
-                            this.props.updateUserInfo(key.publicKey())
-                            console.log("update thanh con")
+                        this.service.post(`api/user_info`,{tx: data_encoding}).then((res) => {
+                            setTimeout(()=>{ 
+                                this.props.getUserInfo(key.publicKey())
+                            }, 1000);
                         }).catch(err => console.log(err))
+                        return
                     })
             }
 
-            // if(this.state.avatar !== '') {
-            //     console.log("avatar")
-            //     this.service.get(`api/sequence/?id=${key.publicKey()}`).then(result =>{
-            //         console.log(result.data)
-            //         let tx = {
-            //             version: 1,
-            //             account: key.publicKey(),
-            //             sequence: result.data + 1,
-            //             memo: Buffer.alloc(0),
-            //             operation: 'update_account',
-            //             params: {
-            //                 key: 'picture',
-            //                 value: new Buffer(this.state.avatar, 'binary')
-            //             },
-            //             signature: new Buffer(64)
-            //         }
-            //         sign(tx, secretKey)
-            //         let data_encoding = '0x'+ encode(tx).toString('hex');
-            //         this.service.post(`api/update_account`,{tx: data_encoding})
-            //     })
-            // }
+            if(this.state.avatar !== this.props.userInfo.avatar) {
+                this.service.get(`api/sequence/?id=${key.publicKey()}`).then(result =>{
+                    console.log(result.data)
+                    let tx = {
+                        version: 1,
+                        account: key.publicKey(),
+                        sequence: result.data + 1,
+                        memo: Buffer.alloc(0),
+                        operation: 'update_account',
+                        params: {
+                            key: 'picture',
+                            value: new Buffer(this.state.avatar, 'binary')
+                        },
+                        signature: new Buffer(64)
+                    }
+                    sign(tx, secretKey)
+                    let data_encoding = '0x'+ encode(tx).toString('hex');
+                    // this.service.post(`api/user_info`,{tx: data_encoding})
+                    //         .then((res)=>{
+                    //             setTimeout(()=>{ 
+                    //                 this.props.getUserInfo(key.publicKey())
+                    //             }, 1000);
+                    //         })
+                    //         .catch((err)=>{
+                    //             console.log(err)
+                    //         })
+                })
+            }
         this.props.onCancel();
     }
    
@@ -89,8 +95,23 @@ class EditProfile extends Component {
         }
     }
 
+    componentDidMount() {
+        let secretKey = localStorage.getItem("SECRET_KEY")
+        const key = Keypair.fromSecret(secretKey);
+        this.props.getUserInfo(key.publicKey())
+        this.setState({
+            avatar:this.props.userInfo.avatar,
+            displayName: this.props.userInfo.displayName,
+            location:this.props.userInfo.location,
+            birthday:moment(this.props.userInfo.birthdate).format('MMM DD, YYYY'),
+        })
+    }
 
     render() {
+        console.log("render")
+        console.log(this.props.userInfo)
+        console.log(this.state)
+
         if (this.props.isModalShow === true) {
             return (
                 <div>
@@ -120,7 +141,6 @@ class EditProfile extends Component {
                                     </label>
                                     <input type="file" id="fileAvatar" accept="image/*" ref="fileUploader" onChange={(e) =>
                                         this.handleChosen(e)}/>
-                                        {/*<img src={{this.state.ava}}/>*/}
                                 </div>
                             </div>
                         </div>
