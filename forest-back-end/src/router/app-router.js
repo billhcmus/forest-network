@@ -2,6 +2,8 @@ import _ from 'lodash';
 import {encode, sign} from "../transaction";
 import {SECRET_KEY} from "../config";
 var querystring = require('querystring');
+import axios from 'axios';
+import {API_URL} from '../config';
 
 export default class AppRouter {
     constructor(app) {
@@ -177,46 +179,48 @@ export default class AppRouter {
          */
         app.post('/api/update_account', (req, res, next) => {
             const body = _.get(req, 'body');
-            // console.log(body)
             const content_type = {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             }
-            console.log(querystring.stringify({tx: body}))
-
-            this.app.service.post('broadcast_tx_commit', querystring.stringify({tx: body}), content_type)
-                .then(res => {
-                    console.log(res.data);
-                    console.log(res.data.result);
-                    if (_.get(res.data.result, "height") === "0") {
-                        let rs = {code: -1}
-                        res.status(200).json({'result': rs,'status': 'update success'})
-                    } else {
-                        console.log(res.data);
-                        res.status(304)
+            console.log(body)
+            this.app.service.post('broadcast_tx_commit', querystring.stringify(body), content_type)
+                .then(rs => {
+                        // return Promise.resolve('Done step two');
+                    if (_.get(rs.data.result, "height") === "0") {
+                        let statu_code = {code: -1}
+                        return res.status(304)
                             .json({'status': 'update failed',
-                                   'errors': err 
+                                   'errors': rs 
                         })
+
+                    } else {
+                        console.log("else")
+                        console.log(rs.data.result);
+                        return res.status(200).json({'result': rs,'status': 'update success'})
                     }
                 }).catch(err => {
-                    res.status(304)
+                    return res.status(304)
                         .json({'status': 'update failed',
                                'errors': err 
                     })
                 });
 
-            // this.app.service.get(`broadcast_tx_commit?tx=${body.tx}`).then(result => {
-            //     console.log("success")
-            //     console.log(result.data.result);
-            //     res.status(200).json({'status': 'update success'})
+            // return new Promise((resolve, reject) => {
+            //     this.app.service.post('broadcast_tx_commit', querystring.stringify(body), content_type)
+            //     .then(res => {
+            //         console.log(res.data.result);
+            //         if (_.get(res.data.result, "height") === "0") {
+            //             let rs = {code: -1}
+            //             return Promise.resolve(rs)
 
-            // }).catch(err => {
-            //     console.log(err.data)
-            //     res.status(304)
-            //         .json({'status': 'update failed',
-            //                'errors': err 
-            //     })
+            //         } else {
+            //             return Promise.resolve(res.data)
+            //         }
+            //     }).catch(err => {
+            //         return reject(err);
+            //     });
             // });
         });
     }

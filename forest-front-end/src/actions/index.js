@@ -82,7 +82,6 @@ export const updatePeopleInfo = (loginKey,peopleKey) =>
             dispatch(changeAcountInfo(account.data))
         })
         service.get(`api/userInfo/?id=${peopleKey}`).then(user =>{
-            console.log(user.data)
             dispatch(changeUserInfo(user.data))
         })
         service.get(`api/isfollow/?address1=${loginKey}&address2=${peopleKey}`).then(exists =>{
@@ -136,3 +135,11 @@ export const getCount = (publicKey) =>
         })
     }
 
+export const updateUserInfo = (publicKey) =>
+    (dispatch, getState) =>{
+        let service = new WebService;
+        service.get(`api/userInfo/?id=${publicKey}`).then(user =>{
+            console.log(user.data)
+            dispatch(changeUserInfo(user.data))
+        })
+    }

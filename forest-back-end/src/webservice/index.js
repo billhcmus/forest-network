@@ -14,8 +14,6 @@ export default class WebService {
 
     post(endpoint="", data={}, options = {headers: {'Content-Type': 'application/json'}}) {
         const url = `${API_URL}/${endpoint}`;
-        console.log("Vafo post")
-        console.log(data);
         return axios.post(url, data, options);
     }
 }
