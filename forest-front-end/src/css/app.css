@@ -271,6 +271,7 @@ body, html {
 }
 .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-text-container p {
   overflow: hidden;
+  white-space: pre-wrap;
   -webkit-line-clamp: 4;
   display: -webkit-box;
   font-size: 14px;
@@ -431,15 +432,15 @@ body, html {
 .main-content .content {
   display: inline-block;
   height: 100%;
+  width: 600px;
   margin-top: 10px;
   vertical-align: top;
 }
 .main-content .main-right {
   display: inline-block;
-  max-width: 913px;
-  min-width: 913px;
+  width: 900px;
   height: 100%;
-  margin-top: 10px;
+  margin: 10px;
   vertical-align: top;
 }
 .main-content .sidebar-right {

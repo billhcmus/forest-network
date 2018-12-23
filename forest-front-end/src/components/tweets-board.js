@@ -9,9 +9,30 @@ class TweetBoard extends Component {
             localStorage.getItem("SECRET_KEY")).publicKey())
     }
 
+    isBottom(el) {
+        return el.getBoundingClientRect().bottom <= window.innerHeight;
+    }
+
+    componentDidMount() {
+        document.addEventListener('scroll', this.trackScrolling);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('scroll', this.trackScrolling);
+    }
+
+    trackScrolling = () => {
+        const wrappedElement = document.getElementById('a-scroll');
+        if (this.isBottom(wrappedElement)) {
+            console.log('Loadmore');
+            this.props.getSomeMoreTweet(this.props.activeUser,Keypair.fromSecret(
+                localStorage.getItem("SECRET_KEY")).publicKey(),this.props.tweets.length)
+        }
+    };
+
     render() {
       return (
-        <div className="tweets-board-container">
+        <div className="tweets-board-container"  id ="a-scroll" ref={(el) => { this.screen = el; }}>
           <div className="heading-title">
             <div className="space-content"></div>
             {/*<div className="title-content">*/}

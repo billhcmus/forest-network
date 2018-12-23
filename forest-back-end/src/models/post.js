@@ -20,7 +20,8 @@ export default class Post {
     }
 
     async getPost(publicKey,loginer,start,count) {
-        let posts = await this.app.db.collection('post').find({author: publicKey}).skip(+start).limit(+count).toArray();
+        let posts = await this.app.db.collection('post').find({author: publicKey}).sort({time:-1})
+            .skip(+start).limit(+count).toArray();
         let user = await this.app.models.user.getUser(publicKey)
         let res = posts.map(async (post) =>{
             try {
@@ -66,7 +67,8 @@ export default class Post {
     }
 
     async getPostDetail(object,loginer,start,count) {
-        let comments = await this.app.db.collection('comment').find({object: object}).skip(+start).limit(+count).toArray();
+        let comments = await this.app.db.collection('comment').find({object: object}).sort({time:-1})
+            .skip(+start).limit(+count).toArray();
         let res = comments.map(async (comment) =>{
             try {
                 let user = await this.app.models.user.getUser(comment.author);

@@ -1,5 +1,6 @@
 import {
     ADD_TWEET_LIST,
+    INIT_TWEET_LIST,
     CHANGE_ACCOUNT_INFO,
     CHANGE_AUTH_TAB,
     CHANGE_BUTTON_FOLLOW,
@@ -42,6 +43,10 @@ export const changeAcountInfo = (account) => (
 
 export const changeUserInfo = (user) => (
     {type: CHANGE_USER_INFO, user: user}
+);
+
+export const initTweetList = (tweets) => (
+    {type: INIT_TWEET_LIST, tweets: tweets}
 );
 
 export const addTweetList = (tweets) => (
@@ -142,7 +147,15 @@ export const getLoginerInfo = (publicKey) =>
 export const getSomeNewestTweet = (publicKey,loginerKey) =>
     (dispatch, getState) => {
         let service = new WebService;
-        service.get(`api/tweet/?id=${publicKey}&loginer=${loginerKey}&start=0&count=5`).then(tweets => {
+        service.get(`api/tweet/?id=${publicKey}&loginer=${loginerKey}&start=0&count=15`).then(tweets => {
+            dispatch(initTweetList(tweets.data))
+        })
+    };
+
+export const getSomeMoreTweet = (publicKey,loginerKey,offset) =>
+    (dispatch, getState) => {
+        let service = new WebService;
+        service.get(`api/tweet/?id=${publicKey}&loginer=${loginerKey}&start=${offset}&count=15`).then(tweets => {
             dispatch(addTweetList(tweets.data))
         })
     };

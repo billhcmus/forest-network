@@ -31,7 +31,7 @@ class LeftSidebar extends Component {
           </div>
           <div className="bandwidth">
             <Icon icon={meter} size={32}/>
-            <span> Oxy: {bandwidthLimit - this.props.userInfo.bandwidth}</span>
+            <span> Energy: {bandwidthLimit - this.props.userInfo.bandwidth}</span>
           </div>
           <div className="bandwidthTime">
             <Icon icon={calendar} size={32}/>
