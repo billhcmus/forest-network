@@ -64,4 +64,45 @@ export default class Post {
         let post = await this.app.db.collection('post').find({author: publicKey});
         return post.count();
     }
+
+    async getPostDetail(object,loginer,start,count) {
+        let comments = await this.app.db.collection('comment').find({object: object}).skip(+start).limit(+count).toArray();
+        let res = comments.map(async (comment) =>{
+            try {
+                let user = await this.app.models.user.getUser(comment.author);
+                comment.avatar = user.picture
+                comment.displayName = user.name
+                comment.like = 0
+                comment.haha = 0
+                comment.wow = 0
+                comment.sad = 0
+                comment.angry = 0
+                comment.love = 0
+                comment.comment = await this.app.db.collection('comment').find({object:comment._id}).count();
+                await this.app.db.collection('reaction').find({object:comment._id}).toArray().then(reaction =>{
+                    reaction.forEach(react => {
+                        if (react.reaction === 1)
+                            comment.like++;
+                        else if (react.reaction === 2)
+                            comment.love++;
+                        else if (react.reaction === 3)
+                            comment.haha++;
+                        else if (react.reaction === 4)
+                            comment.wow++;
+                        else if (react.reaction === 5)
+                            comment.sad++;
+                        else if (react.reaction === 6)
+                            comment.angry++;
+                    })
+                })
+                let tmp = await this.app.db.collection('reaction').findOne({object:comment._id,author:loginer});
+                comment.currentReaction = tmp ? tmp.reaction : 0;
+                return comment
+            }
+            catch (e) {
+                console.log(e)
+            }
+        })
+        return Promise.all(res);
+    }
 }

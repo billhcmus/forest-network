@@ -1,14 +1,13 @@
 import {Modal} from 'antd';
 import React, {Component} from 'react';
-import TweetItem from "../tweets-item";
+import TweetItem from "../../containers/tweet-item";
 import TweetItemDetail from "../tweets-item-detail";
 
 
 class ViewTweet extends Component {
-
     render() {
-        const mainTweet = this.props.tweetDetail.mainTweet;
-        const listComments = this.props.tweetDetail.otherTweets;
+        const mainTweet = this.props.tweetDetail.main;
+        const listComments = this.props.tweetDetail.comments;
         return (
             <Modal
                 visible={this.props.isModalShow}

@@ -171,6 +171,35 @@ export default class AppRouter {
             });
         });
 
+        /**
+         * @endpoint: /api/tweet/count
+         * @method: GET
+         */
+        app.get('/api/tweetCount', (req, res, next) => {
+            app.models.post.getPostCount(req.query.id).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(304).json({
+                    err: err,
+                });
+            });
+        });
+
+        /**
+         * @endpoint: /api/tweet/count
+         * @method: GET
+         */
+        app.get('/api/tweetDetail', (req, res, next) => {
+            app.models.post.getPostDetail(req.query.object,req.query.loginer,req.query.start,req.query.count).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(304).json({
+                    err: err,
+                });
+            });
+        });
+
+
 
     }
 }

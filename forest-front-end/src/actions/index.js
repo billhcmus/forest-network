@@ -14,6 +14,8 @@ import {
     INCREASE_FOLLOWING,
     SET_USER_INFO,
     SET_ACTIVE_USER,
+    CHANGE_TWEET_DETAIL_COMMENT,
+    CHANGE_TWEET_DETAIL_MAIN
 } from "../constants";
 
 import WebService from '../webservice'
@@ -81,6 +83,23 @@ export const toggleFollow = (hasFollow) => (
 export const activeUser = (userID) => (
     {type: SET_ACTIVE_USER, activeUser: userID}
 );
+
+export const changeTweetDetailMain = (main) => (
+    {type: CHANGE_TWEET_DETAIL_MAIN, main: main}
+);
+
+export const changeTweetDetailComment = (comments) => (
+    {type: CHANGE_TWEET_DETAIL_COMMENT, comments: comments}
+);
+
+export const getDetailTweet = (object, loginer) =>
+    (dispatch, getState) => {
+        dispatch(changeTweetDetailMain(object))
+        let service = new WebService();
+        service.get(`api/tweetDetail/?object=${object._id}&loginer=${loginer}&start=0&count=10`).then(postDetail => {
+            dispatch(changeTweetDetailComment(postDetail.data))
+        });
+    };
 
 export const updatePeopleInfo = (loginKey, peopleKey) =>
     (dispatch, getState) => {

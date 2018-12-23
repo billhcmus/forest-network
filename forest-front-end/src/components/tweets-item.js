@@ -29,7 +29,7 @@ class TweetItem extends Component {
         })
     }
 
-    handleCommentCacel = (e) => {
+    handleCommentCancel = (e) => {
         this.setState({
             isCommentShow: false
         })
@@ -47,6 +47,8 @@ class TweetItem extends Component {
         this.setState({
             isModalShow: true
         })
+        this.props.getDetailTweet(this.props.itemInfo,Keypair.fromSecret(
+            localStorage.getItem("SECRET_KEY")).publicKey())
     }
 
     sendInteract = (type,isTurnOn) => {
@@ -80,6 +82,7 @@ class TweetItem extends Component {
     }
 
     handleReactClick = (e,type) =>{
+        e.stopPropagation()
         if (this.props.itemInfo.currentReaction === type){
             this.sendInteract(type,false)
         }
@@ -90,78 +93,80 @@ class TweetItem extends Component {
     render() {
         const itemInfo = this.props.itemInfo
         return (
-            <li className="item-tweet">
+            <div>
                 <ViewTweet isModalShow={this.state.isModalShow} onCancel={(e) => this.handleCancel(e)}/>
-                <Comment object={itemInfo._id} isCommentShow={this.state.isCommentShow} onCancel={(e) => this.handleCommentCacel(e)}/>
-                <div className="tweet-content" onClick={(e) =>this.handleSpanClick(e)}>
-                    <div className="tweet-header">
-                        <div className="tweet-profile-link">
-                            <img
-                                src={`data:image/jpeg;base64,${itemInfo.avatar ? itemInfo.avatar : 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='}`}
-                                alt="..."/>
-                            <span
-                                className="displayName">{itemInfo.displayName ? itemInfo.displayName : 'Unknown'}</span>
-                            <span className="time"> {moment(itemInfo.time).format('HH:mm,DD MMM,YYYY')}</span>
-                            <span className="userName"> {itemInfo.author} </span>
+                <Comment objectid={itemInfo._id} isCommentShow={this.state.isCommentShow} onCancel={(e) => this.handleCommentCancel(e)}/>
+                <li className="item-tweet" onClick={(e) =>this.handleSpanClick(e)}>
+                    <div className="tweet-content">
+                        <div className="tweet-header">
+                            <div className="tweet-profile-link">
+                                <img
+                                    src={`data:image/jpeg;base64,${itemInfo.avatar ? itemInfo.avatar : 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='}`}
+                                    alt="..."/>
+                                <span
+                                    className="displayName">{itemInfo.displayName ? itemInfo.displayName : 'Unknown'}</span>
+                                <span className="time"> {moment(itemInfo.time).format('HH:mm,DD MMM,YYYY')}</span>
+                                <span className="userName"> {itemInfo.author} </span>
+                            </div>
+                            {/*<Dropdown overlay={menu} trigger={['click']}>*/}
+                            {/*<div className="tweets-action action-item action-drop">*/}
+                            {/*<button type="button">*/}
+                            {/*<span className="icon "> <Icon type="down" style={{fontSize: '14px'}}/></span>*/}
+                            {/*</button>*/}
+                            {/*</div>*/}
+                            {/*</Dropdown>*/}
                         </div>
-                        {/*<Dropdown overlay={menu} trigger={['click']}>*/}
-                        {/*<div className="tweets-action action-item action-drop">*/}
-                        {/*<button type="button">*/}
-                        {/*<span className="icon "> <Icon type="down" style={{fontSize: '14px'}}/></span>*/}
-                        {/*</button>*/}
-                        {/*</div>*/}
-                        {/*</Dropdown>*/}
-                    </div>
 
-                    <div className="tweet-text-container">
-                        <p>{itemInfo.content.text}</p>
+                        <div className="tweet-text-container">
+                            <p>{itemInfo.content.text}</p>
+                        </div>
                     </div>
-                </div>
-                <div className="tweet-action-footer">
-                    <div className="action-item action-reply">
-                        <button type="button" onClick={(e)=>{this.handleCommentClick(e)}}>
-                            <Icon icon={comment}/>
-                            <span className="actionCount">{itemInfo.comment ? itemInfo.comment : 0}</span>
-                        </button>
+                    <div className="tweet-action-footer">
+                        <div className="action-item action-reply">
+                            <button type="button" onClick={(e)=>{this.handleCommentClick(e)}}>
+                                <Icon icon={comment}/>
+                                <span className="actionCount">{itemInfo.comment ? itemInfo.comment : 0}</span>
+                            </button>
+                        </div>
+                        <div className="action-item action-like">
+                            <button type="button" onClick={(e)=>{this.handleReactClick(e,1)}}>
+                                <Icon icon={thumbsOUp}/>
+                                <span className="actionCount">{itemInfo.like ? itemInfo.like : 0}</span>
+                            </button>
+                        </div>
+                        <div className="action-item action-love">
+                            <button type="button" onClick={(e)=>{this.handleReactClick(e,2)}}>
+                                <Icon icon={heartO}/>
+                                <span className="actionCount">{itemInfo.love ? itemInfo.love : 0}</span>
+                            </button>
+                        </div>
+                        <div className="action-item action-haha">
+                            <button type="button" onClick={(e)=>{this.handleReactClick(e,3)}}>
+                                <Icon icon={happy}/>
+                                <span className="actionCount">{itemInfo.haha ? itemInfo.haha : 0}</span>
+                            </button>
+                        </div>
+                        <div className="action-item action-wow">
+                            <button type="button" onClick={(e)=>{this.handleReactClick(e,4)}}>
+                                <Icon icon={shocked}/>
+                                <span className="actionCount">{itemInfo.wow ? itemInfo.wow : 0}</span>
+                            </button>
+                        </div>
+                        <div className="action-item action-sad">
+                            <button type="button" onClick={(e)=>{this.handleReactClick(e,5)}}>
+                                <Icon icon={sad}/>
+                                <span className="actionCount">{itemInfo.sad ? itemInfo.sad : 0}</span>
+                            </button>
+                        </div>
+                        <div className="action-item action-angry">
+                            <button type="button" onClick={(e)=>{this.handleReactClick(e,6)}}>
+                                <Icon icon={angry}/>
+                                <span className="actionCount">{itemInfo.angry ? itemInfo.angry : 0}</span>
+                            </button>
+                        </div>
                     </div>
-                    <div className="action-item action-like">
-                        <button type="button" onClick={(e)=>{this.handleReactClick(e,1)}}>
-                            <Icon icon={thumbsOUp}/>
-                            <span className="actionCount">{itemInfo.like ? itemInfo.like : 0}</span>
-                        </button>
-                    </div>
-                    <div className="action-item action-love">
-                        <button type="button" onClick={(e)=>{this.handleReactClick(e,2)}}>
-                            <Icon icon={heartO}/>
-                            <span className="actionCount">{itemInfo.love ? itemInfo.love : 0}</span>
-                        </button>
-                    </div>
-                    <div className="action-item action-haha">
-                        <button type="button" onClick={(e)=>{this.handleReactClick(e,3)}}>
-                            <Icon icon={happy}/>
-                            <span className="actionCount">{itemInfo.haha ? itemInfo.haha : 0}</span>
-                        </button>
-                    </div>
-                    <div className="action-item action-wow">
-                        <button type="button" onClick={(e)=>{this.handleReactClick(e,4)}}>
-                            <Icon icon={shocked}/>
-                            <span className="actionCount">{itemInfo.wow ? itemInfo.wow : 0}</span>
-                        </button>
-                    </div>
-                    <div className="action-item action-sad">
-                        <button type="button" onClick={(e)=>{this.handleReactClick(e,5)}}>
-                            <Icon icon={sad}/>
-                            <span className="actionCount">{itemInfo.sad ? itemInfo.sad : 0}</span>
-                        </button>
-                    </div>
-                    <div className="action-item action-angry">
-                        <button type="button" onClick={(e)=>{this.handleReactClick(e,6)}}>
-                            <Icon icon={angry}/>
-                            <span className="actionCount">{itemInfo.angry ? itemInfo.angry : 0}</span>
-                        </button>
-                    </div>
-                </div>
-            </li>
+                </li>
+            </div>
         );
     }
 }

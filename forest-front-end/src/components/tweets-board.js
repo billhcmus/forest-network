@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Icon} from 'antd';
-import TweetItem from './tweets-item';
+import TweetItem from '../containers/tweet-item';
 import {Keypair} from "stellar-base";
 
 class TweetBoard extends Component {

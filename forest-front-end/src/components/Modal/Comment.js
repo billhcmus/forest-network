@@ -37,7 +37,7 @@ class Comment extends Component {
                     memo: Buffer.alloc(0),
                     operation: 'interact',
                     params: {
-                        object: this.props.object,
+                        object: this.props.objectid,
                         content : encodeText({
                             type: 1,
                             text: this.state.content,
