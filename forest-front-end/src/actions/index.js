@@ -17,7 +17,9 @@ import {
     SET_ACTIVE_USER,
     CHANGE_TWEET_DETAIL_COMMENT,
     CHANGE_TWEET_DETAIL_MAIN,
-    ADD_TWEET_DETAIL_COMMENT
+    ADD_TWEET_DETAIL_COMMENT,
+    ADD_FOLLOWING_LIST,
+    ADD_FOLLOWER_LIST
 } from "../constants";
 
 import WebService from '../webservice'
@@ -102,6 +104,14 @@ export const addTweetDetailComment = (comments) =>(
     {type: ADD_TWEET_DETAIL_COMMENT, comments: comments}
 );
 
+export const addMoreListFollower = (followers) =>(
+    {type: ADD_FOLLOWER_LIST, followers: followers}
+);
+
+export const addMoreListFollowing = (followings) =>(
+    {type: ADD_FOLLOWING_LIST, followings: followings}
+);
+
 export const getDetailTweet = (object, loginer) =>
     (dispatch, getState) => {
         dispatch(changeTweetDetailMain(object))
@@ -136,7 +146,7 @@ export const updatePeopleInfo = (loginKey, peopleKey) =>
 export const updateListFollowing = (publicKey) =>
     (dispatch, getState) => {
         let service = new WebService();
-        service.get(`api/followings/?id=${publicKey}&needMore=1`).then(followings => {
+        service.get(`api/followings/?id=${publicKey}&needMore=1&start=0&count=9`).then(followings => {
             dispatch(changeListFollowing(followings.data))
         })
     };
@@ -144,8 +154,24 @@ export const updateListFollowing = (publicKey) =>
 export const updateListFollower = (publicKey) =>
     (dispatch, getState) => {
         let service = new WebService();
-        service.get(`api/followers/?id=${publicKey}`).then(followers => {
+        service.get(`api/followers/?id=${publicKey}&start=0&count=9`).then(followers => {
             dispatch(changeListFollower(followers.data))
+        })
+    };
+
+export const addListFollowing = (publicKey,offset) =>
+    (dispatch, getState) => {
+        let service = new WebService();
+        service.get(`api/followings/?id=${publicKey}&needMore=1&start=${offset}&count=9`).then(followings => {
+            dispatch(addMoreListFollowing(followings.data))
+        })
+    };
+
+export const addListFollower = (publicKey,offset) =>
+    (dispatch, getState) => {
+        let service = new WebService();
+        service.get(`api/followers/?id=${publicKey}&start=${offset}&count=9`).then(followers => {
+            dispatch(addMoreListFollower(followers.data))
         })
     };
 

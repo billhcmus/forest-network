@@ -74,7 +74,7 @@ export default class AppRouter {
          * @method: GET
          */
         app.get('/api/followings', (req, res, next) => {
-            app.models.follow.getFollowings(req.query.id, req.query.needMore).then(rs => {
+            app.models.follow.getFollowings(req.query.id, req.query.needMore,req.query.start,req.query.count).then(rs => {
                 return res.status(200).json(rs);
             }).catch(err => {
                 return res.status(404).json({
@@ -103,7 +103,7 @@ export default class AppRouter {
          * @method: GET
          */
         app.get('/api/followers', (req, res, next) => {
-            app.models.follow.getFollowers(req.query.id).then(rs => {
+            app.models.follow.getFollowers(req.query.id,req.query.start,req.query.count).then(rs => {
                 return res.status(200).json(rs);
             }).catch(err => {
                 return res.status(404).json({

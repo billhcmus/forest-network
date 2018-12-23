@@ -41,7 +41,7 @@ class ViewTweet extends Component {
                                 })
                             }
                         </ul>
-                        <div className="view-more" onClick={(e)=>this.handleViewMoreComment(e)}>Xem thêm</div>
+                        <div className="view-more" onClick={(e)=>this.handleViewMoreComment(e)}>Xem thêm...</div>
                     </div>
                 </Modal>
         );

@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import FollowingList from '../components/following-list'
-import {updateListFollowing} from "../actions";
+import {addListFollowing, updateListFollowing} from "../actions";
 
 const mapStateToProps = state => {
 	return {
@@ -13,7 +13,10 @@ const mapDispatchToProps = dispatch => {
     return {
 		updateListFollowing:(publicKey) => {
 			dispatch(updateListFollowing(publicKey));
-		}
+		},
+		addListFollowing:(publicKey,offset) => {
+		dispatch(addListFollowing(publicKey,offset));
+	}
 	}
 };
 

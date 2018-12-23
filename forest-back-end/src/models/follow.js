@@ -26,8 +26,8 @@ export default class Follow {
         return exist.count();
     }
 
-    async getFollowings(publicKey,needMore) {
-        let listFollowings = await this.app.db.collection('follow').find({following: publicKey}).toArray();
+    async getFollowings(publicKey,needMore,start,count) {
+        let listFollowings = await this.app.db.collection('follow').find({following: publicKey}).skip(+start).limit(+count).toArray();
         if (needMore === "0")
             return listFollowings.map(user =>{
                 return user.followed
@@ -38,8 +38,8 @@ export default class Follow {
         return Promise.all(res)
     }
 
-    async getFollowers(publicKey) {
-        let listFollowers = await this.app.db.collection('follow').find({followed: publicKey}).toArray();
+    async getFollowers(publicKey,start,count) {
+        let listFollowers = await this.app.db.collection('follow').find({followed: publicKey}).skip(+start).limit(+count).toArray();
         let res = listFollowers.map(user =>{
             return this.app.db.collection('user').findOne({_id: user.following})
         })
