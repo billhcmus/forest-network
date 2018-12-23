@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Menu, Dropdown, Icon} from 'antd';
-import {Link, withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
+import connect from "react-redux/es/connect/connect";
+import {activeUser} from "../actions";
 // const menu = (
 //   <Menu>
 //     <Menu.Item>
@@ -17,31 +18,24 @@ import {Link, withRouter} from 'react-router-dom'
 
 class FollowingItem extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className="card" style={{width: '23rem'}}>
-                <a className="card-img-top card-head" href="#">
+                <div className="card-img-top card-head" href="#">
                     {!!this.props.FollowItem.theme &&
-                    <img className="card-img-top" src={this.props.FollowItem.theme}/>
+                    <img className="card-img-top" alt="theme" src={this.props.FollowItem.theme}/>
                     }
-                </a>
+                </div>
                 <div className="card-body">
-                    <img src={`data:image/jpeg;base64,${this.props.FollowItem.avatar}`} alt="...."/>
+                    <div className="avatar">
+                        <img src={`data:image/jpeg;base64,
+                        ${this.props.FollowItem.avatar?this.props.FollowItem.avatar:'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='}`}
+                             alt="...."/>
+                    </div>
                     <div className="card-action">
-                        <button className="btn btn-primary" type="button">
-                            <span>Following</span>
-                        </button>
-                        {/*<div className="actions-group">*/}
-                        {/*<Dropdown overlay={menu} trigger={['click']}>*/}
-                        {/*<a className="ant-dropdown-link" href="#">*/}
-                        {/*<Icon type="small-dash" style={{color: '#657786'}}/>*/}
-                        {/*</a>*/}
-                        {/*</Dropdown>*/}
-                        {/*</div>*/}
+                        {/*<button className="btn btn-primary" type="button">*/}
+                            {/*<span>UnFollow</span>*/}
+                        {/*</button>*/}
                     </div>
                     <div className="card-userfield">
                         <div className="displayName">
@@ -51,6 +45,7 @@ class FollowingItem extends Component {
                         <div className="userName">
                             <div
                                 onClick={() => {
+                                    this.props.activeUser(this.props.FollowItem.userName)
                                     this.props.history.push(`/${this.props.FollowItem.userName}`)
                                 }}>
                                 {this.props.FollowItem.userName}
@@ -64,4 +59,17 @@ class FollowingItem extends Component {
     }
 }
 
-export default withRouter(FollowingItem);
+const mapStateToProps = state => {
+    return {
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        activeUser: (userid) => {
+            dispatch(activeUser(userid));
+        }
+    }
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FollowingItem));

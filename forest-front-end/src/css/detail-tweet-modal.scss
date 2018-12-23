@@ -1,6 +1,15 @@
 .tweet-container {
   position: relative;
 
+  .view-more{
+    margin: 5px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .view-more:hover{
+    cursor: pointer;
+    color: #00a7f8;
+  }
 
   .tweets-action {
     float: right;
@@ -8,7 +17,7 @@
     text-align: right;
     min-width: inherit;
   }
-  .action-like {
+  .action-love {
     button:hover{
       cursor: pointer;
       color: #ff0083;
@@ -17,7 +26,42 @@
   .action-reply {
     button:hover{
       cursor: pointer;
-      color: #04dff8;
+      color: #00eff8;
+    }
+  }
+
+  .action-like {
+    button:hover{
+      cursor: pointer;
+      color: #00a7f8;
+    }
+  }
+
+  .action-wow {
+    button:hover{
+      cursor: pointer;
+      color: #00f86c;
+    }
+  }
+
+  .action-haha {
+    button:hover{
+      cursor: pointer;
+      color: #f8cf00;
+    }
+  }
+
+  .action-sad {
+    button:hover{
+      cursor: pointer;
+      color: #dd00f8;
+    }
+  }
+
+  .action-angry {
+    button:hover{
+      cursor: pointer;
+      color: #f80d00;
     }
   }
 
@@ -25,6 +69,67 @@
     button:hover{
       cursor: pointer;
       color: #70df00;
+    }
+  }
+
+  .action-love-active {
+    button{
+      color: #ff0083;
+    }
+  }
+
+  .action-like-active {
+    button{
+      color: #00a7f8;
+    }
+  }
+
+  .action-wow-active {
+    button{
+      color: #00f86c;
+    }
+  }
+
+  .action-haha-active {
+    button{
+      color: #f8cf00;
+    }
+  }
+
+  .action-sad-active {
+    button{
+      color: #dd00f8;
+    }
+  }
+
+  .action-angry-active {
+    button{
+      color: #ff0083;
+    }
+  }
+
+  .action-item-active {
+    min-width: 80px;
+    button {
+      display: inline-block;
+      font-size: 16px;
+      line-height: 1;
+      position: relative;
+      border: none;
+      background: transparent;
+
+      .actionCount {
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 1;
+        margin-left: 12px;
+        position: relative;
+        vertical-align: text-bottom;
+      }
+    }
+    button:hover{
+      cursor: pointer;
+      color: #657786;
     }
   }
 
@@ -52,11 +157,13 @@
     }
   }
   .tweet-action-footer {
-    display: flex;
+    display: inline-flex;
     margin-bottom: 0px;
+    text-align: center;
   }
 
   .main-tweet{
+    background-color: #edf9ff;
     padding: 30px;
     border-bottom: solid 1px #e6ecf0;
     img {
@@ -74,24 +181,26 @@
       margin-bottom: 10px;
     }
     .displayName {
-      display: inline-block;
+      // display: flex;
       max-width: 100%;
       font-weight: 800;
-      font-size: 24px;
+      font-size: 18px;
     }
     .displayName:hover {
-      color: #04dff8;
-      border-bottom: solid 1px #04dff8;
+      color: #1DA1F2;
+      border-bottom: solid 1px #1DA1F2;
     }
     .userName {
-      display: inline-block;
-      color: #657786;
-      font-size: 16px;
+      color: #9ad1ff;
+      font-size: 12px;
+      overflow: hidden;
+      display: block;
+      text-overflow: ellipsis;
+      max-width: 500px
     }
 
     .time {
-      display: inline-block;
-      font-size: 16px;
+      font-size: 12px;
     }
 
     .countStat{
@@ -116,6 +225,7 @@
     .tweet-text-container {
       position: relative;
       p {
+        white-space: pre-wrap;
         overflow: hidden;
         margin: 0;
         width: 100%;
@@ -131,11 +241,10 @@
     margin: 0;
     list-style: none;
     .item-tweet {
-      background: #fff;
-      padding: 10px;
-      border-bottom: 1px solid #e6ecf0;
+      background: #e6ffc9;
+      border-bottom: 1px solid #ffffff;
       // background-clip: padding-box;
-      padding: 9px 12px;
+      padding: 10px 80px;
       .tweet-content {
         text-align: left;
         margin-left: 58px;
@@ -165,28 +274,30 @@
               font-size: 18px;
             }
             .displayName:hover {
-              color: #04dff8;
-              border-bottom: solid 1px #04dff8;
+              color: #1DA1F2;
+              border-bottom: solid 1px #1DA1F2;
             }
             .userName {
-              color: #657786;
-              font-size: 16px;
+              color: #f44336;
+              font-size: 12px;
               overflow: hidden;
-              display: inline-flex;
+              display: block;
               text-overflow: ellipsis;
-              max-width: 200px
+              max-width: 500px
+            }
+            .time::before {
+              color: #657786;
+              content: "\00b0"
             }
             .time {
               font-size: 16px;
-            }
-            .time::before {
-              content: "\00b7"
             }
           }
         }
         .tweet-text-container {
           position: relative;
           p {
+            white-space: pre-wrap;
             overflow: hidden;
             margin-bottom: 0px;
             -webkit-line-clamp: 4;
@@ -199,7 +310,7 @@
     }
 
     .item-tweet:hover {
-      background: #eff4fa;
+      background: rgba(250, 231, 0, 0.16);
       cursor: pointer;
     }
   }

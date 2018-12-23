@@ -1,6 +1,6 @@
 import {verify,hash} from '../transaction';
 const crypto = require('crypto');
-import {decodeText,decodeFollowings} from '../transaction/myv1';
+import {decodeText,decodeFollowings,decodeReact} from '../transaction/myv1';
 import _ from 'lodash';
 const base32 = require('base32.js');
 
@@ -131,9 +131,7 @@ export default class Synchronization {
                 _id: address,
             }
             await this.app.db.collection('user').insertOne(newUser);
-
             console.log(`${account._id} create ${address}`);
-
         }
         else if (operation ===  'payment') {
             let params = _.get(data, "params")
@@ -200,11 +198,13 @@ export default class Synchronization {
                         {$set: {picture: value}})
                 } else if (key === "followings") {
                     const list = decodeFollowings(value).addresses.map(add =>{return base32.encode(add)});
+                    await this.app.db.collection('follow').deleteMany({following: data.account})
                     list.forEach(item =>{
                         this.app.db.collection('follow').insertOne({
                             _id: crypto.createHash('sha256')
                                 .update(data.account + item)
                                 .digest()
+                                .slice(0, 16)
                                 .toString('hex'),
                             following: data.account,
                             followed: item,
@@ -221,7 +221,42 @@ export default class Synchronization {
             let params = _.get(data, "params")
             let object = _.get(params, "object");
             let content = _.get(params, "content");
-            console.log(`${account._id} interact object ${object} content ${content}`);
+            //try check comment
+            try {
+                const newComment = {
+                    _id: hashTx,
+                    content: decodeText(content),
+                    author:account._id,
+                    object:object,
+                    time: block_time,
+                }
+                await this.app.db.collection('comment').insertOne(newComment);
+                console.log(`${account._id} comment: ${newComment.content.text} to object ${object}`);
+            }
+            catch (e) {
+                //Not a comment
+                //try check react
+                try {
+                    const newReact = {
+                        reaction: decodeReact(content).reaction,
+                        author:account._id,
+                        object:object,
+                    }
+                    let foundReact = await this.app.db.collection('reaction').findOne({author:account._id,object:object})
+                    if (foundReact)
+                    {
+                        await this.app.db.collection('reaction').findOneAndUpdate(
+                            {_id:foundReact._id},
+                            {$set:{reaction:newReact.reaction}});
+                    }else {
+                        await this.app.db.collection('reaction').insertOne(newReact);
+                    }
+                    console.log(`${account._id} react: ${newReact.reaction} to object ${object}`);
+                }
+                catch (err) {
+                    console.log(`${account._id} interact ERR ${err}`);
+                }
+            }
         }
         else
             return('Operation is not support.');
@@ -235,14 +270,20 @@ export default class Synchronization {
         if (data.params && data.params.address && data.params.address !== data.account) {
             tags.push({ key: "account", value: data.params.address});
         }
-        // if (data.params && data.params.object) {
-        //     tags.push({ key: OBJECT_KEY, value: Buffer.from(data.params.object) });
-        // }
-        const newTransaction = {
-            _id: hashTx,
-            tags:tags,
-            tx:data
+        if (data.params && data.params.object) {
+            tags.push({ key: "object", value: Buffer.from(data.params.object) });
         }
-        await this.app.db.collection('transaction').insertOne(newTransaction);
+
+        try {
+            const newTransaction = {
+                _id: hashTx,
+                tags:tags,
+                tx:data
+            }
+            await this.app.db.collection('transaction').insertOne(newTransaction);
+        }
+       catch (e) {
+           console.log(e)
+       }
     }
 }

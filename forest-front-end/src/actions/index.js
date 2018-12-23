@@ -1,20 +1,26 @@
 import {
-    DISMISS_ITEM_RECOMMEND, 
-    INCREASE_FOLLOWING,
-    UPDATE_DETAIL,
-    CHANGE_AUTH_TAB,
-    CHANGE_ACCOUNT_INFO,
     ADD_TWEET_LIST,
-    CHANGE_USER_INFO,
-    GET_USER_INFO,
-    CHANGE_FOLLOWING_COUNT,
-    CHANGE_TWEET_COUNT,
-    SET_LOGIN_INFO,
-    CHANGE_FOLLOWING_LIST,
+    INIT_TWEET_LIST,
+    CHANGE_ACCOUNT_INFO,
+    CHANGE_AUTH_TAB,
+    CHANGE_BUTTON_FOLLOW,
+    CHANGE_DETAIL,
     CHANGE_FOLLOWER_COUNT,
     CHANGE_FOLLOWER_LIST,
-    CHANGE_BUTTON_FOLLOW } 
-from "../constants";
+    CHANGE_FOLLOWING_COUNT,
+    CHANGE_FOLLOWING_LIST,
+    CHANGE_TWEET_COUNT,
+    CHANGE_USER_INFO,
+    DISMISS_ITEM_RECOMMEND,
+    INCREASE_FOLLOWING,
+    SET_USER_INFO,
+    SET_ACTIVE_USER,
+    CHANGE_TWEET_DETAIL_COMMENT,
+    CHANGE_TWEET_DETAIL_MAIN,
+    ADD_TWEET_DETAIL_COMMENT,
+    ADD_FOLLOWING_LIST,
+    ADD_FOLLOWER_LIST
+} from "../constants";
 
 import WebService from '../webservice'
 
@@ -27,7 +33,7 @@ export const increaseFollowing = () => (
 );
 
 export const updateDetail = (userDetail) => (
-    {type: UPDATE_DETAIL, userDetail: userDetail}
+    {type: CHANGE_DETAIL, userDetail: userDetail}
 );
 
 export const changeAuthTab = (status) => (
@@ -40,6 +46,10 @@ export const changeAcountInfo = (account) => (
 
 export const changeUserInfo = (user) => (
     {type: CHANGE_USER_INFO, user: user}
+);
+
+export const initTweetList = (tweets) => (
+    {type: INIT_TWEET_LIST, tweets: tweets}
 );
 
 export const addTweetList = (tweets) => (
@@ -58,8 +68,8 @@ export const changeCountFollower = (count) => (
     {type: CHANGE_FOLLOWER_COUNT, followerCount: count}
 );
 
-export const setLoginInfo = (publicKey) => (
-    {type: SET_LOGIN_INFO, loginer: publicKey}
+export const setUserInfo = (user) => (
+    {type: SET_USER_INFO, userLogin: user}
 );
 
 export const changeListFollowing = (followings) => (
@@ -74,66 +84,134 @@ export const updateButtonFollow = (exists) => (
     {type: CHANGE_BUTTON_FOLLOW, hasFollow: exists}
 );
 
+export const toggleFollow = (hasFollow) => (
+    {type: CHANGE_BUTTON_FOLLOW, hasFollow: (hasFollow === 1) ? 0 : 1}
+);
 
-export const updatePeopleInfo = (loginKey,peopleKey) =>
-    (dispatch, getState) =>{
-        let service = new WebService;
-        service.get(`api/accountInfo/?id=${peopleKey}`).then(account =>{
+export const activeUser = (userID) => (
+    {type: SET_ACTIVE_USER, activeUser: userID}
+);
+
+export const changeTweetDetailMain = (main) => (
+    {type: CHANGE_TWEET_DETAIL_MAIN, main: main}
+);
+
+export const changeTweetDetailComment = (comments) => (
+    {type: CHANGE_TWEET_DETAIL_COMMENT, comments: comments}
+);
+
+export const addTweetDetailComment = (comments) =>(
+    {type: ADD_TWEET_DETAIL_COMMENT, comments: comments}
+);
+
+export const addMoreListFollower = (followers) =>(
+    {type: ADD_FOLLOWER_LIST, followers: followers}
+);
+
+export const addMoreListFollowing = (followings) =>(
+    {type: ADD_FOLLOWING_LIST, followings: followings}
+);
+
+export const getDetailTweet = (object, loginer) =>
+    (dispatch, getState) => {
+        dispatch(changeTweetDetailMain(object))
+        let service = new WebService();
+        service.get(`api/tweetDetail/?object=${object._id}&loginer=${loginer}&start=0&count=5`).then(postDetail => {
+            dispatch(changeTweetDetailComment(postDetail.data))
+        });
+    };
+
+export const getMoreDetailTweet = (object, loginer,offset) =>
+    (dispatch, getState) => {
+        let service = new WebService();
+        service.get(`api/tweetDetail/?object=${object._id}&loginer=${loginer}&start=${offset}&count=5`).then(postDetail => {
+            dispatch(addTweetDetailComment(postDetail.data))
+        });
+    };
+
+export const updatePeopleInfo = (loginKey, peopleKey) =>
+    (dispatch, getState) => {
+        let service = new WebService();
+        service.get(`api/accountInfo/?id=${peopleKey}`).then(account => {
             dispatch(changeAcountInfo(account.data))
-        })
-        service.get(`api/userInfo/?id=${peopleKey}`).then(user =>{
+        });
+        service.get(`api/userInfo/?id=${peopleKey}`).then(user => {
             dispatch(changeUserInfo(user.data))
-        })
-        service.get(`api/isfollow/?address1=${loginKey}&address2=${peopleKey}`).then(exists =>{
+        });
+        service.get(`api/isfollow/?address1=${loginKey}&address2=${peopleKey}`).then(exists => {
             dispatch(updateButtonFollow(exists.data))
         })
-    }
+    };
 
 export const updateListFollowing = (publicKey) =>
-    (dispatch, getState) =>{
-        let service = new WebService;
-        service.get(`api/followings/?id=${publicKey}`).then(followings =>{
+    (dispatch, getState) => {
+        let service = new WebService();
+        service.get(`api/followings/?id=${publicKey}&needMore=1&start=0&count=9`).then(followings => {
             dispatch(changeListFollowing(followings.data))
         })
-    }
+    };
 
 export const updateListFollower = (publicKey) =>
-    (dispatch, getState) =>{
-        let service = new WebService;
-        service.get(`api/followers/?id=${publicKey}`).then(followers =>{
+    (dispatch, getState) => {
+        let service = new WebService();
+        service.get(`api/followers/?id=${publicKey}&start=0&count=9`).then(followers => {
             dispatch(changeListFollower(followers.data))
         })
-    }
+    };
+
+export const addListFollowing = (publicKey,offset) =>
+    (dispatch, getState) => {
+        let service = new WebService();
+        service.get(`api/followings/?id=${publicKey}&needMore=1&start=${offset}&count=9`).then(followings => {
+            dispatch(addMoreListFollowing(followings.data))
+        })
+    };
+
+export const addListFollower = (publicKey,offset) =>
+    (dispatch, getState) => {
+        let service = new WebService();
+        service.get(`api/followers/?id=${publicKey}&start=${offset}&count=9`).then(followers => {
+            dispatch(addMoreListFollower(followers.data))
+        })
+    };
 
 export const getLoginerInfo = (publicKey) =>
-    (dispatch, getState) =>{
-        let service = new WebService;
-        service.get(`api/userInfo/?id=${publicKey}`).then(user =>{
-            dispatch(setLoginInfo(user.data))
+    (dispatch, getState) => {
+        let service = new WebService();
+        service.get(`api/userInfo/?id=${publicKey}`).then(user => {
+            dispatch(setUserInfo(user.data))
         })
-    }
+    };
 
-export const getSomeNewestTweet = (publicKey) =>
-    (dispatch, getState) =>{
+export const getSomeNewestTweet = (publicKey,loginerKey) =>
+    (dispatch, getState) => {
         let service = new WebService;
-        service.get(`api/tweet/?id=${publicKey}&start=0&count=5`).then(tweets =>{
+        service.get(`api/tweet/?id=${publicKey}&loginer=${loginerKey}&start=0&count=10`).then(tweets => {
+            dispatch(initTweetList(tweets.data))
+        })
+    };
+
+export const getSomeMoreTweet = (publicKey,loginerKey,offset) =>
+    (dispatch, getState) => {
+        let service = new WebService;
+        service.get(`api/tweet/?id=${publicKey}&loginer=${loginerKey}&start=${offset}&count=10`).then(tweets => {
             dispatch(addTweetList(tweets.data))
         })
-    }
+    };
 
 export const getCount = (publicKey) =>
-    (dispatch, getState) =>{
-        let service = new WebService;
-        service.get(`api/tweet/count?id=${publicKey}`).then(count =>{
+    (dispatch, getState) => {
+        let service = new WebService();
+        service.get(`api/tweetCount?id=${publicKey}`).then(count => {
             dispatch(changeCountTweet(count.data))
-        })
-        service.get(`api/followingsCount?id=${publicKey}`).then(count =>{
+        });
+        service.get(`api/followingsCount?id=${publicKey}`).then(count => {
             dispatch(changeCountFollowing(count.data))
-        })
-        service.get(`api/followersCount?id=${publicKey}`).then(count =>{
+        });
+        service.get(`api/followersCount?id=${publicKey}`).then(count => {
             dispatch(changeCountFollower(count.data))
         })
-    }
+    };
 
 export const getUserInfo = (publicKey) =>
     (dispatch, getState) =>{

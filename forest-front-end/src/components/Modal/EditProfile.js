@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Icon,Input } from 'antd';
+import {Icon} from 'antd';
 import '../../css/edit-profile.scss'
 import moment from "moment";
 import { Keypair } from 'stellar-base';
@@ -15,7 +15,7 @@ class EditProfile extends Component {
             avatar:this.props.userInfo.avatar,
             displayName: this.props.userInfo.displayName,
             location:this.props.userInfo.location,
-            birthday:moment(this.props.userInfo.birthdate).format('MMM DD, YYYY'),
+
         };
     }
 

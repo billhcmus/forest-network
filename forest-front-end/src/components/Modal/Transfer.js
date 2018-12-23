@@ -1,11 +1,9 @@
-import { Form, Icon, Input, Button, Modal } from 'antd';
+import {Button, Form, Icon, Input, Modal} from 'antd';
 import React, {Component} from 'react';
 import "../../css/compose-tweet.scss"
-import {Menu} from "antd/lib/menu";
-import { Keypair } from 'stellar-base';
+import {Keypair} from 'stellar-base';
 import WebService from "../../webservice";
-import {encode,sign} from '../../transaction/index';
-import {encodeText} from  '../../transaction/myv1'
+import {encode, sign} from '../../transaction/index';
 import _ from 'lodash'
 
 
@@ -39,10 +37,12 @@ class TransferForm extends Component {
                             address : address,
                             amount : +money,
                         }
-                    }
+                    };
+
                     sign(tx,secret);
                     let data_encoding = '0x' + encode(tx).toString('hex');
-                    this.service.post(`api/sendTx`,{tx: data_encoding}).then((response) => {
+                    this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
+                        alert("Payment Success!");
                         this.props.onCancel();
                     }).catch(err => {
                         const message = _.get(err, 'response.data.error.message', "Payment Unsuccess!");

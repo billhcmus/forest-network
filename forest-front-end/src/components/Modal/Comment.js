@@ -8,7 +8,7 @@ import {encodeText} from '../../transaction/myv1'
 import _ from 'lodash'
 
 
-class TweetForm extends Component {
+class Comment extends Component {
 
     constructor(props) {
         super(props);
@@ -22,8 +22,6 @@ class TweetForm extends Component {
         this.setState({
             content:e.target.value
         })
-        console.log(e.target.value)
-
     }
 
     handleSubmit = () => {
@@ -37,25 +35,26 @@ class TweetForm extends Component {
                     account: '',
                     sequence: seq.data + 1,
                     memo: Buffer.alloc(0),
-                    operation: 'post',
+                    operation: 'interact',
                     params: {
+                        object: this.props.objectid,
                         content : encodeText({
                             type: 1,
                             text: this.state.content,
                         }),
-                        keys : []
                     }
                 }
                 sign(tx,secret);
                 let data_encoding = '0x' + encode(tx).toString('hex');
+                console.log(data_encoding)
                 this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
-                    alert("Tweet Success!");
+                    alert("Success!");
                     this.props.onCancel();
                     this.setState({
                         content:""
                     })
                 }).catch(err => {
-                    const message = _.get(err, 'response.data.error.message', "Tweet Unsuccess!");
+                    const message = _.get(err, 'response.data.error.message', "Comment Unsuccess!");
                     alert(message);
                 })
             })
@@ -65,43 +64,32 @@ class TweetForm extends Component {
     render() {
         return (
             <Modal
-                title="Compose new Tweet"
+                title="Comment"
                 centered
-                visible={this.props.isTweetShow}
+                visible={this.props.isCommentShow}
                 onCancel={() => this.props.onCancel()}
                 footer={null}
                 style={{padding:0}}
             >
-               <div className="modal-body">
-                   <div className="tweet-box-avatar">
-                       <img className="avatar"
-                            src = {`data:image/jpeg;base64,${this.props.loginerAvatar}`}
-                            alt="avatar"/>
-                   </div>
-                   <div className="tweet-box-content">
-                       <div className="tweet-content">
-                           <textarea className="tweet-text-area"
+                <div className="modal-body">
+                    <div className="tweet-box-content">
+                        <div className="tweet-content">
+                           <textarea className="comment-text-area"
                                      onChange={(e)=>this.textChange(e)}
-                                     placeholder="What's happening?"
+                                     placeholder="What do you thing?"
                                      name="status"></textarea>
-                       </div>
+                        </div>
 
-                       <div className="tweet-toolbar">
-                           {/*<div className="inputfile" >*/}
-                               {/*<label htmlFor="file">*/}
-                                   {/*<Icon type="picture" style={{ fontSize: '24px'}}/>*/}
-                               {/*</label>*/}
-                               {/*<input type="file" id="file" accept="image/*" ref="fileUploader"/>*/}
-                           {/*</div>*/}
-                           <Button type="primary"
-                                   onClick={this.handleSubmit}
-                                   style={{backgroundColor:"#1da1f2", borderRadius: '50px',fontWeight:'bold',float: 'right'}}>Tweet</Button>
-                       </div>
-                   </div>
-               </div>
+                        <div className="tweet-toolbar">
+                            <Button type="primary"
+                                    onClick={this.handleSubmit}
+                                    style={{backgroundColor:"#1da1f2", borderRadius: '50px',fontWeight:'bold',float: 'right'}}>Comment</Button>
+                        </div>
+                    </div>
+                </div>
             </Modal>
 
         );
     }
 }
-export default TweetForm;
+export default Comment;

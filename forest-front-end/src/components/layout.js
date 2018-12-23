@@ -2,12 +2,19 @@ import React, {Component} from 'react';
 import Navbar from '../containers/navbar';
 import UserProfile from '../containers/user-profile'
 import Wall from "./wall";
+import connect from "react-redux/es/connect/connect";
+import {activeUser} from "../actions";
 
-export default class Layout extends Component {
+class Layout extends Component {
 
     componentWillMount() {
-        if (this.props.match.params.id.length >= 25) {
-            localStorage.setItem("CURRENT_USER", this.props.match.params.id)
+        //Cần thay thế 1 biện pháp để xác định id có phải là 1 publickey ko
+        if (this.props.match.params.id.length > 25) {
+            this.props.activeUser(this.props.match.params.id)
+        }
+        else if (localStorage.getItem("ACTIVE_USER"))
+        {
+            this.props.activeUser(localStorage.getItem("ACTIVE_USER"))
         }
     }
 
@@ -21,3 +28,21 @@ export default class Layout extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        activeUser: (userid) => {
+            dispatch(activeUser(userid));
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);
+
+
+

@@ -1,5 +1,6 @@
 require("babel-core/register");
 require("babel-polyfill");
+import * as WebSocket from 'ws'
 import * as http from 'http'
 import express from 'express'
 import cors from 'cors'
@@ -25,6 +26,9 @@ app.use(bodyParse.json({
 }));
 
 const server = http.createServer(app);
+
+let wss = new WebSocket.Server({server});
+app.wss = wss;
 
 const client = RpcClient('wss://gorilla.forest.network:443/websocket');
 client.ws.on("close",(err)=>{
@@ -55,9 +59,17 @@ new DataBase().connect().then((db) => {
         if (!res)
             app.db.collection('account').insertOne(rootAccount);
     });
+    app.db.collection('user').findOne({_id: rootAccount._id}).then(res=>{
+        if (!res)
+            app.db.collection('user').insertOne({_id:'GA6IW2JOWMP4WGI6LYAZ76ZPMFQSJAX4YLJLOQOWFC5VF5C6IGNV2IW7'});
+    });
+    //Init index DB
     app.db.collection('post').createIndex({author:1})
     app.db.collection('follow').createIndex({following:1})
     app.db.collection('follow').createIndex({followed:1})
+    app.db.collection('comment').createIndex({object:1})
+    app.db.collection('reaction').createIndex({object:1})
+    app.db.collection('reaction').createIndex({author:1})
 
 
     //Sync and subcribe
@@ -72,7 +84,7 @@ new DataBase().connect().then((db) => {
 });
 
 //TEST PIC
-// *******app.models.user.updateAccount();
+//app.models.user.updateAccount();
 
 
 server.listen(process.env.PORT || PORT, () => {

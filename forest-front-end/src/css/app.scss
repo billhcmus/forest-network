@@ -229,8 +229,7 @@ body, html {
         list-style: none;
         .item-tweet {
           background: #fff;
-          padding: 10px;
-          border-bottom: 1px solid #e6ecf0;
+          border-bottom: 3px solid #e6ecf0;
           // background-clip: padding-box;
           padding: 9px 12px;
           .tweet-content {
@@ -288,8 +287,11 @@ body, html {
 
             .tweet-text-container {
               position: relative;
+              padding-top: 10px;
+
               p {
                 overflow: hidden;
+                white-space: pre-wrap;
                 // color: #2e2e2e;
                 -webkit-line-clamp: 4;
                 display: -webkit-box;
@@ -297,49 +299,143 @@ body, html {
                 font-weight: 500;
               }
             }
+          }
+          .tweet-action-footer {
+            display: inline-flex;
+            margin-bottom: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #e6ecf0;
+            text-align: center;
 
-            .tweet-action-footer {
-              display: flex;
-              margin-bottom: 10px;
-              .action-like {
-                button:hover{
-                  cursor: pointer;
-                  color: #ff0083;
-                }
+            .action-love {
+              button:hover{
+                cursor: pointer;
+                color: #ff0083;
               }
-              .action-reply {
-                button:hover{
-                  cursor: pointer;
-                  color: #04dff8;
-                }
+            }
+            .action-reply {
+              button:hover{
+                cursor: pointer;
+                color: #00eff8;
               }
-              .action-item {
-                min-width: 80px;
-                button {
-                  color: #657786;
-                  display: inline-block;
-                  font-size: 16px;
-                  line-height: 1;
-                  padding: 0 2px;
-                  position: relative;
-                  border: none;
-
-                  background: transparent;
-
-                  .actionCount {
-                    font-size: 16px;
-                    font-weight: bold;
-                    line-height: 0.75;
-                    margin-left: 12px;
-                    position: relative;
-                    vertical-align: text-bottom;
-                  }
-                }
-              }
-
-
             }
 
+            .action-like {
+              button:hover{
+                cursor: pointer;
+                color: #00a7f8;
+              }
+            }
+
+            .action-wow {
+              button:hover{
+                cursor: pointer;
+                color: #00f86c;
+              }
+            }
+
+            .action-haha {
+              button:hover{
+                cursor: pointer;
+                color: #f8cf00;
+              }
+            }
+
+            .action-sad {
+              button:hover{
+                cursor: pointer;
+                color: #dd00f8;
+              }
+            }
+
+            .action-angry {
+              button:hover{
+                cursor: pointer;
+                color: #f80d00;
+              }
+            }
+
+            .action-love-active {
+              button{
+                color: #ff0083;
+              }
+            }
+
+            .action-like-active {
+              button{
+                color: #00a7f8;
+              }
+            }
+
+            .action-wow-active {
+              button{
+                color: #00f86c;
+              }
+            }
+
+            .action-haha-active {
+              button{
+                color: #f8cf00;
+              }
+            }
+
+            .action-sad-active {
+              button{
+                color: #dd00f8;
+              }
+            }
+
+            .action-angry-active {
+              button{
+                color: #ff0083;
+              }
+            }
+
+            .action-item-active {
+              min-width: 80px;
+              button {
+                display: inline-block;
+                font-size: 16px;
+                line-height: 1;
+                position: relative;
+                border: none;
+                background: transparent;
+
+                .actionCount {
+                  font-size: 16px;
+                  font-weight: bold;
+                  line-height: 1;
+                  margin-left: 12px;
+                  position: relative;
+                  vertical-align: text-bottom;
+                }
+              }
+              button:hover{
+                cursor: pointer;
+                color: #657786;
+              }
+            }
+
+            .action-item {
+              min-width: 80px;
+              button {
+                display: inline-block;
+                font-size: 16px;
+                line-height: 1;
+                position: relative;
+                border: none;
+                background: transparent;
+
+                .actionCount {
+                  font-size: 16px;
+                  font-weight: bold;
+                  line-height: 1;
+                  margin-left: 12px;
+                  position: relative;
+                  vertical-align: text-bottom;
+                }
+              }
+            }
           }
         }
 
@@ -373,12 +469,11 @@ body, html {
       font-size: 24px;
       font-weight: 800;
       margin-bottom: 10px;
-      a {
+      div {
         line-height: 28px;
       }
-      a:hover {
+      div:hover {
         color: #04dff8;
-        cursor: pointer;
       }
     }
     .address {
@@ -392,7 +487,6 @@ body, html {
     .address {
       span:hover {
         color: #04dff8;
-        cursor: pointer;
         transition-duration: 0.4s;
       }
     }
@@ -456,7 +550,7 @@ body, html {
   text-align: center;
   .sidebar-left {
     display: inline-block;
-    width: 242px;
+    width: 300px;
     margin: 10px;
     vertical-align: top;
     margin-top: 50px;
@@ -464,18 +558,17 @@ body, html {
   }
   .content {
     display: inline-block;
-    width: 613px;
     height: 100%;
+    width: 600px;
     margin-top: 10px;
     vertical-align: top;
   }
   .main-right {
     display: inline-block;
-    max-width: 913px;
-    min-width: 913px;
+    width: 900px;
     height: 100%;
-    margin-top: 10px;
-    vertical-align: top; 
+    margin: 10px;
+    vertical-align: top;
   }
   .sidebar-right {
     display: inline-block;

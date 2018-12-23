@@ -1,17 +1,41 @@
-import {CHANGE_FOLLOWING_LIST} from "../constants";
+import {CHANGE_FOLLOWING_LIST,ADD_FOLLOWING_LIST} from "../constants";
 
-const initState =[]
+const initState =[];
 
 export default (state = initState, action) => {
     switch (action.type) {
-        case CHANGE_FOLLOWING_LIST:
-            let tmp = [];
+        case CHANGE_FOLLOWING_LIST: {
+            let newState = [];
             if (action.followings) {
                 action.followings.forEach((user) => {
-                    tmp = [...tmp, user]
-                })
+                    if (user) {
+                        newState = [...newState, {
+                            userName: user._id,
+                            avatar: user.picture,
+                            displayName: user.name
+                        }]
+                    }
+                });
             }
-            return tmp
+            return newState;
+        }
+        case ADD_FOLLOWING_LIST:
+        {
+            let newState = state;
+            if (action.followings) {
+                action.followings.forEach((user) => {
+                    if (user) {
+                        newState = [...newState, {
+                            userName: user._id,
+                            avatar: user.picture,
+                            displayName:user.name
+                        }]
+                    }
+                });
+            }
+            return newState;
+        }
+
         default:
             return state
     }

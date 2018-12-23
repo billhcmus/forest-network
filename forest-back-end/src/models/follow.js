@@ -26,27 +26,23 @@ export default class Follow {
         return exist.count();
     }
 
-    async getFollowings(publicKey) {
-        let listFollowings = await this.app.db.collection('follow').find({following: publicKey}).toArray();
-        return await listFollowings.map(user =>{
-            let tmp = this.app.db.collection('user').findOne({_id: user.following})
-            return{
-                userName:user.followed,
-                displayName:tmp.name,
-                avatar:tmp.picture,
-            }
+    async getFollowings(publicKey,needMore,start,count) {
+        let listFollowings = await this.app.db.collection('follow').find({following: publicKey}).skip(+start).limit(+count).toArray();
+        if (needMore === "0")
+            return listFollowings.map(user =>{
+                return user.followed
+            })
+        let res = listFollowings.map(user =>{
+            return this.app.db.collection('user').findOne({_id: user.followed})
         })
+        return Promise.all(res)
     }
 
-    async getFollowers(publicKey) {
-        let listFollowers = await this.app.db.collection('follow').find({followed: publicKey}).toArray();
-        return await listFollowers.map(user =>{
-            let tmp = this.app.db.collection('user').findOne({_id: user.followed})
-            return{
-                userName:user.following,
-                displayName:tmp.name,
-                avatar:tmp.picture,
-            }
+    async getFollowers(publicKey,start,count) {
+        let listFollowers = await this.app.db.collection('follow').find({followed: publicKey}).skip(+start).limit(+count).toArray();
+        let res = listFollowers.map(user =>{
+            return this.app.db.collection('user').findOne({_id: user.following})
         })
+        return Promise.all(res)
     }
 }

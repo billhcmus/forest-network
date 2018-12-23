@@ -1,14 +1,14 @@
 import {
     CHANGE_ACCOUNT_INFO,
-    INCREASE_FOLLOWING,
+    CHANGE_BUTTON_FOLLOW,
     CHANGE_DETAIL,
-    CHANGE_USER_INFO,
-    CHANGE_TWEET_COUNT,
-    CHANGE_FOLLOWING_COUNT,
     CHANGE_FOLLOWER_COUNT,
-    CHANGE_BUTTON_FOLLOW
-} 
-from "../constants";
+    CHANGE_FOLLOWING_COUNT,
+    CHANGE_TWEET_COUNT,
+    CHANGE_USER_INFO,
+    INCREASE_FOLLOWING,
+} from "../constants";
+import _ from 'lodash';
 
 const initState = {
     displayName: 'Unknown',
@@ -20,7 +20,7 @@ const initState = {
     avatar:'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
     theme:'https://pbs.twimg.com/profile_banners/173407308/1405769923/1500x500',
     location: "Viet Nam",
-    birthdate: 0,
+    birthdate: "15-08-1997",
     tweetCount: 0,
     followingCount: 0,
     followerCount: 0,
@@ -32,23 +32,23 @@ export default (state = initState, action) => {
         case CHANGE_BUTTON_FOLLOW:
             return{
                 ...state,
-                hasFollow: action.hasFollow
-            }
+                hasFollow: action.hasFollow ? action.hasFollow : 0
+            };
         case CHANGE_TWEET_COUNT:
             return{
                 ...state,
-                tweetCount: action.tweetCount
-            }
+                tweetCount: action.tweetCount ? action.tweetCount : 0
+            };
         case CHANGE_FOLLOWING_COUNT:
             return{
                 ...state,
-                followingCount: action.followingCount
-            }
+                followingCount: action.followingCount ? action.followingCount : 0
+            };
         case CHANGE_FOLLOWER_COUNT:
             return{
                 ...state,
-                followerCount: action.followerCount
-            }
+                followerCount: action.followerCount ? action.followerCount : 0
+            };
         case CHANGE_USER_INFO:
             return{
                 ...state,
@@ -60,11 +60,12 @@ export default (state = initState, action) => {
             return{
                 ...state,
                 userName: action.account._id,
-                bandwidthTime: action.account.bandwidthTime ? action.account.bandwidthTime : "dd/mm/yyyy" ,
+                bandwidthTime: _.get(action.account, "bandwidthTime") ? new Date(action.account.bandwidthTime) : "dd/mm/yyyy" ,
                 balance:  action.account.balance,
                 bandwidth: action.account.bandwidth,
                 sequence: action.account.sequence
             };
+
         case INCREASE_FOLLOWING:
             return {
                 ...state,

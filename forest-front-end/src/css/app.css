@@ -211,8 +211,7 @@ body, html {
 }
 .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet {
   background: #fff;
-  padding: 10px;
-  border-bottom: 1px solid #e6ecf0;
+  border-bottom: 3px solid #e6ecf0;
   padding: 9px 12px;
 }
 .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content {
@@ -268,43 +267,107 @@ body, html {
 }
 .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-text-container {
   position: relative;
+  padding-top: 10px;
 }
 .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-text-container p {
   overflow: hidden;
+  white-space: pre-wrap;
   -webkit-line-clamp: 4;
   display: -webkit-box;
   font-size: 14px;
   font-weight: 500;
 }
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer {
-  display: flex;
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer {
+  display: inline-flex;
   margin-bottom: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #e6ecf0;
+  text-align: center;
 }
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer .action-like button:hover {
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-love button:hover {
   cursor: pointer;
   color: #ff0083;
 }
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer .action-reply button:hover {
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-reply button:hover {
   cursor: pointer;
-  color: #04dff8;
+  color: #00eff8;
 }
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer .action-item {
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-like button:hover {
+  cursor: pointer;
+  color: #00a7f8;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-wow button:hover {
+  cursor: pointer;
+  color: #00f86c;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-haha button:hover {
+  cursor: pointer;
+  color: #f8cf00;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-sad button:hover {
+  cursor: pointer;
+  color: #dd00f8;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-angry button:hover {
+  cursor: pointer;
+  color: #f80d00;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-love-active button {
+  color: #ff0083;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-like-active button {
+  color: #00a7f8;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-wow-active button {
+  color: #00f86c;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-haha-active button {
+  color: #f8cf00;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-sad-active button {
+  color: #dd00f8;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-angry-active button {
+  color: #ff0083;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item-active {
   min-width: 80px;
 }
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer .action-item button {
-  color: #657786;
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item-active button {
   display: inline-block;
   font-size: 16px;
   line-height: 1;
-  padding: 0 2px;
   position: relative;
   border: none;
   background: transparent;
 }
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-action-footer .action-item button .actionCount {
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item-active button .actionCount {
   font-size: 16px;
   font-weight: bold;
-  line-height: 0.75;
+  line-height: 1;
+  margin-left: 12px;
+  position: relative;
+  vertical-align: text-bottom;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item-active button:hover {
+  cursor: pointer;
+  color: #657786;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item {
+  min-width: 80px;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item button {
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1;
+  position: relative;
+  border: none;
+  background: transparent;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item button .actionCount {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1;
   margin-left: 12px;
   position: relative;
   vertical-align: text-bottom;
@@ -336,12 +399,11 @@ body, html {
   font-weight: 800;
   margin-bottom: 10px;
 }
-.sidebar .sidebar-head .displayName a {
+.sidebar .sidebar-head .displayName div {
   line-height: 28px;
 }
-.sidebar .sidebar-head .displayName a:hover {
+.sidebar .sidebar-head .displayName div:hover {
   color: #04dff8;
-  cursor: pointer;
 }
 .sidebar .sidebar-head .address {
   color: #657786;
@@ -351,7 +413,6 @@ body, html {
 }
 .sidebar .sidebar-head .address span:hover {
   color: #04dff8;
-  cursor: pointer;
   transition-duration: 0.4s;
 }
 .sidebar .sidebar-head .location {
@@ -403,24 +464,23 @@ body, html {
 }
 .main-content .sidebar-left {
   display: inline-block;
-  width: 242px;
+  width: 300px;
   margin: 10px;
   vertical-align: top;
   margin-top: 50px;
 }
 .main-content .content {
   display: inline-block;
-  width: 613px;
   height: 100%;
+  width: 600px;
   margin-top: 10px;
   vertical-align: top;
 }
 .main-content .main-right {
   display: inline-block;
-  max-width: 913px;
-  min-width: 913px;
+  width: 900px;
   height: 100%;
-  margin-top: 10px;
+  margin: 10px;
   vertical-align: top;
 }
 .main-content .sidebar-right {

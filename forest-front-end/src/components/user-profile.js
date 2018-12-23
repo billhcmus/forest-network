@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
-import EditProfile from  "../containers/edit-profile"
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom'
+import EditProfile from "../containers/edit-profile"
 import {Keypair} from "stellar-base";
 import {encodeFollowings} from "../transaction/myv1";
 import {encode, sign} from "../transaction";
@@ -14,7 +14,6 @@ class UserProfile extends Component {
         this.service = new WebService();
         this.state = {
             isModalShow: false,
-            isFollow: false
         };
     }
 
@@ -22,7 +21,7 @@ class UserProfile extends Component {
         this.setState({
             isModalShow: false
         })
-    }
+    };
 
     componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside);
@@ -37,12 +36,14 @@ class UserProfile extends Component {
         this.setState({
             isModalShow: true
         })
-    }
+    };
+
     handleFollowClick = async (e) =>{
         let secret = localStorage.getItem("SECRET_KEY");
         let publicKey = Keypair.fromSecret(secret).publicKey();
         let seq = await this.service.get(`api/sequence/?id=${publicKey}`);
-        let followings = await this.service.get(`api/followings/?id=${publicKey}`);
+        let followings = await this.service.get(`api/followings/?id=${publicKey}&needMore=0`);
+        let newfollowings = followings.data.concat(this.props.activeUser);
         let tx = {
             version: 1,
             account: '',
@@ -52,16 +53,17 @@ class UserProfile extends Component {
             params: {
                 key: 'followings',
                 value: encodeFollowings({
-                    addresses: followings.data.map(user=>{
-                        return Buffer.from(base32.decode)
-                    }).concat(Buffer.from(base32.decode(this.props.curentId)))
+                    addresses: newfollowings.map(user =>{
+                        return Buffer.from(base32.decode(user))
+                    })
                 })
             }
         }
         sign(tx,secret);
         let data_encoding = '0x' + encode(tx).toString('hex');
-
-        this.service.post(`api/sendTx`,{tx: data_encoding}).then((response) => {
+        this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
+            this.props.toggleFollow(0)
+            alert('Successs');
         }).catch(err => {
             const message = _.get(err, 'response.data.error.message', "Follow Unsuccess!");
             alert(message);
@@ -72,8 +74,13 @@ class UserProfile extends Component {
         let secret = localStorage.getItem("SECRET_KEY");
         let publicKey = Keypair.fromSecret(secret).publicKey();
         let seq = await this.service.get(`api/sequence/?id=${publicKey}`);
-        let followings = await this.service.get(`api/followings/?id=${publicKey}`);
-        let addbase32 = Buffer.from(base32.decode(this.props.curentId));
+        let followings = await this.service.get(`api/followings/?id=${publicKey}&needMore=0`);
+        let newfollowings = followings.data.filter(item=>{
+            if (this.props.activeUser === item)
+                return false
+            return true
+        });
+
         let tx = {
             version: 1,
             account: '',
@@ -83,39 +90,53 @@ class UserProfile extends Component {
             params: {
                 key: 'followings',
                 value: encodeFollowings({
-                    addresses: followings.data.map(user=>{
-                        return Buffer.from(base32.decode)
-                    }).filter(item=>{
-                        if (addbase32 === item)
-                            return false
-                        return true
+                    addresses: newfollowings.map(user=>{
+                        return Buffer.from(base32.decode(user))
                     })
                 })
             }
-        }
+        };
         sign(tx,secret);
         let data_encoding = '0x' + encode(tx).toString('hex');
 
-        this.service.post(`api/sendTx`,{tx: data_encoding}).then((response) => {
+        this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
+            this.props.toggleFollow(1)
+            alert('Successs');
         }).catch(err => {
-            const message = _.get(err, 'response.data.error.message', "Follow Unsuccess!");
+            const message = _.get(err, 'response.data.error.message', "UnFollow Unsuccess!");
             alert(message);
         })
     }
 
-    componentWillMount() {
-        this.props.getCount(localStorage.getItem("CURRENT_USER"))
-        this.props.updatePeopleInfo(Keypair.fromSecret(
-            localStorage.getItem("SECRET_KEY")).publicKey(),
-            localStorage.getItem("CURRENT_USER"))
+    //Để gọi API lại khi thay đổi activeUser mà ko bị xoay vòng
+    componentWillUpdate(nextProps, nextState, nextContext) {
+        if (nextProps.activeUser && nextProps.activeUser !== this.props.activeUser)
+        {
+            this.props.getCount(nextProps.activeUser)
+            this.props.updatePeopleInfo(Keypair.fromSecret(
+                localStorage.getItem("SECRET_KEY")).publicKey(),
+                nextProps.activeUser)
+            localStorage.setItem("ACTIVE_USER",nextProps.activeUser)//Trường hợp reload trang
+        }
     }
+
+    componentWillMount() {
+        if (this.props.activeUser) {
+            this.props.getCount(this.props.activeUser)
+            this.props.updatePeopleInfo(Keypair.fromSecret(
+                localStorage.getItem("SECRET_KEY")).publicKey(),
+                this.props.activeUser)
+            localStorage.setItem("ACTIVE_USER",this.props.activeUser)//Trường hợp reload trang
+        }
+    }
+
     render() {
-        let secret = localStorage.getItem("SECRET_KEY");
-        const specButton =  (Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey() === localStorage.getItem("CURRENT_USER"))
-        ? <span className="button-text" onClick={(e)=>this.handleEditClick(e)}>Edit Profile</span>
-            :  (this.props.userInfo.hasFollow === 0)
-                ?  <span className="button-text" onClick={(e)=>this.handleFollowClick(e)}>Follow</span>
-                    :   <span className="button-text" onClick={(e)=>this.handleUnfollowClick(e)}>Unfollow</span>
+        const specButton =
+            (Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey() === this.props.activeUser)
+                ? <span className="button-text" onClick={(e)=>this.handleEditClick(e)}>Edit Profile</span>
+                    :  (this.props.userInfo.hasFollow === 0)
+                        ?  <span className="button-text" onClick={(e)=>this.handleFollowClick(e)}>Follow</span>
+                            :   <span className="button-text" onClick={(e)=>this.handleUnfollowClick(e)}>Unfollow</span>
 
 
         return (
@@ -131,9 +152,9 @@ class UserProfile extends Component {
                                 <div className="avatar-container">
                                     <div className="profile-container-avatar">
                                         <div className="profile-avatar">
-                                            <a href="#" className="profile-picture">
+                                            <div className="profile-picture">
                                                 <img alt="avatar" src={`data:image/jpeg;base64,${this.props.userInfo.avatar}`}/>
-                                            </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

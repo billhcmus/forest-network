@@ -1,6 +1,4 @@
 const vstruct = require('varstruct');
-const base32 = require('base32.js');
-const { Keypair } = require('stellar-base');
 
 const PlainTextContent = vstruct([
     { name: 'type', type: vstruct.UInt8 },
@@ -11,6 +9,18 @@ const Followings = vstruct([
     { name: 'addresses', type: vstruct.VarArray(vstruct.UInt16BE, vstruct.Buffer(35)) },
 ]);
 
+const ReactContent = vstruct([
+    { name: 'type', type: vstruct.UInt8 },
+    { name: 'reaction', type: vstruct.UInt8 },
+]);
+
+function encodeReact(content) {
+    return ReactContent.encode(content)
+}
+
+function decodeReact(content){
+    return ReactContent.decode(content)
+}
 
 function encodeText(content) {
     return PlainTextContent.encode(content)
@@ -28,4 +38,4 @@ function decodeFollowings(content){
     return Followings.decode(content)
 }
 
-module.exports = { encodeText, decodeText,encodeFollowings,decodeFollowings }
+module.exports = { encodeText, decodeText,encodeFollowings,decodeFollowings,decodeReact,encodeReact}

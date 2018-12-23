@@ -1,18 +1,20 @@
-import {Layout, Menu, Icon, Input,Avatar,Button,Dropdown} from 'antd/lib';
+import {Avatar, Button, Dropdown, Icon, Input, Layout, Menu} from 'antd/lib';
 import Tweet from "../components/Modal/Tweet";
 import Transfer from "../components/Modal/Transfer";
 import React, {Component} from 'react';
 import _ from 'lodash';
 import '../css/navstyle.css';
 import {Keypair} from "stellar-base";
-import {updateUserInfo} from "../actions";
-import {Link} from "react-router-dom";
+
 const {Header} = Layout;
 const Search = Input.Search;
 
 function handleMenuClick(e) {
     if (_.get(e, "key") === "1") {
         localStorage.clear();
+        window.location = `/`;
+    } else if (_.get(e, "key") === "0") {
+        window.location = `/${Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey()}`;
     }
 }
 
@@ -26,12 +28,12 @@ class Navbar extends Component {
     }
 
     menuDrop = (
-        <div style={{boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'}}>
+        <div style={{boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',width: '150px'}}>
             <Menu onClick={handleMenuClick}>
                 <Menu.Divider />
                 <Menu.Item key="0">
                     <Icon type="user"/>
-                    Detail
+                    Profile
                 </Menu.Item>
                 <Menu.Item key="1">
                     <Icon type="logout"/>
@@ -47,20 +49,22 @@ class Navbar extends Component {
             isTweetShow: false,
             isTransShow: false
         })
-    }
+    };
 
 
     handleTweetClick =(e)=>{
+        e.preventDefault();
         this.setState({
             isTweetShow: true
         })
-    }
+    };
 
     handleTransClick =(e)=>{
+        e.preventDefault();
         this.setState({
             isTransShow: true
         })
-    }
+    };
 
     componentWillMount()
     {
@@ -89,10 +93,11 @@ class Navbar extends Component {
                                 defaultSelectedKeys={['1']}
                                 style={{lineHeight: '44px', border: 'none'}}>
                                 <Menu.Item key="1" style={{fontWeight:'600'}}>
-                                    <Link to={"/"}>
+                                    <div  onClick={() => {
+                                        window.location = `/${Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey()}`}}>
                                         <Icon type="home"/>
                                         Home
-                                    </Link>
+                                    </div>
                                 </Menu.Item>
                                 <Menu.Item key="2" style={{fontWeight:'600'}}>
                                     <Icon type="bell"/>
@@ -120,7 +125,7 @@ class Navbar extends Component {
 
                             <Button type="primary" style={{borderRadius: '50px',fontWeight:'bold',marginLeft:'16px'}} onClick={(e)=>this.handleTweetClick(e)}>Tweet</Button>
                         </div>
-                        <Tweet isTweetShow={this.state.isTweetShow} onCancel={(e)=>this.handleCancel(e)}/>
+                        <Tweet loginerAvatar={this.props.loginerInfo.avatar} isTweetShow={this.state.isTweetShow} onCancel={(e)=>this.handleCancel(e)}/>
                         <Transfer isTransShow={this.state.isTransShow} onCancel={(e)=>this.handleCancel(e)}/>
 
                     </div>

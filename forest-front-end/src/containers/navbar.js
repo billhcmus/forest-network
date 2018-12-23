@@ -4,7 +4,7 @@ import {getLoginerInfo} from "../actions";
 
 const mapStateToProps = state => {
     return {
-        loginerInfo: state.LoginerReducer
+        loginerInfo: state.loginer
     }
 }
 

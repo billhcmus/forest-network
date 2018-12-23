@@ -4,7 +4,7 @@ import TweetBoard from '../containers/tweets-board';
 import SideBar from '../containers/left-sidebar';
 import FollowingList from '../containers/following';
 import FollowerList from '../containers/followers'
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 
 export default class Wall extends Component {
     render() {
@@ -59,3 +59,4 @@ export default class Wall extends Component {
         );
     }
 }
+
