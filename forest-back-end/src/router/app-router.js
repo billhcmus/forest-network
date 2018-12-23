@@ -128,10 +128,10 @@ export default class AppRouter {
 
 
         /**
-         * @endpoint: /api/posts
+         * @endpoint: /api/sendTx
          * @method: POST
          */
-        app.post('/api/posts', (req, res, next) => {
+        app.post('/api/sendTx', (req, res, next) => {
             const body = _.get(req, 'body');
             app.models.interact.createPost(body.tx).then(rs => {
                 return res.status(200).json(rs);

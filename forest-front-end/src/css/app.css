@@ -312,11 +312,51 @@ body, html {
   cursor: pointer;
   color: #f80d00;
 }
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-love-active button {
+  color: #ff0083;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-like-active button {
+  color: #00a7f8;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-wow-active button {
+  color: #00f86c;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-haha-active button {
+  color: #f8cf00;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-sad-active button {
+  color: #dd00f8;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-angry-active button {
+  color: #ff0083;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item-active {
+  min-width: 80px;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item-active button {
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1;
+  position: relative;
+  border: none;
+  background: transparent;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item-active button .actionCount {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1;
+  margin-left: 12px;
+  position: relative;
+  vertical-align: text-bottom;
+}
+.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item-active button:hover {
+  cursor: pointer;
+  color: #657786;
+}
 .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item {
   min-width: 80px;
 }
 .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item button {
-  color: #657786;
   display: inline-block;
   font-size: 16px;
   line-height: 1;

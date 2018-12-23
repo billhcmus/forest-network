@@ -72,6 +72,67 @@
     }
   }
 
+  .action-love-active {
+    button{
+      color: #ff0083;
+    }
+  }
+
+  .action-like-active {
+    button{
+      color: #00a7f8;
+    }
+  }
+
+  .action-wow-active {
+    button{
+      color: #00f86c;
+    }
+  }
+
+  .action-haha-active {
+    button{
+      color: #f8cf00;
+    }
+  }
+
+  .action-sad-active {
+    button{
+      color: #dd00f8;
+    }
+  }
+
+  .action-angry-active {
+    button{
+      color: #ff0083;
+    }
+  }
+
+  .action-item-active {
+    min-width: 80px;
+    button {
+      display: inline-block;
+      font-size: 16px;
+      line-height: 1;
+      position: relative;
+      border: none;
+      background: transparent;
+
+      .actionCount {
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 1;
+        margin-left: 12px;
+        position: relative;
+        vertical-align: text-bottom;
+      }
+    }
+    button:hover{
+      cursor: pointer;
+      color: #657786;
+    }
+  }
+
   .action-item {
     min-width: 80px;
     button {

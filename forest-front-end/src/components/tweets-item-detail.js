@@ -106,37 +106,43 @@ class TweetItemDetail extends Component {
                             <span className="actionCount">{itemInfo.comment ? itemInfo.comment : 0}</span>
                         </button>
                     </div>
-                    <div className="action-item action-like">
+                    <div className={this.props.itemInfo.currentReaction === 1
+                        ?"action-item-active action-like-active":"action-item action-like"}>
                         <button type="button" onClick={(e)=>{this.handleReactClick(e,1)}}>
                             <Icon icon={thumbsOUp}/>
                             <span className="actionCount">{itemInfo.like ? itemInfo.like : 0}</span>
                         </button>
                     </div>
-                    <div className="action-item action-love">
+                    <div className={this.props.itemInfo.currentReaction === 2
+                        ?"action-item-active action-love-active":"action-item action-love"}>
                         <button type="button" onClick={(e)=>{this.handleReactClick(e,2)}}>
                             <Icon icon={heartO}/>
                             <span className="actionCount">{itemInfo.love ? itemInfo.love : 0}</span>
                         </button>
                     </div>
-                    <div className="action-item action-haha">
+                    <div className={this.props.itemInfo.currentReaction === 3
+                        ?"action-item-active action-haha-active":"action-item action-haha"}>
                         <button type="button" onClick={(e)=>{this.handleReactClick(e,3)}}>
                             <Icon icon={happy}/>
                             <span className="actionCount">{itemInfo.haha ? itemInfo.haha : 0}</span>
                         </button>
                     </div>
-                    <div className="action-item action-wow">
+                    <div className={this.props.itemInfo.currentReaction === 4
+                        ?"action-item-active action-wow-active":"action-item action-wow"}>
                         <button type="button" onClick={(e)=>{this.handleReactClick(e,4)}}>
                             <Icon icon={shocked}/>
                             <span className="actionCount">{itemInfo.wow ? itemInfo.wow : 0}</span>
                         </button>
                     </div>
-                    <div className="action-item action-sad">
+                    <div className={this.props.itemInfo.currentReaction === 5
+                        ?"action-item action-sad-active":"action-item action-sad"}>
                         <button type="button" onClick={(e)=>{this.handleReactClick(e,5)}}>
                             <Icon icon={sad}/>
                             <span className="actionCount">{itemInfo.sad ? itemInfo.sad : 0}</span>
                         </button>
                     </div>
-                    <div className="action-item action-angry">
+                    <div className={this.props.itemInfo.currentReaction === 6
+                        ?"action-item action-angry-active":"action-item action-angry"}>
                         <button type="button" onClick={(e)=>{this.handleReactClick(e,6)}}>
                             <Icon icon={angry}/>
                             <span className="actionCount">{itemInfo.angry ? itemInfo.angry : 0}</span>
