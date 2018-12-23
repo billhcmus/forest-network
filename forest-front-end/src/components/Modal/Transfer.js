@@ -37,10 +37,11 @@ class TransferForm extends Component {
                             address : address,
                             amount : +money,
                         }
-                    }
+                    };
+
                     sign(tx,secret);
                     let data_encoding = '0x' + encode(tx).toString('hex');
-                    this.service.post(`api/sendTx`,{tx: data_encoding}).then((response) => {
+                    this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
                         alert("Payment Success!");
                         this.props.onCancel();
                     }).catch(err => {

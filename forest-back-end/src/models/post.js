@@ -2,7 +2,7 @@ import {encode, sign} from "../transaction";
 import {SECRET_KEY} from "../config";
 import _ from "lodash";
 
-export default class Interact {
+export default class Post {
     constructor(app) {
         this.app = app;
         this.createPost = this.createPost.bind(this);

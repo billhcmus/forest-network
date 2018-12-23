@@ -1,5 +1,6 @@
 require("babel-core/register");
 require("babel-polyfill");
+import * as WebSocket from 'ws'
 import * as http from 'http'
 import express from 'express'
 import cors from 'cors'
@@ -25,6 +26,9 @@ app.use(bodyParse.json({
 }));
 
 const server = http.createServer(app);
+
+let wss = new WebSocket.Server({server});
+app.wss = wss;
 
 const client = RpcClient('wss://gorilla.forest.network:443/websocket');
 client.ws.on("close",(err)=>{
