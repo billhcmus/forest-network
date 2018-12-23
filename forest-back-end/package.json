@@ -39,7 +39,8 @@
     "regenerator-runtime": "^0.13.1",
     "stellar-base": "^0.9.0",
     "tendermint": "^3.2.1",
-    "varstruct": "^6.1.2"
+    "varstruct": "^6.1.2",
+    "ws": "^6.1.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

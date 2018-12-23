@@ -1,9 +1,10 @@
 import Account from "./account";
-import Payment from "./payment";
 import Synchronization from "./sync";
 import User from "./user";
-import Interact from "./interact"
+import Post from "./post"
 import Follow from  "./follow"
+import Connection from "./connection";
+import Payment from  "./payment"
 
 /* Model là nơi tập hợp các thành phần
     User, Follower, ....
@@ -14,10 +15,11 @@ export default class Model {
     constructor(app) {
         this.app = app;
         this.account = new Account(app);
-        this.payment = new Payment(app);
         this.user = new User(app);
         this.sync = new Synchronization(app);
-        this.interact = new Interact(app);
+        this.post = new Post(app);
         this.follow = new Follow(app);
+        this.connection = new Connection(app);
+        this.payment = new Payment(app);//cái này để show history payment chứ ko phải chuyển tiền
     }
 }

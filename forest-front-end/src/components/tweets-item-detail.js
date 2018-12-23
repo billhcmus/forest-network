@@ -56,7 +56,7 @@ class TweetItemDetail extends Component {
             }
             sign(tx,secret);
             let data_encoding = '0x' + encode(tx).toString('hex');
-            this.service.post(`api/sendTx`,{tx: data_encoding}).then((response) => {
+            this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
                 alert('Successs');
             }).catch(err => {
                 const message = _.get(err, 'response.data.error.message', "React Unsuccess!");

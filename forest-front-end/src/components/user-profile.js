@@ -61,7 +61,7 @@ class UserProfile extends Component {
         }
         sign(tx,secret);
         let data_encoding = '0x' + encode(tx).toString('hex');
-        this.service.post(`api/sendTx`,{tx: data_encoding}).then((response) => {
+        this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
             this.props.toggleFollow(0)
             alert('Successs');
         }).catch(err => {
@@ -99,7 +99,7 @@ class UserProfile extends Component {
         sign(tx,secret);
         let data_encoding = '0x' + encode(tx).toString('hex');
 
-        this.service.post(`api/sendTx`,{tx: data_encoding}).then((response) => {
+        this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
             this.props.toggleFollow(1)
             alert('Successs');
         }).catch(err => {
