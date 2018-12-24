@@ -77,7 +77,7 @@ class Comment extends Component {
                            <textarea className="comment-text-area"
                                      onChange={(e)=>this.textChange(e)}
                                      placeholder="What do you thing?"
-                                     name="status"></textarea>
+                                     name="status"/>
                         </div>
 
                         <div className="tweet-toolbar">

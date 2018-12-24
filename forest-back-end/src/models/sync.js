@@ -40,8 +40,10 @@ export default class Synchronization {
                     {
                         console.log("Height", i)
                         let err = await this.checkAndWriteToDB(i, txs[j], block_time);
-                        if (err)
+                        if (err) {
                             console.log(err);
+                            return false;
+                        }
                     }
                 }
                 await this.app.db.collection('metadata').findOneAndUpdate(
@@ -49,7 +51,62 @@ export default class Synchronization {
                     {$set: {_value: i}})
 
         }
-        return { code: 1 };
+        return true;
+    }
+
+    async checkTransaction(tx, block_time) {
+         //Verify tx có hợp lệ không, theo các trường hợp trong code server.js
+
+         const txSize =  Buffer(tx, 'base64').length;
+         const data = this.app.helper.decodeTransaction(tx)//decode từ buffer binary sang json
+         const hashTx = hash(data);
+ 
+         // Check signature
+         if (!verify(data)) {
+             console.log('Wrong signature');
+             return false;
+         }
+ 
+         //Get account from MongoDB
+         const account = await this.app.db.collection('account').findOne({_id: data.account});
+         // Check account
+         if (!account) {
+             console.log('Account does not exists');
+             return false;
+         }
+ 
+         // Check sequence
+         const nextSequence = account.sequence + 1;
+         if (nextSequence !== data.sequence) {
+             console.log('Sequence mismatch');
+             return false;
+         }
+ 
+         // Check memo
+         if (data.memo.length > 32) {
+             console.log('Memo has more than 32 bytes.');
+             return false;
+         }
+ 
+         //Check bandwidth
+         const diff = account.bandwidthTime
+             ? moment(block_time).unix() - moment(account.bandwidthTime).unix()
+             : BANDWIDTH_PERIOD;
+         const bandwidthLimit = account.balance / MAX_CELLULOSE * NETWORK_BANDWIDTH;
+         // 24 hours window max 65kB
+         account.bandwidth = Math.ceil(Math.max(0, (BANDWIDTH_PERIOD - diff) / BANDWIDTH_PERIOD) * account.bandwidth + txSize);
+         if (account.bandwidth > bandwidthLimit) {
+             console.log('Bandwidth limit exceeded');
+             return false;
+         }
+ 
+         // Check bandwidth usage < account balance
+         const blockedAmount = Math.ceil(account.bandwidth / NETWORK_BANDWIDTH * MAX_CELLULOSE);
+         if (account.balance < blockedAmount) {
+             console.log('Account balance must greater blocked amount due to bandwidth used');
+             return false;
+         }
+         return true;
     }
 
     async checkAndWriteToDB(block, tx, block_time) {

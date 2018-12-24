@@ -3,9 +3,9 @@ import Navbar from '../containers/navbar';
 import UserProfile from '../containers/user-profile'
 import Wall from "./wall";
 import connect from "react-redux/es/connect/connect";
-import {activeUser} from "../actions";
 import {Route, Switch} from 'react-router-dom';
-
+import {activeUser, createNewConnection} from "../actions";
+import Connection from "../connection";
 
 class Layout extends Component {
 
@@ -18,6 +18,8 @@ class Layout extends Component {
         {
             this.props.activeUser(localStorage.getItem("ACTIVE_USER"))
         }
+
+        this.props.createNewConnection(new Connection());
     }
 
     render() {
@@ -58,6 +60,9 @@ const mapDispatchToProps = dispatch => {
     return {
         activeUser: (userid) => {
             dispatch(activeUser(userid));
+        },
+        createNewConnection: (connection) => {
+            dispatch(createNewConnection(connection));
         }
     }
 };

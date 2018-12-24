@@ -6,7 +6,7 @@ import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
 import bodyParse from 'body-parser'
-import { PORT, ThongAccount } from './config';
+import { PORT, ThongAccount, WS_PRIVATE_NOTE_URL } from './config';
 import AppRouter from './router/app-router';
 import Model from './models';
 import DataBase from './database';
@@ -29,7 +29,7 @@ const server = http.createServer(app);
 
 let wss = new WebSocket.Server({server});
 app.wss = wss;
-const client = RpcClient('wss://dragonfly.forest.network:443/websocket');
+const client = RpcClient(WS_PRIVATE_NOTE_URL);
 
 client.ws.on("close",(err)=>{
     console.log(err)
@@ -75,8 +75,10 @@ new DataBase().connect().then((db) => {
 
     //Sync and subcribe
     app.models.sync.syncTxsToDB().then(res=>{
-        client.subscribe({query: "tm.event = \'NewBlock\'"} , () => {
-            app.models.sync.syncTxsToDB();
+        client.subscribe({query: "tm.event = \'NewBlock\'"} , (block) => {
+            if (app.models.sync.syncTxsToDB()) {
+                app.models.connection.UpdateToClient(block);
+            }
         });
     });
 

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import FollowerItem from './follower-item';
 import '../css/follow.scss';
-import {Keypair} from "stellar-base";
 
 class FollowersList extends Component {
 
