@@ -1,6 +1,9 @@
 import _ from 'lodash';
 import {encode, sign} from "../transaction";
 import {SECRET_KEY} from "../config";
+var querystring = require('querystring');
+import axios from 'axios';
+import {API_URL} from '../config';
 
 export default class AppRouter {
     constructor(app) {
@@ -190,7 +193,43 @@ export default class AppRouter {
                 });
             });
         });
+                /**
+         * @endpoint: /api/user_info
+         * @method: POST
+         */
+        app.post('/api/user_info', (req, res, next) => {
+            const body = _.get(req, 'body');
+            const content_type = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }
+            this.app.service.post('broadcast_tx_commit', querystring.stringify(body), content_type)
+                .then(rs => {
+                    if (_.get(rs.data.result, "height") === "0") {
+                        let statu_code = {code: -1}
+                        res.status(304)
+                            .json({status: 'update failed',
+                                   errors: rs.data.result 
+                        })
 
+                    } else {
+                        console.log("else")
+                        console.log(rs.data.result);
+                        res.status(200).json({
+                            status: 'update success',
+                            result: rs.data.result
+                        })
+                    }
+                }).catch(err => {
+                    res.status(304)
+                        .json({status: 'update failed',
+                               errors: err.data 
+                    })
+                });
+
+        });
+        
         /**
          * @endpoint: /api/tweet/count
          * @method: GET
@@ -234,3 +273,5 @@ export default class AppRouter {
         })
     }
 }
+
+

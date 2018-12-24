@@ -1,4 +1,4 @@
-import {CHANGE_FOLLOWING_LIST,ADD_FOLLOWING_LIST} from "../constants";
+import { CHANGE_FOLLOWING_LIST, ADD_FOLLOWING_LIST } from "../constants/index";
 
 const initState =[];
 

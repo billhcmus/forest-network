@@ -11,8 +11,8 @@ import {
 import _ from 'lodash';
 
 const initState = {
-    displayName: '',
-    userName:'',
+    displayName: 'Unknown',
+    userName:'Unknown',
     balance:0,
     bandwidth:0,
     sequence:0,
@@ -55,6 +55,7 @@ export default (state = initState, action) => {
                 displayName: action.user.name ? action.user.name.toString('utf-8') : "Unknown",
                 avatar: action.user.picture ? action.user.picture : 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
             };
+            return state;
         case CHANGE_ACCOUNT_INFO:
             return{
                 ...state,
@@ -70,15 +71,6 @@ export default (state = initState, action) => {
                 ...state,
                 followingCount: state.followingCount + 1
             };
-
-        case CHANGE_DETAIL:
-            return {
-                ...state,
-                displayName: action.userDetail.displayName,
-                location: action.userDetail.location,
-                birthdate: action.userDetail.birthday,
-            };
-
         default:
             return state
     }
