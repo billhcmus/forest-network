@@ -7,7 +7,6 @@ class DetailTransaction extends Component {
 
     render() {
         const transaction = this.props.transaction;
-        console.log(transaction)
         return (
             <Modal
                 title="Transaction detail"

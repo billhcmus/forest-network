@@ -261,10 +261,6 @@ body, html {
 .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweet-profile-link .time {
   font-size: 16px;
 }
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-header .tweets-action {
-  margin: -2px -9px 0 auto;
-  min-width: inherit;
-}
 .tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-content .tweet-text-container {
   position: relative;
   padding-top: 10px;
@@ -276,105 +272,6 @@ body, html {
   display: -webkit-box;
   font-size: 14px;
   font-weight: 500;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer {
-  display: inline-flex;
-  margin-bottom: 10px;
-  padding-top: 10px;
-  border-top: 1px solid #e6ecf0;
-  text-align: center;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-love button:hover {
-  cursor: pointer;
-  color: #ff0083;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-reply button:hover {
-  cursor: pointer;
-  color: #00eff8;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-like button:hover {
-  cursor: pointer;
-  color: #00a7f8;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-wow button:hover {
-  cursor: pointer;
-  color: #00f86c;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-haha button:hover {
-  cursor: pointer;
-  color: #f8cf00;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-sad button:hover {
-  cursor: pointer;
-  color: #dd00f8;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-angry button:hover {
-  cursor: pointer;
-  color: #f80d00;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-love-active button {
-  color: #ff0083;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-like-active button {
-  color: #00a7f8;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-wow-active button {
-  color: #00f86c;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-haha-active button {
-  color: #f8cf00;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-sad-active button {
-  color: #dd00f8;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-angry-active button {
-  color: #ff0083;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item-active {
-  min-width: 80px;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item-active button {
-  display: inline-block;
-  font-size: 16px;
-  line-height: 1;
-  position: relative;
-  border: none;
-  background: transparent;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item-active button .actionCount {
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 1;
-  margin-left: 12px;
-  position: relative;
-  vertical-align: text-bottom;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item-active button:hover {
-  cursor: pointer;
-  color: #657786;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item {
-  min-width: 80px;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item button {
-  display: inline-block;
-  font-size: 16px;
-  line-height: 1;
-  position: relative;
-  border: none;
-  background: transparent;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet .tweet-action-footer .action-item button .actionCount {
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 1;
-  margin-left: 12px;
-  position: relative;
-  vertical-align: text-bottom;
-}
-.tweets-board-container .tweets-timeline .tweet-container .list-tweets .item-tweet:hover {
-  background: #eff4fa;
-  cursor: pointer;
 }
 .tweets-board-container .stream-end-inner {
   padding: 15px 50px;
