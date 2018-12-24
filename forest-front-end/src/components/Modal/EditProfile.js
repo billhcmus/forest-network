@@ -40,13 +40,11 @@ class EditProfile extends Component {
                         }
                         sign(tx, secretKey)
                         let data_encoding = '0x'+ encode(tx).toString('hex');
-                        console.log(data_encoding)
                         this.service.post(`api/user_info`,{tx: data_encoding}).then((res) => {
                             setTimeout(()=>{ 
                                 this.props.getUserInfo(key.publicKey())
-                            }, 1000);
+                            }, 500);
                         }).catch(err => console.log(err))
-                        return
                     })
             }
 
@@ -56,7 +54,7 @@ class EditProfile extends Component {
                     let tx = {
                         version: 1,
                         account: key.publicKey(),
-                        sequence: result.data + 1,
+                        sequence: this.state.displayName !== this.props.userInfo.displayName ? result.data + 2 : result.data + 1,
                         memo: Buffer.alloc(0),
                         operation: 'update_account',
                         params: {
@@ -65,17 +63,35 @@ class EditProfile extends Component {
                         },
                         signature: new Buffer(64)
                     }
+                    console.log(tx)
                     sign(tx, secretKey)
                     let data_encoding = '0x'+ encode(tx).toString('hex');
-                    // this.service.post(`api/user_info`,{tx: data_encoding})
-                    //         .then((res)=>{
-                    //             setTimeout(()=>{ 
-                    //                 this.props.getUserInfo(key.publicKey())
-                    //             }, 1000);
-                    //         })
-                    //         .catch((err)=>{
-                    //             console.log(err)
-                    //         })
+                    if(this.state.displayName !== this.props.userInfo.displayName)
+                    {
+                        setTimeout(()=>{
+                        this.service.post(`api/user_info`,{tx: data_encoding})
+                            .then((res)=>{
+                                setTimeout(()=>{ 
+                                    this.props.getUserInfo(key.publicKey())
+                                }, 500);
+                            })
+                            .catch((err)=>{
+                                console.log(err)
+                            })
+                        },1000)
+                    }
+                    else{
+                        console.log("afsad")
+                        this.service.post(`api/user_info`,{tx: data_encoding})
+                                .then((res)=>{
+                                    setTimeout(()=>{ 
+                                        this.props.getUserInfo(key.publicKey())
+                                    }, 500);
+                                })
+                                .catch((err)=>{
+                                    console.log(err)
+                                })
+                    }
                 })
             }
         this.props.onCancel();
@@ -95,22 +111,22 @@ class EditProfile extends Component {
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         let secretKey = localStorage.getItem("SECRET_KEY")
         const key = Keypair.fromSecret(secretKey);
         this.props.getUserInfo(key.publicKey())
-        this.setState({
-            avatar:this.props.userInfo.avatar,
-            displayName: this.props.userInfo.displayName,
-            location:this.props.userInfo.location,
-            birthday:moment(this.props.userInfo.birthdate).format('MMM DD, YYYY'),
-        })
+        setTimeout(()=>{
+            console.log("Da set lai state")
+            this.setState({
+                avatar:this.props.userInfo.avatar,
+                displayName: this.props.userInfo.displayName,
+                location:this.props.userInfo.location,
+                birthday:moment(this.props.userInfo.birthdate).format('MMM DD, YYYY'),
+            })
+        },3000)
     }
 
     render() {
-        console.log("render")
-        console.log(this.props.userInfo)
-        console.log(this.state)
 
         if (this.props.isModalShow === true) {
             return (
