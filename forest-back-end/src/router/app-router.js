@@ -210,7 +210,21 @@ export default class AppRouter {
          * @method: GET
          */
         app.get('/api/payments', (req, res, next) => {
-            app.models.payment.getPayments(req.query.id,req.query.start,req.query.count).then(rs => {
+            app.models.transaction.getPayments(req.query.id).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(404).json({
+                    error: err,
+                });
+            });
+        })
+
+        /**
+         * @endpoint: /api/transaction
+         * @method: GET
+         */
+        app.get('/api/transaction', (req, res, next) => {
+            app.models.transaction.getTransaction(req.query.id).then(rs => {
                 return res.status(200).json(rs);
             }).catch(err => {
                 return res.status(404).json({

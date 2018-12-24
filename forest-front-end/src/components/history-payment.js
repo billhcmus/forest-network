@@ -1,17 +1,36 @@
 import React, {Component} from 'react';
-import { Pagination } from 'antd';
+import { Pagination} from 'antd';
 import '../css/history.scss';
 import moment from "moment";
+import {Keypair} from "stellar-base";
+import DetailTransaction from "../containers/detail-transaction"
 
-const ITEM_PER_PAGE = 5;
+const ITEM_PER_PAGE = 10;
 
 class HistoryPayment extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isModalShow: false,
             currentPage: 1,
         };
     }
+
+
+    handleHashCancel = (e) => {
+        this.setState({
+            isModalShow: false
+        })
+    }
+
+    handleHashClick = (e,id) => {
+        e.stopPropagation()
+        this.setState({
+            isModalShow: true
+        })
+        this.props.getDetailTransaction(id)
+    }
+
 
     componentWillMount(){
         this.props.updatePayment(this.props.activeUser)
@@ -28,6 +47,7 @@ class HistoryPayment extends Component {
     render() {
         return (
             <div className="table-wrapper">
+                <DetailTransaction isModalShow={this.state.isModalShow} onCancel={(e) => this.handleHashCancel(e)}/>
                 <table className="table" style={{backgroundColor:'white'}}>
                     <thead>
                     <tr>
@@ -67,17 +87,27 @@ class HistoryPayment extends Component {
                                     <td data-label="Block" className="">
                                         <span>{value.block}</span>
                                     </td>
-                                    <td data-label="Hash" className="">
-                                        <span>{value._id.slice(0,14)}...</span>
+                                    <td data-label="Hash" className="clickable">
+                                        <span onClick={(e) =>this.handleHashClick(e,value._id)}>
+                                            {value._id.slice(0,14)}...
+                                        </span>
                                     </td>
                                     <td data-label="Time" className="">
                                         <span>{moment(value.time).format()}</span>
                                     </td>
-                                    <td data-label="Sender" className="">
-                                        <span>{value.tags[0].value.slice(0,14)}...</span>
+                                    <td data-label="Sender" className="clickable">
+                                        <span onClick={(e) => {
+                                            e.stopPropagation()
+                                            if (this.props.activeUser !== value.tags[0].value)
+                                                window.location =`/${value.tags[0].value}`
+                                        }}>{value.tags[0].value.slice(0,14)}...</span>
                                     </td>
-                                    <td data-label="Receiver" className="">
-                                        <span>{value.tags[1].value.slice(0,14)}...</span>
+                                    <td data-label="Receiver" className="clickable">
+                                        <span onClick={(e) => {
+                                            e.stopPropagation()
+                                            if (this.props.activeUser !== value.tags[1].value)
+                                                window.location =`/${value.tags[1].value}`
+                                        }}>{value.tags[1].value.slice(0,14)}...</span>
                                     </td>
                                     <td data-label="Amount" className="">
                                         <span>{value.tx.params.amount}</span>

@@ -4,7 +4,7 @@ import User from "./user";
 import Post from "./post"
 import Follow from  "./follow"
 import Connection from "./connection";
-import Payment from  "./payment"
+import Transaction from "./transaction"
 
 /* Model là nơi tập hợp các thành phần
     User, Follower, ....
@@ -20,6 +20,6 @@ export default class Model {
         this.post = new Post(app);
         this.follow = new Follow(app);
         this.connection = new Connection(app);
-        this.payment = new Payment(app);//cái này để show history payment chứ ko phải chuyển tiền
+        this.transaction = new Transaction(app);
     }
 }

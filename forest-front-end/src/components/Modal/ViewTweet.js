@@ -21,6 +21,7 @@ class ViewTweet extends Component {
         const listComments = this.props.tweetDetail.comments;
         return (
                 <Modal
+                    title={`Post ${mainTweet ? "of " + mainTweet.displayName : ""}`}
                     visible={this.props.isModalShow}
                     onCancel={() => this.props.onCancel()}
                     footer={null}

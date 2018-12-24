@@ -6,7 +6,7 @@
 }
 
 .received-money{
-  background-color: rgba(168, 255, 205, 0.17);
+  background-color: rgba(168, 255, 205, 0.22);
 }
 .send-money{
   background-color: rgba(255, 130, 124, 0.15);
@@ -14,4 +14,8 @@
 
 .table-wrapper{
     background-color: white;
+    .clickable:hover{
+      cursor: pointer;
+      color: #00a7f8;
+    }
 }
