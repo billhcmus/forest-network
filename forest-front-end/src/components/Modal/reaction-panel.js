@@ -20,12 +20,10 @@ class ReactionPanel extends Component {
 
     handleHoverIn =()=>{
         this.setState({isHover: true});
-        console.log(this.state.isHover)
     }
 
     handleHoverOut =()=>{
         this.setState({isHover: false});
-        console.log(this.state.isHover)
     }
 
     sendInteract = (type,isTurnOn) => {

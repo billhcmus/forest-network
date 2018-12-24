@@ -11,13 +11,15 @@ class Layout extends Component {
 
     componentWillMount() {
         //Cần thay thế 1 biện pháp để xác định id có phải là 1 publickey ko
-        // if (this.props.match.params.id.length > 25) {
-        //     this.props.activeUser(this.props.match.params.id)
-        // }
-        if (localStorage.getItem("ACTIVE_USER"))
+        /*important*/
+        if (this.props.match.params.id && this.props.match.params.id.length > 25) {
+            this.props.activeUser(this.props.match.params.id)
+        }
+        else if (localStorage.getItem("ACTIVE_USER"))
         {
             this.props.activeUser(localStorage.getItem("ACTIVE_USER"))
         }
+        /*important*/
 
         this.props.createNewConnection(new Connection());
     }
@@ -37,7 +39,7 @@ class Layout extends Component {
                     />
 
                     <Route 
-                        path="/:id"
+                        exact path="/:id"
                         children={({ match }) => (
                             <div>
                                 <UserProfile/>

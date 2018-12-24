@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Icon} from 'antd';
 import '../../css/edit-profile.scss'
-import moment from "moment";
 import { Keypair } from 'stellar-base';
 import WebService from "../../webservice";
 import { encode,sign } from '../../transaction';
@@ -12,9 +11,10 @@ class EditProfile extends Component {
         super(props);
         this.service = new WebService();
         this.state = {
+            hasNewAvatar: false,
             avatar:this.props.userInfo.avatar,
-            displayName: this.props.userInfo.displayName,
-            location:this.props.userInfo.location,
+            // displayName: this.props.userInfo.displayName,
+            // location:this.props.userInfo.location,
 
         };
     }
@@ -36,7 +36,6 @@ class EditProfile extends Component {
                                 key: 'name',
                                 value: new Buffer(this.state.displayName),
                             },
-                            signature: new Buffer(64)
                         }
                         sign(tx, secretKey)
                         let data_encoding = '0x'+ encode(tx).toString('hex');
@@ -61,7 +60,6 @@ class EditProfile extends Component {
                             key: 'picture',
                             value: new Buffer(this.state.avatar, 'binary')
                         },
-                        signature: new Buffer(64)
                     }
                     console.log(tx)
                     sign(tx, secretKey)
@@ -81,7 +79,6 @@ class EditProfile extends Component {
                         },1000)
                     }
                     else{
-                        console.log("afsad")
                         this.service.post(`api/user_info`,{tx: data_encoding})
                                 .then((res)=>{
                                     setTimeout(()=>{ 
@@ -97,12 +94,15 @@ class EditProfile extends Component {
         this.props.onCancel();
     }
    
-    handleChosen(event) {
+    handleChosen=(event) => {
         if (event.target.files && event.target.files[0]) {
 
             var reader = new FileReader();
             reader.onload = (e)=>{
                 this.setState({avatar: e.target.result})
+            }
+            reader.onloadend = (e) =>{
+                this.setState({hasNewAvatar: true})
             }
             reader.readAsBinaryString(event.target.files[0])
 
@@ -120,8 +120,8 @@ class EditProfile extends Component {
             this.setState({
                 avatar:this.props.userInfo.avatar,
                 displayName: this.props.userInfo.displayName,
-                location:this.props.userInfo.location,
-                birthday:moment(this.props.userInfo.birthdate).format('MMM DD, YYYY'),
+                // location:this.props.userInfo.location,
+                // birthday:moment(this.props.userInfo.birthdate).format('MMM DD, YYYY'),
             })
         },3000)
     }
@@ -137,27 +137,33 @@ class EditProfile extends Component {
                     </div>
                     <div className="edit-profile-container">
                         <div className="profile-edit-image">
-                            <label htmlFor="fileTheme">
-                                <span style={{position: 'relative',bottom: '-200px'}}>
-                                    <Icon type="picture" style={{ fontSize: '40px'}}/>
-                                    <p>Change your header photo</p>
-                                </span>
-                            </label>
-                            <input type="file" id="fileTheme" accept="image/*" ref="fileUploader"/>
+                            {/*<label htmlFor="fileTheme">*/}
+                                {/*<span style={{position: 'relative',bottom: '-200px'}}>*/}
+                                    {/*<Icon type="picture" style={{ fontSize: '40px'}}/>*/}
+                                    {/*<p>Change your header photo</p>*/}
+                                {/*</span>*/}
+                            {/*</label>*/}
+                            {/*<input type="file" id="fileTheme" accept="image/*" ref="fileUploader"/>*/}
                         </div>
 
                         <div className="profile-edit-avatar">
                             <div className="profile-container-avatar">
-                                <div className="profile-avatar">
-                                    <label htmlFor="fileAvatar">
-                                     <span style={{position: 'relative',bottom: '-50px'}}>
-                                        <Icon type="picture" style={{ fontSize: '40px'}}/>
-                                        <p>Change your avatar</p>
-                                    </span>
-                                    </label>
-                                    <input type="file" id="fileAvatar" accept="image/*" ref="fileUploader" onChange={(e) =>
-                                        this.handleChosen(e)}/>
-                                </div>
+                                {
+                                    this.state.hasNewAvatar === true ?
+                                        <img alt="avatar" src={`data:image/jpeg;base64,${btoa(this.state.avatar)}`}/>
+                                        :
+                                        <div className="profile-avatar">
+                                            <label htmlFor="fileAvatar">
+                                                 <span style={{position: 'relative',bottom: '-50px'}}>
+                                                    <Icon type="picture" style={{ fontSize: '40px'}}/>
+                                                    <p>Change your avatar</p>
+                                                </span>
+                                            </label>
+                                        <input type="file" id="fileAvatar" accept="image/*" ref="fileUploader" onChange={(e) =>
+                                            this.handleChosen(e)}/>
+                                        </div>
+                                }
+
                             </div>
                         </div>
 
@@ -182,18 +188,18 @@ class EditProfile extends Component {
                                                    onChange={e => this.setState({ displayName: e.target.value })}>
                                             </input>
                                         </div>
-                                        <div>
-                                            <input value = {this.state.location}
-                                                   placeholder={'locate'}
-                                                   onChange={e => this.setState({ location: e.target.value })}>
-                                            </input>
-                                        </div>
-                                        <div>
-                                            <input value = {this.state.birthday}
-                                                   placeholder={'birthday'}
-                                                   onChange={e => this.setState({ birthday: e.target.value })}>
-                                            </input>
-                                        </div>
+                                        {/*<div>*/}
+                                            {/*<input value = {this.state.location}*/}
+                                                   {/*placeholder={'locate'}*/}
+                                                   {/*onChange={e => this.setState({ location: e.target.value })}>*/}
+                                            {/*</input>*/}
+                                        {/*</div>*/}
+                                        {/*<div>*/}
+                                            {/*<input value = {this.state.birthday}*/}
+                                                   {/*placeholder={'birthday'}*/}
+                                                   {/*onChange={e => this.setState({ birthday: e.target.value })}>*/}
+                                            {/*</input>*/}
+                                        {/*</div>*/}
                                     </div>
                                 </div>
                             </div>

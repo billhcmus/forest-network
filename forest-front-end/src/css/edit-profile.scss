@@ -88,6 +88,14 @@
     transition: bottom .3s;
     z-index: 13;
 
+    img{
+      border: 5px solid #fff;
+      border-radius: 50%;
+      height: 200px;
+      position: relative;
+      width: 200px;
+    }
+
     .profile-avatar {
       background: #b18787ba;
       border: 5px solid #fff;

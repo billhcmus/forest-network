@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Icon} from 'react-icons-kit';
-import {comment} from 'react-icons-kit/fa';
+import {commentingO} from 'react-icons-kit/fa';
 import ViewTweet from '../containers/view-detail-tweet';
 import Comment from '../components/Modal/Comment';
 import moment from "moment";
@@ -89,7 +89,7 @@ class TweetItem extends Component {
                     <div className="tweet-action-footer">
                         <ReactionPanel itemInfo={itemInfo}/>
                         <div className="comment-btn" onClick={(e)=>{this.handleCommentClick(e)}}>
-                                <span><Icon icon={comment}/> Comment</span>
+                                <span><Icon icon={commentingO}/> Comment</span>
                         </div>
                         {
                             itemInfo.like > 0 ?

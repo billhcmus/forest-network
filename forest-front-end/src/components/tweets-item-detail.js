@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
-import {comment} from 'react-icons-kit/fa';
+import {commentingO} from 'react-icons-kit/fa';
 import "../css/detail-tweet-modal.scss"
 import {Icon} from "react-icons-kit";
 import {Keypair} from "stellar-base";
@@ -109,7 +109,7 @@ class TweetItemDetail extends Component {
                 <div className="tweet-action-footer">
                     <ReactionPanel itemInfo={itemInfo}/>
                     <div className="comment-btn" onClick={(e)=>{this.handleCommentClick(e)}}>
-                        <span><Icon icon={comment}/> Comment</span>
+                        <span><Icon icon={commentingO}/> Comment</span>
                     </div>
                     {
                         itemInfo.like > 0 ?

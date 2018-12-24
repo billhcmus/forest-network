@@ -26,7 +26,7 @@
     cursor: pointer;
     font-size: 15px;
     &:hover {
-      background: rgba(0, 0, 0, 0.08);
+      background: rgba(0, 0, 0, 0.14);
     }
   }
 
@@ -46,13 +46,13 @@
     margin-bottom: 0px;
     text-align: center;
     padding-top: 10px;
-    border-top: solid 1px #e6ecf0;
+    border-top: solid 1px #e0e6ea;
   }
 
   .main-tweet{
-    background-color: #edf9ff;
+    background-color: white;
     padding: 30px;
-    border-bottom: solid 1px #e6ecf0;
+    border-bottom: solid 1px #e0e6ea;
     img {
       width: 50px;
       height: 50px;
@@ -105,7 +105,7 @@
   }
 
   .moreStat{
-    border-top: 1px solid #e6ecf0;
+    border-top: 1px solid #e0e6ea;
     margin-top: 10px;
     display: flow-root;
     .countStat{
@@ -121,8 +121,8 @@
     margin: 0;
     list-style: none;
     .item-tweet {
-      background: #e6ffc9;
-      border-bottom: 1px solid #ffffff;
+      background: rgb(230, 255, 201);
+      border-top: 2px solid #ffffff;
       // background-clip: padding-box;
       padding: 10px 80px;
       .tweet-content {
@@ -190,7 +190,7 @@
     }
 
     .item-tweet:hover {
-      background: rgba(250, 231, 0, 0.16);
+      background: rgba(250, 231, 0, 0.29);
       cursor: pointer;
     }
   }
