@@ -4,15 +4,17 @@ import UserProfile from '../containers/user-profile'
 import Wall from "./wall";
 import connect from "react-redux/es/connect/connect";
 import {activeUser} from "../actions";
+import {Route, Switch} from 'react-router-dom';
+
 
 class Layout extends Component {
 
     componentWillMount() {
         //Cần thay thế 1 biện pháp để xác định id có phải là 1 publickey ko
-        if (this.props.match.params.id.length > 25) {
-            this.props.activeUser(this.props.match.params.id)
-        }
-        else if (localStorage.getItem("ACTIVE_USER"))
+        // if (this.props.match.params.id.length > 25) {
+        //     this.props.activeUser(this.props.match.params.id)
+        // }
+        if (localStorage.getItem("ACTIVE_USER"))
         {
             this.props.activeUser(localStorage.getItem("ACTIVE_USER"))
         }
@@ -22,8 +24,26 @@ class Layout extends Component {
         return (
             <div className="Container">
                 <Navbar/>
-                <UserProfile/>
-                <Wall/>
+                <Switch>
+                    <Route 
+                        path="/home"
+                        children={({ match }) => (
+                            <div className={"main-content"}>
+                                <p>Home</p>
+                            </div>
+                        )}
+                    />
+
+                    <Route 
+                        path="/:id"
+                        children={({ match }) => (
+                            <div>
+                                <UserProfile/>
+                                <Wall/>
+                            </div>
+                        )}
+                    />
+                </Switch>
             </div>
         );
     }
