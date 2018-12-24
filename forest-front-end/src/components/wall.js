@@ -4,12 +4,25 @@ import TweetBoard from '../containers/tweets-board';
 import SideBar from '../containers/left-sidebar';
 import FollowingList from '../containers/following';
 import FollowerList from '../containers/followers'
+import HistoryPayment from "../containers/history-payment";
+
 import {Route, Switch} from 'react-router-dom';
 
 export default class Wall extends Component {
     render() {
         return (
             <Switch>
+                <Route
+                    path="/history"
+                    children={({ match }) => (
+                        <div className={"main-content"}>
+                            <div className={"single-page"}>
+                                <HistoryPayment/>
+                            </div>
+                        </div>
+                    )}
+                />
+
                 <Route
                     path="/following"
                     children={({ match }) => (

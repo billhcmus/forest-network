@@ -22,8 +22,6 @@ class TweetForm extends Component {
         this.setState({
             content:e.target.value
         })
-        console.log(e.target.value)
-
     }
 
     handleSubmit = () => {

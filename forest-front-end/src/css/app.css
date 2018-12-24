@@ -490,5 +490,12 @@ body, html {
   margin: 10px;
   vertical-align: top;
 }
+.main-content .single-page {
+  display: inline-block;
+  width: 1000px;
+  height: 100%;
+  margin: 10px;
+  vertical-align: top;
+}
 
 /*# sourceMappingURL=app.css.map */

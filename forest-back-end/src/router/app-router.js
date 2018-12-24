@@ -243,6 +243,34 @@ export default class AppRouter {
                 });
             });
         });
+
+        /**
+         * @endpoint: /api/payments
+         * @method: GET
+         */
+        app.get('/api/payments', (req, res, next) => {
+            app.models.transaction.getPayments(req.query.id).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(404).json({
+                    error: err,
+                });
+            });
+        })
+
+        /**
+         * @endpoint: /api/transaction
+         * @method: GET
+         */
+        app.get('/api/transaction', (req, res, next) => {
+            app.models.transaction.getTransaction(req.query.id).then(rs => {
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(404).json({
+                    error: err,
+                });
+            });
+        })
     }
 }
 

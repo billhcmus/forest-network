@@ -2,29 +2,34 @@
   border-radius: 21px;
 }
 
-@media screen and (max-width: 768px) {
-  .menu {
-    max-width: 100px !important;
+@media screen and (max-width: 786px) {
+  .container {
+    max-width: 600px !important;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 992px) {
+  .menu {
+    max-width: 50px;
+  }
+}
+@media screen and (min-width: 992px) {
   .container {
-    width: auto !important;
-    min-width: 424px !important;
+    width: auto;
+    min-width: 424px;
   }
 
   .menu {
-    width: 280px !important;
+    width: 415px;
   }
 }
 @media screen and (min-width: 1236px) {
   .container {
     max-width: 1290px !important;
-    min-width: 424px !important;
+    min-width: 424px;
   }
 
   .menu {
-    width: 280px;
+    width: 415px;
   }
 }
 .container {

@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import _ from 'lodash';
 import '../css/navstyle.css';
 import {Keypair} from "stellar-base";
+import {Link} from "react-router-dom";
 
 const {Header} = Layout;
 const Search = Input.Search;
@@ -93,7 +94,7 @@ class Navbar extends Component {
                                 defaultSelectedKeys={['1']}
                                 style={{lineHeight: '44px', border: 'none'}}>
                                 <Menu.Item key="1" style={{fontWeight:'600'}}>
-                                    <div  onClick={() => {
+                                    <div onClick={() => {
                                         window.location = `/${Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey()}`}}>
                                         <Icon type="home"/>
                                         Home
@@ -102,6 +103,16 @@ class Navbar extends Component {
                                 <Menu.Item key="2" style={{fontWeight:'600'}}>
                                     <Icon type="bell"/>
                                     Notification
+                                </Menu.Item>
+                                <Menu.Item key="3" style={{fontWeight:'600'}}>
+                                    <Link  to="/history">
+                                        <Icon type="dollar"/>
+                                        History payment
+                                    </Link>
+                                    {/*<div onClick={() => {*/}
+                                        {/*window.location = `/history`}}>*/}
+
+                                    {/*</div>*/}
                                 </Menu.Item>
 
                             </Menu>

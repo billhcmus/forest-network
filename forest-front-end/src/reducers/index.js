@@ -8,6 +8,8 @@ import RecommendReducer from './RecommendReducer';
 import AuthReducer from './AuthReducer';
 import loginer from  './UserReducer'
 import activeUser from './ActiveUserReducer'
+import payment from  './PaymentHistoryReducer'
+import transaction from  './TransactionReducer'
 
 export default combineReducers({
     userInfo,
@@ -18,5 +20,7 @@ export default combineReducers({
     RecommendReducer,
     AuthReducer,
     loginer,
+    payment,
     activeUser,
+    transaction,
 });

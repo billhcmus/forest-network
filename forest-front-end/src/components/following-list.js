@@ -33,7 +33,7 @@ class FollowingList extends Component {
   render() {
     return (
       <div className="list-follow" id ="scrollfollowing" ref={(el) => { this.screen = el; }}>
-        { 
+        {
           this.props.list_following.map((value, key)=>{
             return <FollowItem key={key} FollowItem={value}/>
           })
