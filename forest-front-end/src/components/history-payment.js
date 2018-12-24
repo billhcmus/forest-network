@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { Pagination} from 'antd';
 import '../css/history.scss';
 import moment from "moment";
-import {Keypair} from "stellar-base";
 import DetailTransaction from "../containers/detail-transaction"
 
 const ITEM_PER_PAGE = 10;

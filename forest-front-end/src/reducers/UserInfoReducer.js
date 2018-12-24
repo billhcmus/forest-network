@@ -1,7 +1,6 @@
 import {
     CHANGE_ACCOUNT_INFO,
     CHANGE_BUTTON_FOLLOW,
-    CHANGE_DETAIL,
     CHANGE_FOLLOWER_COUNT,
     CHANGE_FOLLOWING_COUNT,
     CHANGE_TWEET_COUNT,
@@ -55,7 +54,6 @@ export default (state = initState, action) => {
                 displayName: action.user.name ? action.user.name.toString('utf-8') : "Unknown",
                 avatar: action.user.picture ? action.user.picture : 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
             };
-            return state;
         case CHANGE_ACCOUNT_INFO:
             return{
                 ...state,

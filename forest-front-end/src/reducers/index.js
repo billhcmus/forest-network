@@ -10,6 +10,7 @@ import loginer from  './UserReducer'
 import activeUser from './ActiveUserReducer'
 import payment from  './PaymentHistoryReducer'
 import transaction from  './TransactionReducer'
+import connection from './ConnectionReducer'
 
 export default combineReducers({
     userInfo,
@@ -23,4 +24,5 @@ export default combineReducers({
     payment,
     activeUser,
     transaction,
+    connection
 });

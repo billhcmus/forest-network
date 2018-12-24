@@ -21,7 +21,7 @@ import {
     ADD_FOLLOWING_LIST,
     ADD_FOLLOWER_LIST,
     CHANGE_PAYMENT_LIST,
-    CHANGE_TRANSACTION
+    CHANGE_TRANSACTION, CREATE_NEW_CONNECTION
 } from "../constants";
 
 import WebService from '../webservice'
@@ -122,9 +122,13 @@ export const changeTransaction = (transaction) => (
     {type: CHANGE_TRANSACTION, transaction: transaction}
 );
 
+export const createNewConnection = (connection) => (
+    {type: CREATE_NEW_CONNECTION, payload: connection}
+);
+
 export const getDetailTweet = (object, loginer) =>
     (dispatch, getState) => {
-        dispatch(changeTweetDetailMain(object))
+        dispatch(changeTweetDetailMain(object));
         let service = new WebService();
         service.get(`api/tweetDetail/?object=${object._id}&loginer=${loginer}&start=0&count=5`).then(postDetail => {
             dispatch(changeTweetDetailComment(postDetail.data))
@@ -211,7 +215,7 @@ export const getLoginerInfo = (publicKey) =>
 
 export const getSomeNewestTweet = (publicKey,loginerKey) =>
     (dispatch, getState) => {
-        let service = new WebService;
+        let service = new WebService();
         service.get(`api/tweet/?id=${publicKey}&loginer=${loginerKey}&start=0&count=10`).then(tweets => {
             dispatch(initTweetList(tweets.data))
         })
@@ -219,7 +223,7 @@ export const getSomeNewestTweet = (publicKey,loginerKey) =>
 
 export const getSomeMoreTweet = (publicKey,loginerKey,offset) =>
     (dispatch, getState) => {
-        let service = new WebService;
+        let service = new WebService();
         service.get(`api/tweet/?id=${publicKey}&loginer=${loginerKey}&start=${offset}&count=10`).then(tweets => {
             dispatch(addTweetList(tweets.data))
         })
@@ -241,9 +245,9 @@ export const getCount = (publicKey) =>
 
 export const getUserInfo = (publicKey) =>
     (dispatch, getState) =>{
-        let service = new WebService;
+        let service = new WebService();
         service.get(`api/userInfo/?id=${publicKey}`).then(user =>{
-            console.log(user.data)
+            console.log(user.data);
             dispatch(changeUserInfo(user.data))
         })
-    }
+    };
