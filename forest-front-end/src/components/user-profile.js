@@ -122,10 +122,10 @@ class UserProfile extends Component {
 
     componentWillMount() {
         if (this.props.activeUser) {
-            this.props.getCount(this.props.activeUser)
+            this.props.getCount(this.props.activeUser);
             this.props.updatePeopleInfo(Keypair.fromSecret(
                 localStorage.getItem("SECRET_KEY")).publicKey(),
-                this.props.activeUser)
+                this.props.activeUser);
             localStorage.setItem("ACTIVE_USER",this.props.activeUser)//Trường hợp reload trang
         }
     }

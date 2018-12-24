@@ -1,7 +1,6 @@
 import {
     CHANGE_ACCOUNT_INFO,
     CHANGE_BUTTON_FOLLOW,
-    CHANGE_DETAIL,
     CHANGE_FOLLOWER_COUNT,
     CHANGE_FOLLOWING_COUNT,
     CHANGE_TWEET_COUNT,
@@ -11,8 +10,8 @@ import {
 import _ from 'lodash';
 
 const initState = {
-    displayName: '',
-    userName:'',
+    displayName: 'Unknown',
+    userName:'Unknown',
     balance:0,
     bandwidth:0,
     sequence:0,
@@ -70,15 +69,6 @@ export default (state = initState, action) => {
                 ...state,
                 followingCount: state.followingCount + 1
             };
-
-        case CHANGE_DETAIL:
-            return {
-                ...state,
-                displayName: action.userDetail.displayName,
-                location: action.userDetail.location,
-                birthdate: action.userDetail.birthday,
-            };
-
         default:
             return state
     }

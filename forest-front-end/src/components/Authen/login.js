@@ -17,7 +17,7 @@ class LoginForm extends Component {
 
     checkAuth() {
         if (localStorage.getItem('token')) {
-            window.location = `/${ Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey()}`;
+            window.location =`/home`;
         }
     }
 
@@ -30,9 +30,9 @@ class LoginForm extends Component {
                     password: values.password
                 };
                 this.service.post('api/users/login', user).then((response) => {
-                    localStorage.setItem('token', true);
+                    localStorage.setItem('token', Keypair.fromSecret(values.secretkey).publicKey());
                     localStorage.setItem("SECRET_KEY", values.secretkey);
-                    this.props.history.push(`/${user.publicKey}`);
+                    this.props.history.push(`/home`);
                 }).catch(err => {
                     const message = _.get(err, 'response.data.error.message', "Login Error!");
                     alert(message);

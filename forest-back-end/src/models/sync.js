@@ -30,18 +30,22 @@ export default class Synchronization {
         let lastheight = status.data.result.sync_info.latest_block_height;
         console.log("SyncTX: ",beginHeight,"-->",lastheight);
         //Duyệt từng height
+        let isValidTx = true;
         for (let i = beginHeight + 1; i <= lastheight; ++i) {
                 let res = await this.app.service.get(`block?height=${i}`)
                 let txs = res.data.result.block.data.txs;
                 let block_time = res.data.result.block.header.time;
+                isValidTx = true;
                 if (txs !== null) {
                     //Duyệt từng tx trong list tx của block
                     for(let j = 0; j < txs.length; j++)
                     {
                         console.log("Height", i)
                         let err = await this.checkAndWriteToDB(i, txs[j], block_time);
-                        if (err)
+                        if (err) {
                             console.log(err);
+                            isValidTx = false;
+                        }
                     }
                 }
                 await this.app.db.collection('metadata').findOneAndUpdate(
@@ -49,7 +53,7 @@ export default class Synchronization {
                     {$set: {_value: i}})
 
         }
-        return { code: 1 };
+        return isValidTx;
     }
 
     async checkAndWriteToDB(block, tx, block_time) {

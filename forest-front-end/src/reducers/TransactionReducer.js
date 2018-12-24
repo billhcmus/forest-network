@@ -1,12 +1,13 @@
 import {CHANGE_TRANSACTION} from "../constants";
 
-const initState = ''
+const initState = '';
 
 export default (state = initState, action) => {
     switch (action.type) {
         case CHANGE_TRANSACTION: {
             if (action.transaction)
-                return action.transaction
+                return action.transaction;
+            break;
         }
         default:
             return state

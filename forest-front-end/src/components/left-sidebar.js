@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Icon} from 'react-icons-kit';
 import {calendar, coinDollar, meter, plus, user} from 'react-icons-kit/icomoon';
 
+
 const BANDWIDTH_PERIOD = 86400;
 const MAX_BLOCK_SIZE = 22020096;
 const RESERVE_RATIO = 1;
