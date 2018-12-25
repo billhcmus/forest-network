@@ -4,9 +4,10 @@ import Transfer from "../components/Modal/Transfer";
 import Register from '../components/Modal/CreateAccount';
 import React, {Component} from 'react';
 import _ from 'lodash';
-import '../css/navstyle.css';
+import '../css/navstyle.scss';
 import {Keypair} from "stellar-base";
 import {Link} from "react-router-dom";
+import WebService from "../webservice";
 
 const {Header} = Layout;
 const Search = Input.Search;
@@ -23,6 +24,7 @@ function handleMenuClick(e) {
 class Navbar extends Component {
     constructor(props) {
         super(props);
+        this.service = new WebService();
         this.state = {
             isTweetShow: false,
             isTransShow: false,
@@ -76,6 +78,17 @@ class Navbar extends Component {
             isRegisterShow: true
         });
     };
+
+    handleSearch = (value) =>
+    {
+            this.service.get(`api/accountInfo/?id=${value}`).then((res) => {
+                console.log(res.data)
+                window.location = `/${res.data._id}`;
+            }).catch(err => {
+                const message = _.get(err, 'response.data.error.message', "Can't find this user");
+                alert(message);
+            })
+    }
 
     componentWillMount()
     {
@@ -131,8 +144,8 @@ class Navbar extends Component {
 
                         <div style={{float:'right'}}>
                             <Search
-                                placeholder="Search Twitter"
-                                onSearch={value => console.log(value)}
+                                placeholder="Search by address"
+                                onSearch={value => this.handleSearch(value)}
                                 style={{width: 200,marginLeft:'16px'}}
                                 className={'inputSearch'}
                             />

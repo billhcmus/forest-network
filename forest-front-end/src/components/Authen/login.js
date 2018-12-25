@@ -30,7 +30,8 @@ class LoginForm extends Component {
                     password: values.password
                 };
                 this.service.post('api/users/login', user).then((response) => {
-                    localStorage.setItem('token', Keypair.fromSecret(values.secretkey).publicKey());
+                    localStorage.setItem('token', true);
+                    localStorage.setItem('ACTIVE_USER', Keypair.fromSecret(values.secretkey).publicKey());
                     localStorage.setItem("SECRET_KEY", values.secretkey);
                     this.props.history.push(`/home`);
                 }).catch(err => {
