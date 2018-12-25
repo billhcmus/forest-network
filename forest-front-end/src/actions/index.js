@@ -251,3 +251,10 @@ export const getUserInfo = (publicKey) =>
             //dispatch(changeUserInfo(user.data))
         })
     };
+
+export const addNewComment = (comment) =>
+    (dispatch, getState) => {
+        let listComment = [];
+        listComment.push(comment);
+        dispatch(addTweetDetailComment(listComment))
+    };

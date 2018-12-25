@@ -1,6 +1,7 @@
 import {WEB_SOCKET_URL} from "../config";
 import _ from 'lodash';
 import {openNotification} from "../notification";
+import {addNewComment} from "../actions";
 
 export default class Connection {
     constructor() {
@@ -57,6 +58,7 @@ export default class Connection {
                 break;
             case 'interact':
                 openNotification(payload.title, payload.description);
+                //addNewComment(payload.data);
                 break;
             case 'post':
                 openNotification(payload.title, payload.description);
