@@ -94,11 +94,10 @@ class Navbar extends Component {
                                 defaultSelectedKeys={['1']}
                                 style={{lineHeight: '44px', border: 'none'}}>
                                 <Menu.Item key="1" style={{fontWeight:'600'}}>
-                                    <div onClick={() => {
-                                        window.location = `/home`}}>
+                                    <Link  to="/home">
                                         <Icon type="home"/>
                                         Home
-                                    </div>
+                                    </Link>
                                 </Menu.Item>
                                 <Menu.Item key="2" style={{fontWeight:'600'}}>
                                     <Icon type="bell"/>

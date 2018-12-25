@@ -3,7 +3,7 @@ import {encode, sign} from "../transaction";
 import {SECRET_KEY} from "../config";
 var querystring = require('querystring');
 import axios from 'axios';
-import {API_URL} from '../config';
+// import {API_URL} from '../config';
 
 export default class AppRouter {
     constructor(app) {

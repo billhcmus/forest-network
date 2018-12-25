@@ -28,26 +28,8 @@ class Layout extends Component {
         return (
             <div className="Container">
                 <Navbar/>
-                <Switch>
-                    <Route 
-                        path="/home"
-                        children={({ match }) => (
-                            <div className={"main-content"}>
-                                <p>Home</p>
-                            </div>
-                        )}
-                    />
-
-                    <Route 
-                        exact path="/:id"
-                        children={({ match }) => (
-                            <div>
-                                <UserProfile/>
-                                <Wall/>
-                            </div>
-                        )}
-                    />
-                </Switch>
+                <UserProfile/>
+                <Wall/>
             </div>
         );
     }

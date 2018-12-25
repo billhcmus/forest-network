@@ -92,6 +92,7 @@ class EditProfile extends Component {
                 })
             }
         this.props.onCancel();
+        this.setState({hasNewAvatar: false})
     }
    
     handleChosen=(event) => {
@@ -170,7 +171,9 @@ class EditProfile extends Component {
                         <div className="profile-edit-header">
                             <div className="button-edit-profile">
                                 <button type="button" className="button-cancel">
-                                    <span onClick={() => this.props.onCancel()}>Cancel</span>
+                                    <span onClick={() => {
+                                        this.setState({hasNewAvatar: false})
+                                        this.props.onCancel()}}>Cancel</span>
                                 </button>
                              </div>
                             <div className="button-edit-profile">
