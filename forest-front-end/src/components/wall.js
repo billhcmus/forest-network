@@ -13,6 +13,15 @@ export default class Wall extends Component {
         return (
             <Switch>
                 <Route
+                    path="/home"
+                    children={({ match }) => (
+                        <div className={"main-content"}>
+                            <p>Home</p>
+                        </div>
+                    )}
+                />
+
+                <Route
                     path="/history"
                     children={({ match }) => (
                         <div className={"main-content"}>
