@@ -93,10 +93,6 @@ export default class Connection {
             let content = _.get(params, "content");
             
             let post = await this.app.db.collection('post').findOne({_id: object})
-
-            console.log("aa: ", decodeReact(content));
-            console.log("bb: ", decodeText(content));
-
             //try check comment
             try {
                 const newComment = {
