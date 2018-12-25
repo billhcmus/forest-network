@@ -1,5 +1,6 @@
 import {WEB_SOCKET_URL} from "../config";
 import _ from 'lodash';
+import {openNotification} from "../notification";
 
 export default class Connection {
     constructor() {
@@ -52,10 +53,10 @@ export default class Connection {
                 console.log(payload);
                 break;
             case 'payment':
-                alert(payload.message);
+                openNotification("Payment", payload.message);
                 break;
             case 'interact':
-                alert(payload.message);
+                openNotification("Interact", payload.message);
                 break;
             case 'post':
                 break;
