@@ -23,7 +23,6 @@ export default class Connection {
 
             this.connections = this.connections.set(socketId, connection);
 
-
             ws.on('message', (message) => {
                 const messageObj = JSON.parse(message);
                 const action = _.get(messageObj, "action");

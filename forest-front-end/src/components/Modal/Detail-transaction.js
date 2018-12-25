@@ -75,7 +75,7 @@ class DetailTransaction extends Component {
                                 </table>
                             </div>
                         </div>
-                        <pre style={{backgroundColor: 'beige'}}>{JSON.stringify(transaction.tx, null, '\n')}</pre>
+                        <pre style={{backgroundColor: 'beige',textAlign:"left"}}>{JSON.stringify(transaction.tx, null, 4)}</pre>
                     </div>
 
                     :<div></div>
