@@ -22,7 +22,7 @@ class Comment extends Component {
         this.setState({
             content:e.target.value
         })
-    }
+    };
 
     handleSubmit = () => {
         if (this.state.content.length !== 0) {
@@ -47,14 +47,13 @@ class Comment extends Component {
                 sign(tx,secret);
                 let data_encoding = '0x' + encode(tx).toString('hex');
                 this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
-                    alert("Success!");
                     this.props.onCancel();
                     this.setState({
                         content:""
                     })
                 }).catch(err => {
                     const message = _.get(err, 'response.data.error.message', "Comment Unsuccess!");
-                    alert(message);
+                    console.log(message)
                 })
             })
         }

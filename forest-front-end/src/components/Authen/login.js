@@ -5,6 +5,7 @@ import _ from 'lodash'
 import './auth-style.scss'
 import WebService from "../../webservice";
 import { Keypair } from 'stellar-base';
+import {openNotification} from "../../notification";
 
 const FormItem = Form.Item;
 
@@ -35,7 +36,7 @@ class LoginForm extends Component {
                     this.props.history.push(`/home`);
                 }).catch(err => {
                     const message = _.get(err, 'response.data.error.message', "Login Error!");
-                    alert(message);
+                    openNotification("Error", message);
                 })
             }
         });

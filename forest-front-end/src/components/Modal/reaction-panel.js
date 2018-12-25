@@ -7,6 +7,7 @@ import {encodeReact} from "../../transaction/myv1";
 import {encode, sign} from "../../transaction";
 import _ from "lodash";
 import WebService from "../../webservice";
+import {openNotification} from "../../notification";
 
 class ReactionPanel extends Component {
 
@@ -48,16 +49,15 @@ class ReactionPanel extends Component {
             sign(tx,secret);
             let data_encoding = '0x' + encode(tx).toString('hex');
             this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
-                alert('Successs');
             }).catch(err => {
                 const message = _.get(err, 'response.data.error.message', "React Unsuccess!");
-                alert(message);
+                openNotification("Error", message);
             })
         })
-    }
+    };
 
     handleReactClick = (e,type) =>{
-        e.stopPropagation()
+        e.stopPropagation();
         if (this.props.itemInfo.currentReaction === type){
             this.sendInteract(type,false)
         }

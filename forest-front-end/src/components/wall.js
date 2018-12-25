@@ -56,7 +56,7 @@ export default class Wall extends Component {
                     children={({ match }) => (
                         <div className={"main-content"}>
                             <div className={"sidebar-left"}>
-                                <SideBar/>
+                                    <SideBar/>
                             </div>
                             <div className={"content"}>
                                 <TweetBoard/>

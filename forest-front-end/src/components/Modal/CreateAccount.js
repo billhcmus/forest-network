@@ -5,6 +5,7 @@ import {Keypair} from 'stellar-base';
 import WebService from "../../webservice";
 import {encode, sign} from '../../transaction/index';
 import _ from 'lodash'
+import {openNotification} from "../../notification";
 
 const FormItem = Form.Item;
 
@@ -37,11 +38,11 @@ class Register extends Component {
 
                     let data_encoding = '0x' + encode(tx).toString('hex');
                     this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
-                        alert("Register successfully");
+                        openNotification("Register", "Successfully");
                         this.props.onCancel();
                     }).catch(err => {
                         const message = _.get(err, 'response.data.error.message', "Register return with failure!");
-                        alert(message);
+                        openNotification("Error", message);
                     })
                 })
             }

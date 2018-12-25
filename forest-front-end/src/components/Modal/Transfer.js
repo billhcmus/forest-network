@@ -45,7 +45,7 @@ class TransferForm extends Component {
                         this.props.onCancel();
                     }).catch(err => {
                         const message = _.get(err, 'response.data.error.message', "Transaction Unsuccess!");
-                        alert(message);
+                        console.log(message);
                     })
                 })
             }
