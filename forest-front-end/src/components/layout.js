@@ -26,7 +26,7 @@ class Layout extends Component {
 
     render() {
         return (
-            <div className="Container">
+            <div className="">
                 <Navbar/>
                 <UserProfile/>
                 <Wall/>
