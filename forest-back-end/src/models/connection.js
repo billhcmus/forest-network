@@ -1,6 +1,8 @@
-import {OrderedMap} from 'immutable'
+import {OrderedMap, has} from 'immutable'
 import {ObjectID} from 'mongodb'
 import _ from 'lodash'
+import {decodeText,decodeFollowings,decodeReact} from '../transaction/myv1';
+import {hash} from '../transaction';
 export default class Connection {
     constructor(app) {
         this.app = app;
@@ -16,8 +18,10 @@ export default class Connection {
         if (txs !== null) {
             //Duyệt từng tx trong list tx của block
             for (let j = 0; j < txs.length; j++) {
-                const data = this.app.helper.decodeTransaction(txs[j])
-                this.ProcessData(data);
+                if (this.app.models.sync.checkTransaction(txs[j], block_time)) {
+                    const data = this.app.helper.decodeTransaction(txs[j])
+                    this.ProcessData(data);
+                }
             }
         }
     }
@@ -49,7 +53,7 @@ export default class Connection {
             });
             message.payload = {
                 message: "Mày đã chuyển tiền thành công",
-                info: sender
+                data: sender
             }
 
             this.SendToOnePerson(data.account, message);
@@ -61,7 +65,7 @@ export default class Connection {
 
             message.payload = {
                 message: "Có thằng chuyển tiền cho mày",
-                info: receiver
+                data: receiver
             }
             
             this.SendToOnePerson(address, message);
@@ -87,6 +91,12 @@ export default class Connection {
             let params = _.get(data, "params")
             let object = _.get(params, "object");
             let content = _.get(params, "content");
+            
+            let post = await this.app.db.collection('post').findOne({_id: object})
+
+            console.log("aa: ", decodeReact(content));
+            console.log("bb: ", decodeText(content));
+
             //try check comment
             try {
                 const newComment = {
@@ -96,8 +106,13 @@ export default class Connection {
                     object: object,
                     time: block_time,
                 }
+                message.payload = {
+                    message: "Có thằng bình luận",
+                    data: newComment,
+                }
                 // Cap nhat comment vao post co id nay
-                console.log(`${account._id} comment: ${newComment.content.text} to object ${object}`);
+                this.SendToOnePerson(post.author, message);
+                //console.log(`${account._id} comment: ${newComment.content.text} to object ${object}`);
             } catch (e) {
                 //Not a comment
                 //try check react
@@ -114,10 +129,19 @@ export default class Connection {
                     // gui react trong post nay
 
                     if (foundReact) {
-
+                        message.payload = {
+                            message: "Nó đổi reaction kìa",
+                            data: newReact
+                        }
                     } else {
-
+                        message.payload = {
+                            message: "Nó reaction kìa",
+                            data: newReact
+                        }
                     }
+                    //console.log(`${account._id} react: ${newReact.reaction} to object ${object}`);
+
+                    this.SendToOnePerson(post.author, message);
                 } catch (err) {
                     console.log(`${account._id} interact ERR ${err}`);
                 }

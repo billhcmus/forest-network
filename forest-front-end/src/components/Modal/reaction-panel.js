@@ -44,7 +44,7 @@ class ReactionPanel extends Component {
                         reaction: isTurnOn ? type : 0,
                     }),
                 }
-            }
+            };
             sign(tx,secret);
             let data_encoding = '0x' + encode(tx).toString('hex');
             this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
