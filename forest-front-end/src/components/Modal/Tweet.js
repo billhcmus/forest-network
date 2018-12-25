@@ -6,6 +6,7 @@ import WebService from "../../webservice";
 import {encode, sign} from '../../transaction/index';
 import {encodeText} from '../../transaction/myv1'
 import _ from 'lodash'
+import {openNotification} from "../../notification";
 
 
 class TweetForm extends Component {
@@ -47,18 +48,17 @@ class TweetForm extends Component {
                 sign(tx,secret);
                 let data_encoding = '0x' + encode(tx).toString('hex');
                 this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
-                    alert("Tweet Success!");
                     this.props.onCancel();
                     this.setState({
                         content:""
                     })
                 }).catch(err => {
                     const message = _.get(err, 'response.data.error.message', "Tweet Unsuccess!");
-                    alert(message);
+                    openNotification("Error", message);
                 })
             })
         }
-    }
+    };
 
     render() {
         return (

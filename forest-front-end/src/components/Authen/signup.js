@@ -26,19 +26,6 @@ class RegisterForm extends Component {
                 let secretKey = key.secret();
                 this.props.form.setFieldsValue(data);
                 localStorage.setItem("SECRET_KEY", secretKey);
-
-                // this.service.post('api/user', data).then(res => {
-                //     if (_.get(res.data, "code") === -1) {
-                //         alert("Error Register");
-                //     } else {
-                //         localStorage.setItem("SECRET_KEY", secretKey);
-                //         let status = {login: true, signup: false};
-                //         this.props.changeAuthTab(status);
-                //         console.log(res);
-                //     }
-                // }).catch(err => {
-                //     console.log(err);
-                // })
             }
         });
     };

@@ -53,12 +53,13 @@ export default class Connection {
                 console.log(payload);
                 break;
             case 'payment':
-                openNotification("Payment", payload.message);
+                openNotification(payload.title, payload.description);
                 break;
             case 'interact':
-                openNotification("Interact", payload.message);
+                openNotification(payload.title, payload.description);
                 break;
             case 'post':
+                openNotification(payload.title, payload.description);
                 break;
             default:
                 break;

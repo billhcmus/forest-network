@@ -10,6 +10,7 @@ import {encodeReact} from "../transaction/myv1";
 import {encode, sign} from "../transaction";
 import Comment from "./Modal/Comment";
 import ReactionPanel from "./Modal/reaction-panel";
+import {openNotification} from "../notification";
 
 
 class TweetItemDetail extends Component {
@@ -53,17 +54,17 @@ class TweetItemDetail extends Component {
                         reaction: isTurnOn ? type : 0,
                     }),
                 }
-            }
+            };
             sign(tx,secret);
             let data_encoding = '0x' + encode(tx).toString('hex');
             this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
-                alert('Successs');
+
             }).catch(err => {
                 const message = _.get(err, 'response.data.error.message', "React Unsuccess!");
-                alert(message);
+                openNotification("Error", message);
             })
         })
-    }
+    };
 
     handleReactClick = (e,type) =>{
         if (this.props.itemInfo.currentReaction === type){

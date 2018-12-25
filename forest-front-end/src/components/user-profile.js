@@ -7,6 +7,7 @@ import {encode, sign} from "../transaction";
 import base32 from 'base32.js';
 import _ from "lodash";
 import WebService from "../webservice";
+import {openNotification} from "../notification";
 
 class UserProfile extends Component {
     constructor(props) {
@@ -63,12 +64,11 @@ class UserProfile extends Component {
         let data_encoding = '0x' + encode(tx).toString('hex');
         this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
             this.props.toggleFollow(0)
-            alert('Successs');
         }).catch(err => {
             const message = _.get(err, 'response.data.error.message', "Follow Unsuccess!");
-            alert(message);
+            openNotification("Error",message);
         })
-    }
+    };
 
     handleUnfollowClick = async (e) =>{
         let secret = localStorage.getItem("SECRET_KEY");
@@ -100,22 +100,21 @@ class UserProfile extends Component {
         let data_encoding = '0x' + encode(tx).toString('hex');
 
         this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
-            this.props.toggleFollow(1)
-            alert('Successs');
+            this.props.toggleFollow(1);
         }).catch(err => {
             const message = _.get(err, 'response.data.error.message', "UnFollow Unsuccess!");
-            alert(message);
+            openNotification("Error", message);
         })
-    }
+    };
 
     //Để gọi API lại khi thay đổi activeUser mà ko bị xoay vòng
     componentWillUpdate(nextProps, nextState, nextContext) {
         if (nextProps.activeUser && nextProps.activeUser !== this.props.activeUser)
         {
-            this.props.getCount(nextProps.activeUser)
+            this.props.getCount(nextProps.activeUser);
             this.props.updatePeopleInfo(Keypair.fromSecret(
                 localStorage.getItem("SECRET_KEY")).publicKey(),
-                nextProps.activeUser)
+                nextProps.activeUser);
             localStorage.setItem("ACTIVE_USER",nextProps.activeUser)//Trường hợp reload trang
         }
     }

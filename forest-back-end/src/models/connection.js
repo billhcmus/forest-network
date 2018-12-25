@@ -49,7 +49,8 @@ export default class Connection {
 
     SendToOnePerson(publicKey, message) {
         const connection = this.connections.find((con) => con.publicKey === publicKey);
-        
-        connection.ws.send(JSON.stringify(message))
+        if (connection) {
+            connection.ws.send(JSON.stringify(message));
+        }
     }
 }

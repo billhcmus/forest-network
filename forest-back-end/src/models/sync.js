@@ -142,6 +142,10 @@ export default class Synchronization {
             payload: null
         }
 
+        // Nguoi thuc hien hanh dong
+        const actor = await this.app.db.collection('user').findOne({_id: account._id});
+        let actorName = _.get(actor, "name") ? _.get(actor, "name") : "Ai đó";
+
         if (operation === 'create_account') {
             let params = _.get(data, "params")
             let address = _.get(params, "address");
@@ -213,7 +217,8 @@ export default class Synchronization {
                     _id: account._id
                 });
                 message.payload = {
-                    message: "Mày đã chuyển tiền thành công",
+                    title: "Bạn đã chuyển tiền thành công",
+                    description: "",
                     data: sender
                 }
     
@@ -225,7 +230,8 @@ export default class Synchronization {
                 });
     
                 message.payload = {
-                    message: "Có thằng chuyển tiền cho mày",
+                    title: `${actorName} đã chuyển ${amount} CEL cho bạn`,
+                    description: `${data.memo}`,
                     data: receiver
                 }
                 
@@ -247,6 +253,20 @@ export default class Synchronization {
                     keys: keys,
                 }
                 await this.app.db.collection('post').insertOne(newPost);
+
+                // broadcast cho nhung thang follow thang nay
+                if (needNotify) {
+                    let listFollowers = await this.app.db.collection('follow').find({followed: account._id});
+                    message.payload = {
+                        title: `${actorName} đã cập nhật trạng thái`,
+                        description: `${decodeText(content).text}`,
+                        data: newPost
+                    }
+                    listFollowers.forEach(u => {
+                        this.app.models.connection.SendToOnePerson(u.following, message);
+                    });
+                }
+
                 console.log(`${account._id} post type ${newPost.content.type} text ${newPost.content.text} keys ${keys}`);
             } catch (err) {
                 console.log(`${account._id} post ERR content ${content}`);
@@ -312,12 +332,13 @@ export default class Synchronization {
                     time: block_time,
                 }
                 await this.app.db.collection('comment').insertOne(newComment);
-                
+
                 // push noti
                 if (needNotify) {
                     message.payload = {
-                        message: "Có thằng bình luận",
-                        data: newComment,
+                        title: `${actorName} đã bình luận về bài viết của bạn`,
+                        description: `${decodeText(content).text}`,
+                        data: newComment
                     }
                     // Cap nhat comment vao post co id nay
                     this.app.models.connection.SendToOnePerson(post.author, message);
@@ -347,13 +368,15 @@ export default class Synchronization {
                         });
 
                         message.payload = {
-                            message: "Nó đổi reaction kìa",
+                            title: `${actorName} đã bày tỏ cảm xúc về bài viết của bạn`,
+                            description: "",
                             data: newReact
                         }
                     } else {
                         await this.app.db.collection('reaction').insertOne(newReact);
                         message.payload = {
-                            message: "Nó reaction kìa",
+                            title: `${actorName} đã bày tỏ cảm xúc về bài viết của bạn`,
+                            description: "",
                             data: newReact
                         }
                     }
