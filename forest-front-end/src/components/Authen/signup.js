@@ -24,26 +24,20 @@ class RegisterForm extends Component {
                 };
 
                 let secretKey = key.secret();
+                this.props.form.setFieldsValue(data);
+                localStorage.setItem("SECRET_KEY", secretKey);
 
-                this.service.post('api/user', data).then(res => {
-                    if (_.get(res.data, "code") === -1) {
-                        alert("Error Register");
-                    } else {
-                        localStorage.setItem("SECRET_KEY", secretKey);
-                        let status = {login: true, signup: false};
-                        this.props.changeAuthTab(status);
-                        console.log(res);
-                    }
-                }).catch(err => {
-                    console.log(err);
-                })
-                // return new Promise((resolve, reject) => {
-                //     this.service.post('api/users/signup', user).then((response) => {
-                //         store.dispatch(setStatusLogin({login: true, signup: false}));
-                //     }).catch(err => {
-                //         const message = _.get(err, 'response.data.error.message', "Signup Error!");
-                //         alert(message);
-                //     })
+                // this.service.post('api/user', data).then(res => {
+                //     if (_.get(res.data, "code") === -1) {
+                //         alert("Error Register");
+                //     } else {
+                //         localStorage.setItem("SECRET_KEY", secretKey);
+                //         let status = {login: true, signup: false};
+                //         this.props.changeAuthTab(status);
+                //         console.log(res);
+                //     }
+                // }).catch(err => {
+                //     console.log(err);
                 // })
             }
         });
@@ -62,36 +56,44 @@ class RegisterForm extends Component {
         const { getFieldDecorator } = this.props.form;
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
+                {/*<FormItem>*/}
+                    {/*{getFieldDecorator('fullName', {*/}
+                        {/*rules: [{ required: true, message: 'Please input your name!' }],*/}
+                    {/*})(*/}
+                        {/*<Input prefix={<Icon type="profile" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Full Name" />*/}
+                    {/*)}*/}
+                {/*</FormItem>*/}
+                {/*<FormItem>*/}
+                    {/*{getFieldDecorator('email', {*/}
+                        {/*rules:[{required: true, message: 'Please input your email!'}]*/}
+                    {/*})(<Input prefix={<Icon type="mail" style={{color: 'rgba(0,0,0,.25)'}}/>} placeholder="Email"/>*/}
+                    {/*)}*/}
+                {/*</FormItem>*/}
+                {/*<FormItem>*/}
+                    {/*{getFieldDecorator('password', {*/}
+                        {/*rules: [{ required: true, message: 'Please input your Password!' }],*/}
+                    {/*})(*/}
+                        {/*<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />*/}
+                    {/*)}*/}
+                {/*</FormItem>*/}
+                {/*<FormItem>*/}
+                    {/*{getFieldDecorator('confirmPassword', {*/}
+                        {/*rules: [{validator:this.checkPassword}],*/}
+                    {/*})(*/}
+                        {/*<Input prefix={<Icon type="unlock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Confirm Password" />*/}
+                    {/*)}*/}
+                {/*</FormItem>*/}
                 <FormItem>
-                    {getFieldDecorator('fullName', {
-                        rules: [{ required: true, message: 'Please input your name!' }],
+                    {getFieldDecorator('publicKey', {
+                        //rules: [{required: true, message: 'Please input your name!'}],
                     })(
-                        <Input prefix={<Icon type="profile" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Full Name" />
-                    )}
-                </FormItem>
-                <FormItem>
-                    {getFieldDecorator('email', {
-                        rules:[{required: true, message: 'Please input your email!'}]
-                    })(<Input prefix={<Icon type="mail" style={{color: 'rgba(0,0,0,.25)'}}/>} placeholder="Email"/>
-                    )}
-                </FormItem>
-                <FormItem>
-                    {getFieldDecorator('password', {
-                        rules: [{ required: true, message: 'Please input your Password!' }],
-                    })(
-                        <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
-                    )}
-                </FormItem>
-                <FormItem>
-                    {getFieldDecorator('confirmPassword', {
-                        rules: [{validator:this.checkPassword}],
-                    })(
-                        <Input prefix={<Icon type="unlock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Confirm Password" />
+                        <Input prefix={<Icon type="profile" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                               placeholder="Public Key"/>
                     )}
                 </FormItem>
                 <FormItem>
                     <Button type="primary" htmlType="submit" className="login-form-button">
-                        Sign Up
+                        Generate Key
                     </Button>
                 </FormItem>
             </Form>

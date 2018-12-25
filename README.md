@@ -1,5 +1,12 @@
 ﻿# Release notes
 
+## Liệt kê lại những thứ chưa làm
+
+- [ ] Realtime comment, react, transfer
+- [ ] Recommend to follow (cái này cần có một tiêu chí gì đó)
+- [ ] New feed
+- [ ] Notification khi giao dịch thất bại
+
 ## Bug cần sửa
 - Chuyển đổi giữa các tab tweet, following , follower
 - Chuyển đổi giữa trang cá nhân khác nhau
@@ -59,3 +66,7 @@ http://localhost:3001/api/users
   - Secret key (base64): XkkNZoCToqvbMS9FuCIAVyVbjFev92ue2NDD6LfwCvcHA1KwIKbgdYXu7gab0Dtf+r5POSfAVOYcHVuAu7wrKw==
   - Public key (base64): BwNSsCCm4HWF7u4Gm9A7X/q+TzknwFTmHB1bgLu8Kys=
   - Tenermint address: E2E2FA675848740AEC1E6FCA0D01F871AD1F3695
+
+- Thuyen:
+  - Secret key: SDHUCXZ7D5B7QWJQTOGJLC4R72RUCBJI5G6ZEOGQIZOJR4AZBP7XHFUH
+  - Public key: GDO6ZIAAXNHC6QZNIELH3TO3N4DITTUWLMOBMFON236WYM7PQN2QC2B3

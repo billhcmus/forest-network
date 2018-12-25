@@ -1,6 +1,7 @@
 import {Avatar, Button, Dropdown, Icon, Input, Layout, Menu} from 'antd/lib';
 import Tweet from "../components/Modal/Tweet";
 import Transfer from "../components/Modal/Transfer";
+import Register from '../components/Modal/CreateAccount';
 import React, {Component} from 'react';
 import _ from 'lodash';
 import '../css/navstyle.css';
@@ -25,6 +26,7 @@ class Navbar extends Component {
         this.state = {
             isTweetShow: false,
             isTransShow: false,
+            isRegisterShow: false,
         };
     }
 
@@ -48,7 +50,8 @@ class Navbar extends Component {
     handleCancel =(e)=>{
         this.setState({
             isTweetShow: false,
-            isTransShow: false
+            isTransShow: false,
+            isRegisterShow: false
         })
     };
 
@@ -65,6 +68,13 @@ class Navbar extends Component {
         this.setState({
             isTransShow: true
         })
+    };
+
+    handleCreateClick = (e) => {
+        e.preventDefault();
+        this.setState({
+            isRegisterShow: true
+        });
     };
 
     componentWillMount()
@@ -135,10 +145,12 @@ class Navbar extends Component {
                             <Button type="primary" style={{borderRadius: '50px',fontWeight:'bold',marginLeft:'16px'}} onClick={(e)=>this.handleTransClick(e)}>Transfer</Button>
 
                             <Button type="primary" style={{borderRadius: '50px',fontWeight:'bold',marginLeft:'16px'}} onClick={(e)=>this.handleTweetClick(e)}>Tweet</Button>
+
+                            <Button type="primary" style={{borderRadius: '50px',fontWeight:'bold',marginLeft:'16px'}} onClick={(e)=>this.handleCreateClick(e)}>Create New Account</Button>
                         </div>
                         <Tweet loginerAvatar={this.props.loginerInfo.avatar} isTweetShow={this.state.isTweetShow} onCancel={(e)=>this.handleCancel(e)}/>
                         <Transfer isTransShow={this.state.isTransShow} onCancel={(e)=>this.handleCancel(e)}/>
-
+                        <Register isRegisterShow={this.state.isRegisterShow} onCancel={(e) => this.handleCancel(e)}/>
                     </div>
                 </Header>
             </Layout>
