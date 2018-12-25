@@ -24,7 +24,7 @@ export default class Synchronization {
         this.app = app;
     }
 
-    async syncTxsToDB() {
+    async syncTxsToDB(needNotify=false) {
         let beginHeight = 0;
         let metaHeight = await this.app.db.collection('metadata').findOne({
             _id: 'finalHeight'
@@ -52,7 +52,7 @@ export default class Synchronization {
                 //Duyệt từng tx trong list tx của block
                 for (let j = 0; j < txs.length; j++) {
                     console.log("Height", i)
-                    let err = await this.checkAndWriteToDB(i, txs[j], block_time);
+                    let err = await this.checkAndWriteToDB(i, txs[j], block_time, needNotify);
                     if (err) {
                         console.log(err);
                         isValidTx = false;
@@ -71,65 +71,9 @@ export default class Synchronization {
         return isValidTx;
     }
 
-    async checkTransaction(tx, block_time) {
+    async checkAndWriteToDB(block, tx, block_time, needNotify) {
         //Verify tx có hợp lệ không, theo các trường hợp trong code server.js
 
-        const txSize = Buffer(tx, 'base64').length;
-        const data = this.app.helper.decodeTransaction(tx) //decode từ buffer binary sang json
-        const hashTx = hash(data);
-
-        // Check signature
-        if (!verify(data)) {
-            console.log('Wrong signature');
-            return false;
-        }
-
-        //Get account from MongoDB
-        const account = await this.app.db.collection('account').findOne({
-            _id: data.account
-        });
-        // Check account
-        if (!account) {
-            console.log('Account does not exists');
-            return false;
-        }
-
-        // Check sequence
-        const nextSequence = account.sequence + 1;
-        if (nextSequence !== data.sequence) {
-            console.log('Sequence mismatch');
-            return false;
-        }
-
-        // Check memo
-        if (data.memo.length > 32) {
-            console.log('Memo has more than 32 bytes.');
-            return false;
-        }
-
-        //Check bandwidth
-        const diff = account.bandwidthTime ?
-            moment(block_time).unix() - moment(account.bandwidthTime).unix() :
-            BANDWIDTH_PERIOD;
-        const bandwidthLimit = account.balance / MAX_CELLULOSE * NETWORK_BANDWIDTH;
-        // 24 hours window max 65kB
-        account.bandwidth = Math.ceil(Math.max(0, (BANDWIDTH_PERIOD - diff) / BANDWIDTH_PERIOD) * account.bandwidth + txSize);
-        if (account.bandwidth > bandwidthLimit) {
-            console.log('Bandwidth limit exceeded');
-            return false;
-        }
-
-        // Check bandwidth usage < account balance
-        const blockedAmount = Math.ceil(account.bandwidth / NETWORK_BANDWIDTH * MAX_CELLULOSE);
-        if (account.balance < blockedAmount) {
-            console.log('Account balance must greater blocked amount due to bandwidth used');
-            return false;
-        }
-        return true;
-    }
-
-    async checkAndWriteToDB(block, tx, block_time) {
-        //Verify tx có hợp lệ không, theo các trường hợp trong code server.js
 
         const txSize = Buffer(tx, 'base64').length;
         const data = this.app.helper.decodeTransaction(tx) //decode từ buffer binary sang json
@@ -187,8 +131,17 @@ export default class Synchronization {
             }
         })
 
+
         //Process operation
         let operation = _.get(data, "operation");
+
+         // push noti after write to db
+
+         let message = {
+            action: operation,
+            payload: null
+        }
+
         if (operation === 'create_account') {
             let params = _.get(data, "params")
             let address = _.get(params, "address");
@@ -251,6 +204,33 @@ export default class Synchronization {
                     balance: amount
                 }
             })
+
+            // push notification
+
+            // Thong bao cho nguoi gui
+            if (needNotify) {
+                const sender = await this.app.db.collection('account').findOne({
+                    _id: account._id
+                });
+                message.payload = {
+                    message: "Mày đã chuyển tiền thành công",
+                    data: sender
+                }
+    
+                this.app.models.connection.SendToOnePerson(account._id, message);
+    
+                // Thong bao cho nguoi nhan
+                const receiver = await this.app.db.collection('account').findOne({
+                    _id: address
+                });
+    
+                message.payload = {
+                    message: "Có thằng chuyển tiền cho mày",
+                    data: receiver
+                }
+                
+                this.app.models.connection.SendToOnePerson(address, message);
+            }
 
             console.log(`${account._id} transfered ${amount} to ${address}`);
 
@@ -319,6 +299,9 @@ export default class Synchronization {
             let params = _.get(data, "params")
             let object = _.get(params, "object");
             let content = _.get(params, "content");
+
+            let post = await this.app.db.collection('post').findOne({_id: object})
+
             //try check comment
             try {
                 const newComment = {
@@ -329,6 +312,17 @@ export default class Synchronization {
                     time: block_time,
                 }
                 await this.app.db.collection('comment').insertOne(newComment);
+                
+                // push noti
+                if (needNotify) {
+                    message.payload = {
+                        message: "Có thằng bình luận",
+                        data: newComment,
+                    }
+                    // Cap nhat comment vao post co id nay
+                    this.app.models.connection.SendToOnePerson(post.author, message);
+                }
+    
                 console.log(`${account._id} comment: ${newComment.content.text} to object ${object}`);
             } catch (e) {
                 //Not a comment
@@ -351,8 +345,20 @@ export default class Synchronization {
                                 reaction: newReact.reaction
                             }
                         });
+
+                        message.payload = {
+                            message: "Nó đổi reaction kìa",
+                            data: newReact
+                        }
                     } else {
                         await this.app.db.collection('reaction').insertOne(newReact);
+                        message.payload = {
+                            message: "Nó reaction kìa",
+                            data: newReact
+                        }
+                    }
+                    if (needNotify) {
+                        this.app.models.connection.SendToOnePerson(post.author, message);
                     }
                     console.log(`${account._id} react: ${newReact.reaction} to object ${object}`);
                 } catch (err) {
