@@ -54,6 +54,11 @@ export default class Connection {
             case 'payment':
                 alert(payload.message);
                 break;
+            case 'interact':
+                alert(payload.message);
+                break;
+            case 'post':
+                break;
             default:
                 break;
         }

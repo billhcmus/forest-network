@@ -31,7 +31,7 @@ export default class AppRouter {
         });
 
         app.post('/api/accounts/register', (req, res) => {
-
+            
         });
 
          /**

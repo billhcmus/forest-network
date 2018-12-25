@@ -43,10 +43,9 @@ class Comment extends Component {
                             text: this.state.content,
                         }),
                     }
-                }
+                };
                 sign(tx,secret);
                 let data_encoding = '0x' + encode(tx).toString('hex');
-                console.log(data_encoding)
                 this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
                     alert("Success!");
                     this.props.onCancel();
@@ -59,7 +58,7 @@ class Comment extends Component {
                 })
             })
         }
-    }
+    };
 
     render() {
         return (
