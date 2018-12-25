@@ -335,10 +335,23 @@ export default class Synchronization {
 
                 // push noti
                 if (needNotify) {
+
+                    let comment = await this.app.db.collection('comment').findOne({_id: hashTx});
+                    let user = await this.app.models.user.getUser(comment.author);
+                    comment.avatar = user.picture
+                    comment.displayName = user.name
+                    comment.like = 0
+                    comment.haha = 0
+                    comment.wow = 0
+                    comment.sad = 0
+                    comment.angry = 0
+                    comment.love = 0
+                    comment.comment = 0
+
                     message.payload = {
                         title: `${actorName} đã bình luận về bài viết của bạn`,
                         description: `${decodeText(content).text}`,
-                        data: newComment
+                        data: comment
                     }
                     // Cap nhat comment vao post co id nay
                     this.app.models.connection.SendToOnePerson(post.author, message);

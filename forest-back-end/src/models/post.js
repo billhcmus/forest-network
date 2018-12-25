@@ -107,4 +107,9 @@ export default class Post {
         })
         return Promise.all(res);
     }
+
+
+    async getCommentDetail(commentId) {
+        
+    }
 }
