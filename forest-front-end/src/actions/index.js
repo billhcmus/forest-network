@@ -248,6 +248,6 @@ export const getUserInfo = (publicKey) =>
         let service = new WebService();
         console.log("abc");
         service.get(`api/userInfo/?id=${publicKey}`).then(user =>{
-            dispatch(changeUserInfo(user.data))
+            //dispatch(changeUserInfo(user.data))
         })
     };

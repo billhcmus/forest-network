@@ -122,19 +122,19 @@ class Navbar extends Component {
                                         Home
                                     </Link>
                                 </Menu.Item>
+
                                 <Menu.Item key="2" style={{fontWeight:'600'}}>
-                                    <Icon type="bell"/>
-                                    Notification
-                                </Menu.Item>
-                                <Menu.Item key="3" style={{fontWeight:'600'}}>
                                     <Link  to="/history">
                                         <Icon type="dollar"/>
-                                        History payment
+                                        History Payment
                                     </Link>
-                                    {/*<div onClick={() => {*/}
-                                        {/*window.location = `/history`}}>*/}
+                                </Menu.Item>
 
-                                    {/*</div>*/}
+                                <Menu.Item key="3" style={{fontWeight:'600'}}>
+                                    <span onClick={(e)=>this.handleCreateClick(e)}>
+                                        <Icon type="team"/>
+                                        Create Account
+                                    </span>
                                 </Menu.Item>
 
                             </Menu>
@@ -150,15 +150,13 @@ class Navbar extends Component {
                                 className={'inputSearch'}
                             />
 
-                            <Dropdown overlay={this.menuDrop} trigger={['click']} placement="bottomRight">
-                                <Avatar src = {`data:image/jpeg;base64,${this.props.loginerInfo.avatar}`} icon="user" style={{marginLeft:'16px'}}/>
-                            </Dropdown>
-
                             <Button type="primary" style={{borderRadius: '50px',fontWeight:'bold',marginLeft:'16px'}} onClick={(e)=>this.handleTransClick(e)}>Transfer</Button>
 
                             <Button type="primary" style={{borderRadius: '50px',fontWeight:'bold',marginLeft:'16px'}} onClick={(e)=>this.handleTweetClick(e)}>Tweet</Button>
 
-                            <Button type="primary" style={{borderRadius: '50px',fontWeight:'bold',marginLeft:'16px'}} onClick={(e)=>this.handleCreateClick(e)}>Create New Account</Button>
+                            <Dropdown overlay={this.menuDrop} trigger={['click']} placement="bottomRight">
+                                <Avatar src = {`data:image/jpeg;base64,${this.props.loginerInfo.avatar}`} icon="user" style={{marginLeft:'16px'}}/>
+                            </Dropdown>
                         </div>
                         <Tweet loginerAvatar={this.props.loginerInfo.avatar} isTweetShow={this.state.isTweetShow} onCancel={(e)=>this.handleCancel(e)}/>
                         <Transfer isTransShow={this.state.isTransShow} onCancel={(e)=>this.handleCancel(e)}/>
