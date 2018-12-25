@@ -7,6 +7,9 @@ class DetailTransaction extends Component {
 
     render() {
         const transaction = this.props.transaction;
+        let memo = ''
+        if (transaction)
+            memo = new Buffer(transaction.tx.memo,'base64')
         return (
             <Modal
                 title="Transaction detail"
@@ -30,7 +33,7 @@ class DetailTransaction extends Component {
                             <div className="column">
                                 <h5><strong>Operation</strong>: {transaction.operation}</h5>
                                 <h5>
-                                    <strong>Memo</strong>: {transaction.tx.memo ? atob(transaction.tx.memo) : ''}
+                                    <strong>Memo</strong>: {memo !== '' ? memo.toString()  : ''}
                                 </h5>
                                 <h5><strong>Tags</strong>: {transaction.tags.length}</h5>
                             </div>
