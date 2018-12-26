@@ -86,6 +86,16 @@ class NewFeedItem extends Component {
 
                                   <div><b>{itemInfo.operation}</b> <span style={{color: "#3490fa"}}>{itemInfo.address}</span></div>
                             }
+                            {itemInfo && itemInfo.operation === "update_account" &&
+                                <div>
+                                    {itemInfo.params && itemInfo.params.type==="name" &&
+                                        <span>updated name to <span style={{fontSize: '15px', fontWeight: '800'}}>{itemInfo.params.value}</span></span>
+                                    }
+                                    {itemInfo.params && itemInfo.params.type==="picture" &&
+                                        <span>updated picture with <span style={{fontSize: '15px', fontWeight: '800'}}>{itemInfo.params.value}</span></span>
+                                    }
+                                </div>
+                            }
 
                             {itemInfo && itemInfo.operation === "payment" &&
                                 <div>
@@ -94,9 +104,6 @@ class NewFeedItem extends Component {
                                 </div>
                             }
 
-                            {itemInfo && itemInfo.operation === "update_account" && itemInfo.params.type === "name" &&
-                                <span>update name to {itemInfo.params.value}</span>
-                            }
 
                         </div>
 

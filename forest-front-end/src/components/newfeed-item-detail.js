@@ -114,6 +114,17 @@ class NewFeedItemDetail extends Component {
                         </div>
                     }
 
+                    {itemInfo && itemInfo.operation === "update_account" &&
+                        <div>
+                            {itemInfo.params && itemInfo.params.type==="name" &&
+                                <span>updated name to <span style={{fontSize: '15px', fontWeight: '800'}}>{itemInfo.params.value}</span></span>
+                            }
+                            {itemInfo.params && itemInfo.params.type==="picture" &&
+                                <span>updated picture with <span style={{fontSize: '15px', fontWeight: '800'}}>{itemInfo.params.value}</span></span>
+                            }
+                        </div>
+                    }
+
                 </div>
 
                 <span className="time"> {moment(itemInfo.time).format('HH:mm, DD MMM, YYYY')}</span>

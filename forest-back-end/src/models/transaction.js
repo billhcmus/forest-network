@@ -93,7 +93,7 @@ export default class Transaction {
                     if(key === "picture") {
                         item.params = {
                             type: key,
-                            value:value.length
+                            value:value.toString().length + "bytes"
                         }
                     }
                     if(key === "followings"){
