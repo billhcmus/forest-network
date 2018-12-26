@@ -40,56 +40,41 @@ class EditProfile extends Component {
                         sign(tx, secretKey)
                         let data_encoding = '0x'+ encode(tx).toString('hex');
                         this.service.post(`api/user_info`,{tx: data_encoding}).then((res) => {
-                            setTimeout(()=>{ 
-                                this.props.getUserInfo(key.publicKey())
-                            }, 500);
                         }).catch(err => {
                             openNotification("Error", err);
                         })
                     })
             }
 
-            if(this.state.avatar !== this.props.userInfo.avatar) {
-                this.service.get(`api/sequence/?id=${key.publicKey()}`).then(result =>{
-                    let tx = {
-                        version: 1,
-                        account: key.publicKey(),
-                        sequence: this.state.displayName !== this.props.userInfo.displayName ? result.data + 2 : result.data + 1,
-                        memo: Buffer.alloc(0),
-                        operation: 'update_account',
-                        params: {
-                            key: 'picture',
-                            value: new Buffer(this.state.avatar, 'binary')
-                        },
-                    }
-                    sign(tx, secretKey)
-                    let data_encoding = '0x'+ encode(tx).toString('hex');
-                    if(this.state.displayName !== this.props.userInfo.displayName)
-                    {
-                        setTimeout(()=>{
-                        this.service.post(`api/user_info`,{tx: data_encoding})
-                            .then((res)=>{
-                                setTimeout(()=>{ 
-                                    this.props.getUserInfo(key.publicKey())
-                                }, 500);
-                            })
-                            .catch((err)=>{
-                                openNotification("Error", err);
-                            })
-                        },1000)
-                    }
-                    else{
-                        this.service.post(`api/user_info`,{tx: data_encoding})
-                                .then((res)=>{
-                                    setTimeout(()=>{ 
-                                        this.props.getUserInfo(key.publicKey())
-                                    }, 500);
+            if (this.state.hasNewAvatar) {
+                if (this.state.avatar !== this.props.userInfo.avatar) {
+                    this.service.get(`api/sequence/?id=${key.publicKey()}`).then(result => {
+                        let tx = {
+                            version: 1,
+                            account: key.publicKey(),
+                            sequence: this.state.displayName !== this.props.userInfo.displayName ? result.data + 2 : result.data + 1,
+                            memo: Buffer.alloc(0),
+                            operation: 'update_account',
+                            params: {
+                                key: 'picture',
+                                value: new Buffer(this.state.avatar, 'binary')
+                            },
+                        }
+                        try {
+                            sign(tx, secretKey)
+                            let data_encoding = '0x' + encode(tx).toString('hex');
+                            this.service.post(`api/user_info`, {tx: data_encoding})
+                                .then((res) => {
                                 })
-                                .catch((err)=>{
-                                    openNotification("Error", err);
+                                .catch((err) => {
+                                    openNotification("Error","Post Image error");
                                 })
-                    }
-                })
+                        }
+                        catch (e) {
+                            openNotification("Error","Error picture");
+                        }
+                    })
+                }
             }
         this.props.onCancel();
         this.setState({hasNewAvatar: false})

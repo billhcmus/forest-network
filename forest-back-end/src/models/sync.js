@@ -269,24 +269,22 @@ export default class Synchronization {
                 await this.app.db.collection('post').insertOne(newPost);
                 // broadcast cho nhung thang follow thang nay
                 if (needNotify) {
+                    const sender = await this.app.db.collection('account').findOne({
+                        _id: account._id
+                    });
+                    let rs = await this.app.models.post.getSpecificPostInfo(hashTx, account._id);
                     let listFollowers = await this.app.db.collection('follow').find({followed: account._id});
                     message.payload = {
                         title: `${actorName} đã cập nhật trạng thái`,
                         description: `${decodeText(content).text}`,
+                        account: sender,
+                        data:rs
                     }
                     listFollowers.forEach(u => {
                         if (u.following !== account._id)
                             this.app.models.connection.SendToOnePerson(u.following, message);
                     });
-                    const sender = await this.app.db.collection('account').findOne({
-                        _id: account._id
-                    });
-                    this.app.models.post.getSpecificPostInfo(hashTx, account._id).then( rs => {
-                        //Gởi cho nó nữa chứ
-                        message.payload.account = sender
-                        message.payload.data = rs
-                        this.app.models.connection.SendToOnePerson(account._id, message);
-                    })
+                    this.app.models.connection.SendToOnePerson(account._id, message);
                 }
 
                 console.log(`${account._id} post type ${newPost.content.type} text ${newPost.content.text} keys ${keys}`);
@@ -314,13 +312,14 @@ export default class Synchronization {
                         let listFollowers = await this.app.db.collection('follow').find({followed: account._id});
                         message.payload = {
                             title: `${actorName} đã cập nhật tên mới là`,
-                            description:`${value.toString('utf-8')}`
-                        }
+                            description:`${value.toString('utf-8')}`,
+                            account: sender,
+                            data: user
+
+                    }
                         listFollowers.forEach(u => {
                             this.app.models.connection.SendToOnePerson(u.following, message);
                         });
-                        message.payload.account = sender;
-                        message.payload.data = user;
                         this.app.models.connection.SendToOnePerson(account._id, message);
                     }
                 } else if (key === "picture") {
@@ -339,13 +338,13 @@ export default class Synchronization {
                         let listFollowers = await this.app.db.collection('follow').find({followed: account._id});
                         message.payload = {
                             title: `${actorName} đã cập nhật ảnh đại diện`,
-                            description:`size ${value.length} byte`
+                            description:`size ${value.length} bytes`,
+                            account: sender,
+                            data: user
                         }
                         listFollowers.forEach(u => {
                             this.app.models.connection.SendToOnePerson(u.following, message);
                         });
-                        message.payload.account = sender;
-                        message.payload.data = user;
                         this.app.models.connection.SendToOnePerson(account._id, message);
                     }
                 } else if (key === "followings") {
@@ -370,17 +369,17 @@ export default class Synchronization {
                         const sender = await this.app.db.collection('account').findOne({
                             _id: account._id
                         });
-                        let user = await this.app.models.user.getUser(account._id);
                         let listFollowers = await this.app.db.collection('follow').find({followed: account._id});
                         message.payload = {
                             title: `${actorName} đã thay đổi thông tin theo dõi`,
-                            description: ``
+                            description: ``,
+                            countFollowing: list.length,
+                            account: sender
+                            //gửi số người theo dõi mới cho những thằng theo dõi nó
                         }
                         listFollowers.forEach(u => {
                             this.app.models.connection.SendToOnePerson(u.following, message);
                         });
-                        message.payload.account = sender;
-                        message.payload.data = user;
                         this.app.models.connection.SendToOnePerson(account._id, message);
                     }
                 }

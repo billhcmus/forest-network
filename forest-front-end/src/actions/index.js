@@ -26,7 +26,7 @@ import {
     REALTIME_TWEET_STATUS,
     REALTIME_TWEET_DETAIL_COMMENT,
     REALTIME_TWEET_DETAIL_STATUS,
-    REALTIME_TWEET_LIST,
+    REALTIME_TWEET_LIST, INCREASE_TWEET,
 } from "../constants";
 
 import WebService from '../webservice'
@@ -37,6 +37,10 @@ export const dismissUserRecommend = (username) => (
 
 export const increaseFollowing = () => (
     {type: INCREASE_FOLLOWING}
+);
+
+export const increaseTweetCount = () => (
+    {type: INCREASE_TWEET}
 );
 
 export const updateDetail = (userDetail) => (

@@ -2,8 +2,19 @@ import {WEB_SOCKET_URL} from "../config";
 import _ from 'lodash';
 import {openNotification} from "../notification";
 import {store} from "../index";
-import {realtimeTweetDetailComment,realtimeTweetDetailStatus, realtimeTweetStatus,realtimeTweetList,changeAccountInfo} from "../actions";
+import {
+    realtimeTweetDetailComment,
+    realtimeTweetDetailStatus,
+    realtimeTweetStatus,
+    realtimeTweetList,
+    increaseTweetCount,
+    changeAccountInfo,
+    changeUserInfo,
+    changeCountFollowing,
+    setUserInfo
+} from "../actions";
 import {Keypair} from 'stellar-base';
+import loginer from "../reducers/UserReducer";
 
 export default class Connection {
     constructor() {
@@ -52,8 +63,7 @@ export default class Connection {
         const poststatus = _.get(messageObj, "poststatus");
         const account = payload.account
         const activeUser = localStorage.getItem("ACTIVE_USER");
-        if (activeUser === payload.account._id)
-        {
+        if (payload.account && activeUser === payload.account._id){
             store.dispatch(changeAccountInfo(account));
         }
         switch (action) {
@@ -91,15 +101,30 @@ export default class Connection {
             case 'post':
                 openNotification(payload.title, payload.description);
                 //Nếu đang xem trang nó
-                if (activeUser === payload.data.author)
-                {
+                if (activeUser === payload.data.author) {
                     //thêm vào đầu listTweet
+                    store.dispatch(increaseTweetCount());
                     store.dispatch(realtimeTweetList(payload.data));
                 }
                 break;
             case 'update_account':
                 openNotification(payload.title, payload.description);
+                //payload.data._id là id của thằng thay đổi thông tin
 
+                //Update lại thèn loggin nếu là thông tin của nó
+                if (payload.account._id === store.getState().loginer)
+                    store.dispatch(setUserInfo(payload.data))
+
+                //Nếu đang xem tài khoản của 1 thằng( không ngoại lệ đang xem trang của bản thân )
+                if (activeUser === payload.account._id) {
+                    //Update hình ảnh và tên thị của active user từ payload.data
+                    if (payload.data) 
+                        store.dispatch(changeUserInfo(payload.data))
+
+                    //Update count Following Follower
+                    store.dispatch(changeCountFollowing(payload.countFollowing))
+
+                }
                 break;
             default:
                 break;

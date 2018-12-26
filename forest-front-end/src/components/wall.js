@@ -67,12 +67,12 @@ export default class Wall extends Component {
                             <div className={"sidebar-left"}>
                                     <SideBar/>
                             </div>
-                            <div className={"content"}>
+                            <div className={"main-right"}>
                                 <TweetBoard/>
                             </div>
-                            <div className={"sidebar-right"}>
-                                <Follow/>
-                            </div>
+                            {/*<div className={"sidebar-right"}>*/}
+                                {/*<Follow/>*/}
+                            {/*</div>*/}
                         </div>
                     )}
                 />
