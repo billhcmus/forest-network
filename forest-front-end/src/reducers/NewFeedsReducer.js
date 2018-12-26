@@ -16,6 +16,18 @@ export default (state = initState, action) => {
             }
             return tmp
         }
+        case GET_MORE_NEWS:
+        {
+            let tmp = state;
+            if (action.news) {
+                action.news.forEach((newitem) => {
+                    if (newitem) {
+                        tmp = [...tmp, newitem]
+                    }
+                })
+            }
+            return tmp
+        }
         case UPDATE_TWEET_STATUS:
         {
             let tmp = state;

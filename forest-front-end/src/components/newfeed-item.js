@@ -8,6 +8,8 @@ import {Keypair} from "stellar-base";
 import WebService from "../webservice";
 import ReactionPanel from "./Modal/reaction-panel"
 
+import {decodeReact, decodeText, decodeFollowings } from "../transaction/myv1"
+
 
 class NewFeedItem extends Component {
 
@@ -32,12 +34,12 @@ class NewFeedItem extends Component {
         })
     }
 
-    // handleCommentClick = (e) => {
-    //     e.stopPropagation()
-    //     this.setState({
-    //         isCommentShow: true
-    //     })
-    // }
+    handleCommentClick = (e) => {
+        e.stopPropagation()
+        this.setState({
+            isCommentShow: true
+        })
+    }
 
     // handleSpanClick = (e) => {
     //     e.stopPropagation()
@@ -49,7 +51,11 @@ class NewFeedItem extends Component {
     // }
 
     render() {
-        console.log(this.props.itemInfo)
+        // console.log(this.props.itemInfo)
+        if(this.props.itemInfo.operation === "post") {
+            console.log(this.props.itemInfo.tx.params.content)
+            let a = decodeText(this.props.itemInfo.tx.params.content)
+        }
         const itemInfo = this.props.itemInfo
         const countSum = this.props.itemInfo ?
             (itemInfo.like + itemInfo.love + itemInfo.haha + itemInfo.wow + itemInfo.sad + itemInfo.angry)
@@ -76,9 +82,21 @@ class NewFeedItem extends Component {
                                 <span className="userName"> {itemInfo.author} </span>
                             </div>
                         </div>
-
+                        
                         <div className="tweet-text-container">
+                            {itemInfo && itemInfo.operation === "post" && 
+                                
+                                       <p>  {moment(itemInfo.time).format('HH:mm, DD MMM, YYYY')}</p>
+                            }
+                        
+                            {itemInfo && itemInfo.operation === "create_account" &&
+
+                                  <div><b>{itemInfo.operation}</b> <a>{itemInfo.tx.params.address}</a></div>
+                            }
                         </div>
+
+
+
                     </div>
 
                     <div className="moreStat">

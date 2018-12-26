@@ -6,31 +6,31 @@ import {Keypair} from "stellar-base";
 class NewFeedsBoard extends Component {
     componentWillMount() {
         this.props.getNews(Keypair.fromSecret(
-            localStorage.getItem("SECRET_KEY")).publicKey(), 0, 5)
+            localStorage.getItem("SECRET_KEY")).publicKey(), 0, 10)
     }
 
-    // isBottom(el) {
-    //     return el.getBoundingClientRect().bottom <= window.innerHeight;
-    // }
+    isBottom(el) {
+        return el.getBoundingClientRect().bottom <= window.innerHeight;
+    }
 
-    // componentDidMount() {
-    //     document.addEventListener('scroll', this.trackScrolling);
-    // }
+    componentDidMount() {
+        document.addEventListener('scroll', this.trackScrolling);
+    }
 
-    // componentWillUnmount() {
-    //     document.removeEventListener('scroll', this.trackScrolling);
-    // }
+    componentWillUnmount() {
+        document.removeEventListener('scroll', this.trackScrolling);
+    }
 
-    // trackScrolling = () => {
-    //     const wrappedElement = document.getElementById('a-scroll');
-    //     // if (this.isBottom(wrappedElement)) {
-    //     //     console.log('Loadmore');
-    //     //     if (this.props.tweets.length > 0) {
-    //     //         this.props.getSomeMoreTweet(this.props.activeUser, Keypair.fromSecret(
-    //     //             localStorage.getItem("SECRET_KEY")).publicKey(), this.props.tweets.length)
-    //     //     }
-    //     // }
-    // };
+    trackScrolling = () => {
+        const wrappedElement = document.getElementById('a-scroll');
+        if (this.isBottom(wrappedElement)) {
+            console.log('Loadmore');
+            if (this.props.tweets.length > 0) {
+                this.props.getNewsMore(Keypair.fromSecret(
+                    localStorage.getItem("SECRET_KEY")).publicKey(), this.props.newfeeds.length)
+            }
+        }
+    };
 
     render() {
       return (

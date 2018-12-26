@@ -31,11 +31,23 @@ export default class Transaction {
             return item.followed
         })
 
-        let res = await this.app.db.collection('transaction')
+        let trans = await this.app.db.collection('transaction')
                                 .find({tags:{$elemMatch:{key:'account',value:{$in: arr_followings}}}})
                                 .sort({time:-1})
-                                .skip(+(page-1)*limit).limit(+limit)
+                                .skip(+page).limit(+limit)
                                 .toArray();
+
+        let res = trans.map(async (item_tran)=>{
+            let user = await this.app.models.user.getUser(item_tran.tags[0].value)
+            try {
+                item_tran.avatar = user.picture
+                item_tran.displayName = user.name
+                return item_tran
+            }
+            catch (e) {
+                console.log(e)
+            }
+        })
         // if (needMore === "0")
         //     return listFollowings.map(user =>{
         //         return user.followed
