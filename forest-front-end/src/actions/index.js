@@ -21,7 +21,7 @@ import {
     ADD_FOLLOWING_LIST,
     ADD_FOLLOWER_LIST,
     CHANGE_PAYMENT_LIST,
-    CHANGE_TRANSACTION, CREATE_NEW_CONNECTION,
+    CHANGE_TRANSACTION, CREATE_NEW_CONNECTION, UPDATE_TWEET_STATUS,
 } from "../constants";
 
 import WebService from '../webservice'
@@ -100,6 +100,10 @@ export const changeTweetDetailMain = (main) => (
 
 export const changeTweetDetailComment = (comments) => (
     {type: CHANGE_TWEET_DETAIL_COMMENT, comments: comments}
+);
+
+export const updateTweetStatus = (_id, status) => (
+    {type: UPDATE_TWEET_STATUS, _id: _id, status: status}
 );
 
 export const addTweetDetailComment = (comments) =>(

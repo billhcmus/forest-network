@@ -109,7 +109,48 @@ export default class Post {
     }
 
 
-    async getCommentDetail(commentId) {
+    async getSpecificPostInfo(postId, poster, you) {
+        let post = await this.app.db.collection('post').findOne({_id: postId});
+        if (!post) {
+            post = await this.app.db.collection('comment').findOne({_id: postId});
+        }
+        let user = await this.app.models.user.getUser(poster)
+
+        post.avatar = user.picture
+        post.displayName = user.name
+        post.like = 0
+        post.haha = 0
+        post.wow = 0
+        post.sad = 0
+        post.angry = 0
+        post.love = 0
+        post.comment = await this.app.db.collection('comment').find({
+            object: post._id
+        }).count();
+        await this.app.db.collection('reaction').find({
+            object: post._id
+        }).toArray().then(reaction => {
+            reaction.forEach(react => {
+                if (react.reaction === 1)
+                    post.like++;
+                else if (react.reaction === 2)
+                    post.love++;
+                else if (react.reaction === 3)
+                    post.haha++;
+                else if (react.reaction === 4)
+                    post.wow++;
+                else if (react.reaction === 5)
+                    post.sad++;
+                else if (react.reaction === 6)
+                    post.angry++;
+            })
+        })
+        let tmp = await this.app.db.collection('reaction').findOne({
+            object: post._id,
+            author: you
+        });
+        post.currentReaction = tmp ? tmp.reaction : 0;
         
+        return post;
     }
 }

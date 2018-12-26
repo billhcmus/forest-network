@@ -2,8 +2,8 @@ import {WEB_SOCKET_URL} from "../config";
 import _ from 'lodash';
 import {openNotification} from "../notification";
 import {store} from "../index";
-import {addTweetDetailComment} from "../actions";
-
+import {addTweetDetailComment, updateTweetStatus} from "../actions";
+import {Keypair} from 'stellar-base';
 
 export default class Connection {
     constructor() {
@@ -47,10 +47,9 @@ export default class Connection {
 
     static catchMessage(message) {
         const messageObj = JSON.parse(message);
-        console.log(messageObj);
         const action = _.get(messageObj, "action");
         const payload = _.get(messageObj, "payload");
-
+        const poststatus = _.get(messageObj, "poststatus");
         switch (action) {
             case 'auth':
                 console.log(payload);
@@ -59,10 +58,20 @@ export default class Connection {
                 openNotification(payload.title, payload.description);
                 break;
             case 'interact':
-                openNotification(payload.title, payload.description);
-                let listComments = [];
-                listComments.push(payload.data);
-                store.dispatch(addTweetDetailComment(listComments));
+                const publicKey = Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey();
+                if (payload.data.author !== publicKey) {
+                    openNotification(payload.title, payload.description);
+                }
+
+                if (payload.type === "comment") {
+                    let listComments = [];
+                    listComments.push(payload.data);
+                    store.dispatch(addTweetDetailComment(listComments));
+                } else if (payload.type === "reaction") {
+
+                }
+                store.dispatch(updateTweetStatus(_.get(poststatus, "_id"), poststatus));
+
                 break;
             case 'post':
                 openNotification(payload.title, payload.description);

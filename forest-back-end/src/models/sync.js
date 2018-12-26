@@ -351,14 +351,14 @@ export default class Synchronization {
                     comment.angry = 0
                     comment.love = 0
                     comment.comment = 0
-
+                    comment.currentReaction = 0
                     message.payload = {
+                        type: "comment",
                         title: `${actorName} đã bình luận về bài viết của bạn`,
                         description: `${decodeText(content).text}`,
-                        data: comment
+                        data: comment,
+                        poststatus: "",
                     }
-                    // Cap nhat comment vao post co id nay
-                    this.app.models.connection.SendToOnePerson(post.author, message);
                 }
     
                 console.log(`${account._id} comment: ${newComment.content.text} to object ${object}`);
@@ -383,28 +383,31 @@ export default class Synchronization {
                                 reaction: newReact.reaction
                             }
                         });
-
-                        message.payload = {
-                            title: `${actorName} đã bày tỏ cảm xúc về bài viết của bạn`,
-                            description: "",
-                            data: newReact
-                        }
                     } else {
                         await this.app.db.collection('reaction').insertOne(newReact);
-                        message.payload = {
-                            title: `${actorName} đã bày tỏ cảm xúc về bài viết của bạn`,
-                            description: "",
-                            data: newReact
-                        }
-                    }
-                    if (needNotify) {
-                        this.app.models.connection.SendToOnePerson(post.author, message);
+                    } 
+                    message.payload = {
+                        type: "reaction",
+                        title: `${actorName} đã bày tỏ cảm xúc về bài viết của bạn`,
+                        description: "",
+                        data: newReact,
+                        poststatus: "",
                     }
                     console.log(`${account._id} react: ${newReact.reaction} to object ${object}`);
                 } catch (err) {
                     console.log(`${account._id} interact ERR ${err}`);
                     return (err)
                 }
+            }
+
+            if (needNotify) {
+                this.app.models.post.getSpecificPostInfo(post._id, post.author, account._id).then(rs => {
+                    message.poststatus = rs;
+                    // Gui thong bao cho nguoi dang post
+                    this.app.models.connection.SendToOnePerson(post.author, message);
+                    // Gui cho nguoi comment
+                    this.app.models.connection.SendToOnePerson(account._id, message);
+                })
             }
         } else
             return ('Operation is not support.');

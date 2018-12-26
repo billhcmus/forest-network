@@ -19,7 +19,6 @@ class ViewTweet extends Component {
     render() {
         const mainTweet = this.props.tweetDetail.main;
         const listComments = this.props.tweetDetail.comments;
-        console.log(listComments);
         return (
                 <Modal
                     title={`Post ${mainTweet ? "of " + mainTweet.displayName : ""}`}
