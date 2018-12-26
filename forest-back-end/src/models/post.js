@@ -13,7 +13,7 @@ export default class Post {
     async createPost(tx) {
         let res = await this.app.service.get(`broadcast_tx_commit?tx=${tx}`);
         if (_.get(res.data.result, "height") === "0") {
-            return {code: -1}
+            return null;
         } else {
             return res.data
         }

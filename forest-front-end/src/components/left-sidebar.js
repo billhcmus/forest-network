@@ -12,12 +12,12 @@ const NETWORK_BANDWIDTH = RESERVE_RATIO * MAX_BLOCK_SIZE * BANDWIDTH_PERIOD;
 class LeftSidebar extends Component {
   render() {
     const bandwidthLimit = Math.ceil(this.props.userInfo.balance / MAX_CELLULOSE * NETWORK_BANDWIDTH);
-    let now = moment()
+    let now = moment();
     // 24 hours window max 65kB
     let duration = moment.duration(now.diff(this.props.userInfo.bandwidthTime));
     let diff = duration.asSeconds();
     let used = Math.ceil(Math.max(0, (BANDWIDTH_PERIOD - diff) / BANDWIDTH_PERIOD) * this.props.userInfo.bandwidth)
-    let oxy = bandwidthLimit - used
+    let oxy = bandwidthLimit - used;
     return (
       <div className="sidebar">
         <div className="sidebar-head">

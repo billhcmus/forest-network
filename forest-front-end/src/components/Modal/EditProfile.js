@@ -4,6 +4,7 @@ import '../../css/edit-profile.scss'
 import { Keypair } from 'stellar-base';
 import WebService from "../../webservice";
 import { encode,sign } from '../../transaction';
+import {openNotification} from "../../notification";
 
 class EditProfile extends Component {
 
@@ -42,7 +43,9 @@ class EditProfile extends Component {
                             setTimeout(()=>{ 
                                 this.props.getUserInfo(key.publicKey())
                             }, 500);
-                        }).catch(err => console.log(err))
+                        }).catch(err => {
+                            openNotification("Error", err);
+                        })
                     })
             }
 
@@ -71,7 +74,7 @@ class EditProfile extends Component {
                                 }, 500);
                             })
                             .catch((err)=>{
-                                console.log(err)
+                                openNotification("Error", err);
                             })
                         },1000)
                     }
@@ -83,7 +86,7 @@ class EditProfile extends Component {
                                     }, 500);
                                 })
                                 .catch((err)=>{
-                                    console.log(err)
+                                    openNotification("Error", err);
                                 })
                     }
                 })

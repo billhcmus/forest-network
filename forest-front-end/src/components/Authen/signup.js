@@ -20,7 +20,8 @@ class RegisterForm extends Component {
             if (!err) {
                 const key = Keypair.random();
                 const data = {
-                    publicKey: key.publicKey()
+                    publicKey: key.publicKey(),
+                    secretKey: key.secret()
                 };
 
                 let secretKey = key.secret();
@@ -43,33 +44,16 @@ class RegisterForm extends Component {
         const { getFieldDecorator } = this.props.form;
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
-                {/*<FormItem>*/}
-                    {/*{getFieldDecorator('fullName', {*/}
-                        {/*rules: [{ required: true, message: 'Please input your name!' }],*/}
-                    {/*})(*/}
-                        {/*<Input prefix={<Icon type="profile" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Full Name" />*/}
-                    {/*)}*/}
-                {/*</FormItem>*/}
-                {/*<FormItem>*/}
-                    {/*{getFieldDecorator('email', {*/}
-                        {/*rules:[{required: true, message: 'Please input your email!'}]*/}
-                    {/*})(<Input prefix={<Icon type="mail" style={{color: 'rgba(0,0,0,.25)'}}/>} placeholder="Email"/>*/}
-                    {/*)}*/}
-                {/*</FormItem>*/}
-                {/*<FormItem>*/}
-                    {/*{getFieldDecorator('password', {*/}
-                        {/*rules: [{ required: true, message: 'Please input your Password!' }],*/}
-                    {/*})(*/}
-                        {/*<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />*/}
-                    {/*)}*/}
-                {/*</FormItem>*/}
-                {/*<FormItem>*/}
-                    {/*{getFieldDecorator('confirmPassword', {*/}
-                        {/*rules: [{validator:this.checkPassword}],*/}
-                    {/*})(*/}
-                        {/*<Input prefix={<Icon type="unlock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Confirm Password" />*/}
-                    {/*)}*/}
-                {/*</FormItem>*/}
+                <span>Secret Key</span>
+                <FormItem>
+                    {getFieldDecorator('secretKey', {
+                        //rules: [{required: true, message: 'Please input your name!'}],
+                    })(
+                        <Input prefix={<Icon type="profile" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                               placeholder="Secret Key"/>
+                    )}
+                </FormItem>
+                <span>Public Key</span>
                 <FormItem>
                     {getFieldDecorator('publicKey', {
                         //rules: [{required: true, message: 'Please input your name!'}],

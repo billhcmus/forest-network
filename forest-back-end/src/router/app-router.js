@@ -21,10 +21,16 @@ export default class AppRouter {
          * @method: POST
          */
         app.post('/api/users/login', (req, res, next) => {
-           app.models.account.auth(req.body.publicKey).then((result)=>{
-             return res.status(200).json(result);
-           }).catch(err =>{
-            return res.status(404).json({
+            app.models.account.auth(req.body.publicKey).then((result) => {
+                if (result) {
+                    return res.status(200).json(result);
+                } else {
+                    return res.status(404).json({
+                        error: err,
+                    });
+                }
+            }).catch(err => {
+                return res.status(404).json({
                     error: err,
                 });
             })
@@ -41,7 +47,13 @@ export default class AppRouter {
         app.post('/api/users/sendTx', (req, res, next) => {
             const body = _.get(req, 'body');
             app.models.post.createPost(body.tx).then(rs => {
-                return res.status(200).json(rs);
+                if (rs) {
+                    return res.status(200).json(rs);
+                } else {
+                    return res.status(304).json({
+                        err: err,
+                    });
+                }
             }).catch(err => {
                 return res.status(304).json({
                     err: err,
