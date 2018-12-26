@@ -11,6 +11,7 @@ import activeUser from './ActiveUserReducer'
 import payment from  './PaymentHistoryReducer'
 import transaction from  './TransactionReducer'
 import connection from './ConnectionReducer'
+import newfeeds from './NewFeedsReducer'
 
 export default combineReducers({
     userInfo,
@@ -24,5 +25,6 @@ export default combineReducers({
     payment,
     activeUser,
     transaction,
-    connection
+    connection,
+    newfeeds
 });

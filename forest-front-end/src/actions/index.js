@@ -22,6 +22,7 @@ import {
     ADD_FOLLOWER_LIST,
     CHANGE_PAYMENT_LIST,
     CHANGE_TRANSACTION, CREATE_NEW_CONNECTION, UPDATE_TWEET_STATUS,
+    INIT_NEW_LIST,
 } from "../constants";
 
 import WebService from '../webservice'
@@ -127,6 +128,10 @@ export const changeTransaction = (transaction) => (
 
 export const createNewConnection = (connection) => (
     {type: CREATE_NEW_CONNECTION, payload: connection}
+);
+
+export const initNewsList = (news) => (
+    {type: INIT_NEW_LIST, news: news}
 );
 
 export const getDetailTweet = (object, loginer) =>
@@ -252,5 +257,13 @@ export const getUserInfo = (publicKey) =>
         console.log("abc");
         service.get(`api/userInfo/?id=${publicKey}`).then(user =>{
             //dispatch(changeUserInfo(user.data))
+        })
+    };
+
+export const getNews = (publicKey, page = 1, limit = 5) =>
+    (dispatch, getState) => {
+        let service = new WebService();
+        service.get(`api/newfeeds/?id=${publicKey}&start=${page}&limit=${limit}`).then(news => {
+            dispatch(initNewsList(news.data))
         })
     };

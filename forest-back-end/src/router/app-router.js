@@ -276,7 +276,7 @@ export default class AppRouter {
          * @endpoint: /api/transactions
          * @method: GET
          */
-        app.get('/api/transactions', (req, res, next) => {
+        app.get('/api/newfeeds', (req, res, next) => {
             app.models.transaction.getTransactions(req.query.id,req.query.page,req.query.limit).then(rs => {
                 console.log(res.lenght)
                 return res.status(200).json(rs);

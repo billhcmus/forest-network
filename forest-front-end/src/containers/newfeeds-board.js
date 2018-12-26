@@ -1,17 +1,20 @@
 import {connect} from 'react-redux';
 import NewFeedsBoard from "../components/newfeeds-board";
-// import {getSomeNewestTweet,getSomeMoreTweet} from "../actions";
+import { getNews } from "../actions";
 
 const mapStateToProps = state => {
 	return {
 		userInfo: state.userInfo,
-		tweets : state.tweets,
+		newfeeds : state.newfeeds,
 		activeUser : state.activeUser,
 	}
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
+		getNews: (publicKey, page, limit) => {
+			dispatch(getNews(publicKey, page, limit));
+		}
 	}
 };
 
