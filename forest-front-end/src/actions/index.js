@@ -21,7 +21,7 @@ import {
     ADD_FOLLOWING_LIST,
     ADD_FOLLOWER_LIST,
     CHANGE_PAYMENT_LIST,
-    CHANGE_TRANSACTION, CREATE_NEW_CONNECTION
+    CHANGE_TRANSACTION, CREATE_NEW_CONNECTION,
 } from "../constants";
 
 import WebService from '../webservice'
@@ -105,7 +105,6 @@ export const changeTweetDetailComment = (comments) => (
 export const addTweetDetailComment = (comments) =>(
     {type: ADD_TWEET_DETAIL_COMMENT, comments: comments}
 );
-
 export const addMoreListFollower = (followers) =>(
     {type: ADD_FOLLOWER_LIST, followers: followers}
 );
@@ -250,11 +249,4 @@ export const getUserInfo = (publicKey) =>
         service.get(`api/userInfo/?id=${publicKey}`).then(user =>{
             //dispatch(changeUserInfo(user.data))
         })
-    };
-
-export const addNewComment = (comment) =>
-    (dispatch, getState) => {
-        let listComment = [];
-        listComment.push(comment);
-        dispatch(addTweetDetailComment(listComment))
     };

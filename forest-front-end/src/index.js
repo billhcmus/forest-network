@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/app.css'
 import 'antd/dist/antd.css';
 
-const store = createStore(
+export const store = createStore(
     rootReducer,
     applyMiddleware(thunk)
 );

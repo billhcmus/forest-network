@@ -1,6 +1,6 @@
 import {ADD_FOLLOWER_LIST, CHANGE_FOLLOWER_LIST} from "../constants";
 
-const initState =[]
+const initState =[];
 
 export default (state = initState, action) => {
     switch (action.type) {
