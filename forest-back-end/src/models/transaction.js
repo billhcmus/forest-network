@@ -23,15 +23,19 @@ export default class Transaction {
     }
 
     async getTransactions(id, page=1, limit=2){
+
+        let listFollowings = await this.app.db.collection('follow')
+                                            .find({following: id})
+                                            .toArray();
+        let arr_followings = listFollowings.map(item=>{
+            return item.followed
+        })
+
         let res = await this.app.db.collection('transaction')
-                                .find({tags:{$elemMatch:{key:'account',value:id}}})
+                                .find({tags:{$elemMatch:{key:'account',value:{$in: arr_followings}}}})
                                 .sort({time:-1})
                                 .skip(+(page-1)*limit).limit(+limit)
                                 .toArray();
-
-        // let listFollowings = await this.app.db.collection('follow')
-        //                                     .find({following: publicKey})
-        //                                     .skip(+start).limit(+count).toArray();
         // if (needMore === "0")
         //     return listFollowings.map(user =>{
         //         return user.followed
@@ -75,6 +79,6 @@ export default class Transaction {
         //         console.log(e)
         //     }
         // })
-        return res
+        return Promise.all(res);
     }
 }
