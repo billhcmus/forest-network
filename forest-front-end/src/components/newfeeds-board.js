@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Icon} from 'antd';
-import TweetItem from '../containers/tweet-item';
+import NewFeedItem from '../containers/newfeeds-item';
 import {Keypair} from "stellar-base";
 
 class NewFeedsBoard extends Component {
@@ -47,15 +47,15 @@ class NewFeedsBoard extends Component {
 
           <div className="tweets-timeline">
             <div className="tweet-container">
-             {/* <ul className="list-tweets">
+              <ul className="list-tweets">
                 {
-                  !!this.props.tweets && this.props.tweets.map((value, key) =>{
+                  !!this.props.newfeeds && this.props.newfeeds.map((value, key) =>{
                     return (
-                      <TweetItem key={key} itemInfo={value}/>
+                      <NewFeedItem key={key} itemInfo={value}/>
                     )
                   })
                 }
-              </ul>*/}
+              </ul>
             </div>
           </div>
             <div className="stream-end-inner">
