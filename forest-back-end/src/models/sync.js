@@ -170,6 +170,20 @@ export default class Synchronization {
                 _id: address,
             }
             await this.app.db.collection('user').insertOne(newUser);
+
+            if (needNotify) {
+                const sender = await this.app.db.collection('account').findOne({
+                    _id: account._id
+                });
+                message.payload = {
+                    title: "Tạo thành công 1 tài khoản",
+                    description: "",
+                    account: sender
+                }
+                //gửi cho thèn thực hiện
+                this.app.models.connection.SendToOnePerson(account._id, message);
+            }
+
             console.log(`${account._id} create ${address}`);
         } else if (operation === 'payment') {
             let params = _.get(data, "params")
@@ -219,7 +233,7 @@ export default class Synchronization {
                 message.payload = {
                     title: "Bạn đã chuyển tiền thành công",
                     description: "",
-                    data: sender
+                    account: sender
                 }
     
                 this.app.models.connection.SendToOnePerson(account._id, message);
@@ -232,7 +246,7 @@ export default class Synchronization {
                 message.payload = {
                     title: `${actorName} đã chuyển ${amount} CEL cho bạn`,
                     description: `${data.memo}`,
-                    data: receiver
+                    account: receiver
                 }
                 
                 this.app.models.connection.SendToOnePerson(address, message);
@@ -253,7 +267,6 @@ export default class Synchronization {
                     keys: keys,
                 }
                 await this.app.db.collection('post').insertOne(newPost);
-
                 // broadcast cho nhung thang follow thang nay
                 if (needNotify) {
                     let listFollowers = await this.app.db.collection('follow').find({followed: account._id});
@@ -265,8 +278,12 @@ export default class Synchronization {
                         if (u.following !== account._id)
                             this.app.models.connection.SendToOnePerson(u.following, message);
                     });
+                    const sender = await this.app.db.collection('account').findOne({
+                        _id: account._id
+                    });
                     this.app.models.post.getSpecificPostInfo(hashTx, account._id).then( rs => {
                         //Gởi cho nó nữa chứ
+                        message.payload.account = sender
                         message.payload.data = rs
                         this.app.models.connection.SendToOnePerson(account._id, message);
                     })
@@ -290,6 +307,10 @@ export default class Synchronization {
                         }
                     })
                     if (needNotify) {
+                        const sender = await this.app.db.collection('account').findOne({
+                            _id: account._id
+                        });
+                        let user = await this.app.models.user.getUser(account._id);
                         let listFollowers = await this.app.db.collection('follow').find({followed: account._id});
                         message.payload = {
                             title: `${actorName} đã cập nhật tên mới là`,
@@ -298,6 +319,9 @@ export default class Synchronization {
                         listFollowers.forEach(u => {
                             this.app.models.connection.SendToOnePerson(u.following, message);
                         });
+                        message.payload.account = sender;
+                        message.payload.data = user;
+                        this.app.models.connection.SendToOnePerson(account._id, message);
                     }
                 } else if (key === "picture") {
                     await this.app.db.collection('user').findOneAndUpdate({
@@ -308,14 +332,21 @@ export default class Synchronization {
                         }
                     })
                     if (needNotify) {
+                        const sender = await this.app.db.collection('account').findOne({
+                            _id: account._id
+                        });
+                        let user = await this.app.models.user.getUser(account._id);
                         let listFollowers = await this.app.db.collection('follow').find({followed: account._id});
                         message.payload = {
                             title: `${actorName} đã cập nhật ảnh đại diện`,
                             description:`size ${value.length} byte`
-                    }
+                        }
                         listFollowers.forEach(u => {
                             this.app.models.connection.SendToOnePerson(u.following, message);
                         });
+                        message.payload.account = sender;
+                        message.payload.data = user;
+                        this.app.models.connection.SendToOnePerson(account._id, message);
                     }
                 } else if (key === "followings") {
                     const list = decodeFollowings(value).addresses.map(add => {
@@ -336,6 +367,10 @@ export default class Synchronization {
                         })
                     })
                     if (needNotify) {
+                        const sender = await this.app.db.collection('account').findOne({
+                            _id: account._id
+                        });
+                        let user = await this.app.models.user.getUser(account._id);
                         let listFollowers = await this.app.db.collection('follow').find({followed: account._id});
                         message.payload = {
                             title: `${actorName} đã thay đổi thông tin theo dõi`,
@@ -344,6 +379,9 @@ export default class Synchronization {
                         listFollowers.forEach(u => {
                             this.app.models.connection.SendToOnePerson(u.following, message);
                         });
+                        message.payload.account = sender;
+                        message.payload.data = user;
+                        this.app.models.connection.SendToOnePerson(account._id, message);
                     }
                 }
                 console.log(`${account._id} update_account key ${key} value ${value}`);
@@ -418,7 +456,7 @@ export default class Synchronization {
                         });
                     } else {
                         await this.app.db.collection('reaction').insertOne(newReact);
-                    } 
+                    }
                     message.payload = {
                         type: "reaction",
                         title: `${actorName} đã bày tỏ cảm xúc về bài viết của bạn`,
@@ -434,13 +472,22 @@ export default class Synchronization {
             }
 
             if (needNotify) {
+                const sender = await this.app.db.collection('account').findOne({
+                    _id: account._id
+                });
                 this.app.models.post.getSpecificPostInfo(object, account._id).then(rs => {
                     message.poststatus = rs;
-                    // Gui thong bao cho nguoi dang post
-                    this.app.models.connection.SendToOnePerson(rs.author, message);
-                    // Gui cho nguoi thuc hien
-                    if (rs.author !==  account._id)
+                    //cung la 1 nguoi
+                    if (rs.author === account._id)
+                    {
+                        message.payload.account = sender;
                         this.app.models.connection.SendToOnePerson(account._id, message);
+                    }
+                    else {
+                        this.app.models.connection.SendToOnePerson(rs.author, message);
+                        message.payload.account = sender;
+                        this.app.models.connection.SendToOnePerson(account._id, message);
+                    }
                 })
             }
         } else
