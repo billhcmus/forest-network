@@ -4,6 +4,7 @@ import TweetItem from '../containers/tweet-item';
 import {Keypair} from "stellar-base";
 
 class TweetBoard extends Component {
+
     componentWillMount() {
         this.props.getSomeNewestTweet(this.props.activeUser,Keypair.fromSecret(
             localStorage.getItem("SECRET_KEY")).publicKey())
@@ -33,7 +34,7 @@ class TweetBoard extends Component {
     };
 
     render() {
-      return (
+        return (
         <div className="tweets-board-container"  id ="a-scroll" ref={(el) => { this.screen = el; }}>
           <div className="heading-title">
             <div className="space-content"></div>

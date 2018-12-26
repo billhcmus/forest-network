@@ -146,13 +146,13 @@ export default class Post {
     }
 
 
-    async getSpecificPostInfo(postId, poster, you) {
+    async getSpecificPostInfo(postId, you) {
         let post = await this.app.db.collection('post').findOne({_id: postId});
         if (!post) {
             post = await this.app.db.collection('comment').findOne({_id: postId});
+            post.isSubCommnent = true;
         }
-        let user = await this.app.models.user.getUser(poster)
-
+        let user = await this.app.models.user.getUser(post.author)
         post.avatar = user.picture
         post.displayName = user.name
         post.like = 0
@@ -161,6 +161,12 @@ export default class Post {
         post.sad = 0
         post.angry = 0
         post.love = 0
+        post.likeList = []
+        post.hahaList = []
+        post.wowList = []
+        post.sadList = []
+        post.angryList = []
+        post.loveList = []
         post.comment = await this.app.db.collection('comment').find({
             object: post._id
         }).count();
@@ -168,18 +174,34 @@ export default class Post {
             object: post._id
         }).toArray().then(reaction => {
             reaction.forEach(react => {
-                if (react.reaction === 1)
-                    post.like++;
-                else if (react.reaction === 2)
-                    post.love++;
-                else if (react.reaction === 3)
-                    post.haha++;
-                else if (react.reaction === 4)
-                    post.wow++;
-                else if (react.reaction === 5)
-                    post.sad++;
-                else if (react.reaction === 6)
-                    post.angry++;
+                this.app.db.collection('user').findOne({_id: react.author}).then(author =>{
+                    if (react.reaction === 1) {
+                        post.like++;
+                        post.likeList.push(author.name)
+                    }
+                    else if (react.reaction === 2) {
+                        post.love++;
+                        post.loveList.push(author.name)
+                    }
+                    else if (react.reaction === 3)
+                    {
+                        post.haha++;
+                        post.hahaList.push(author.name)
+                    }
+                    else if (react.reaction === 4) {
+                        post.wow++;
+                        post.wowList.push(author.name)
+                    }
+                    else if (react.reaction === 5) {
+                        post.sad++;
+                        post.sadList.push(author.name)
+                    }
+
+                    else if (react.reaction === 6) {
+                        post.angry++;
+                        post.angryList.push(author.name)
+                    }
+                })
             })
         })
         let tmp = await this.app.db.collection('reaction').findOne({
@@ -187,7 +209,6 @@ export default class Post {
             author: you
         });
         post.currentReaction = tmp ? tmp.reaction : 0;
-        
         return post;
     }
 }

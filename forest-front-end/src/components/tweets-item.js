@@ -53,7 +53,6 @@ class TweetItem extends Component {
         const countSum = this.props.itemInfo ?
             (itemInfo.like + itemInfo.love + itemInfo.haha + itemInfo.wow + itemInfo.sad + itemInfo.angry)
             : 0
-        console.log(itemInfo)
         return (
             <div>
                 <ViewTweet isModalShow={this.state.isModalShow} onCancel={(e) => this.handleCancel(e)}/>

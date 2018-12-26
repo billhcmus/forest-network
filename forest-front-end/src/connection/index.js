@@ -2,7 +2,7 @@ import {WEB_SOCKET_URL} from "../config";
 import _ from 'lodash';
 import {openNotification} from "../notification";
 import {store} from "../index";
-import {addTweetDetailComment, updateTweetStatus} from "../actions";
+import {realtimeTweetDetailComment,realtimeTweetDetailStatus, realtimeTweetStatus,realtimeTweetList} from "../actions";
 import {Keypair} from 'stellar-base';
 
 export default class Connection {
@@ -64,16 +64,33 @@ export default class Connection {
                 }
 
                 if (payload.type === "comment") {
-                    let listComments = [];
-                    listComments.push(payload.data);
-                    store.dispatch(addTweetDetailComment(listComments));
+                    //Khi nó đang xem chi tiết mà có th commment
+                    if (poststatus._id === store.getState().tweetDetail.main._id) {
+                        store.dispatch(realtimeTweetDetailComment(payload.data));
+                    }
+                    //Khi nó comment vào comment khi đang ở ngoài comment đó
+                    else if (poststatus.isSubCommnent) {
+                        store.dispatch(realtimeTweetDetailStatus(poststatus));
+                    }
+                    //Nó comment vào bài post khi ở ngoài bài post
+                    store.dispatch(realtimeTweetStatus(poststatus));
+
                 } else if (payload.type === "reaction") {
-
+                    store.dispatch(realtimeTweetDetailStatus(poststatus));//Important
+                    store.dispatch(realtimeTweetStatus(poststatus));//Important
                 }
-                store.dispatch(updateTweetStatus(_.get(poststatus, "_id"), poststatus));
-
                 break;
             case 'post':
+                openNotification(payload.title, payload.description);
+                const activeUser = localStorage.getItem("ACTIVE_USER");
+                //Nếu đang xem trang nó
+                if (activeUser === payload.data.author)
+                {
+                    //thêm vào đầu listTweet
+                    store.dispatch(realtimeTweetList(payload.data));
+                }
+                break;
+            case 'update_account':
                 openNotification(payload.title, payload.description);
                 break;
             default:

@@ -21,7 +21,12 @@ import {
     ADD_FOLLOWING_LIST,
     ADD_FOLLOWER_LIST,
     CHANGE_PAYMENT_LIST,
-    CHANGE_TRANSACTION, CREATE_NEW_CONNECTION, UPDATE_TWEET_STATUS,
+    CHANGE_TRANSACTION,
+    CREATE_NEW_CONNECTION,
+    REALTIME_TWEET_STATUS,
+    REALTIME_TWEET_DETAIL_COMMENT,
+    REALTIME_TWEET_DETAIL_STATUS,
+    REALTIME_TWEET_LIST,
 } from "../constants";
 
 import WebService from '../webservice'
@@ -102,13 +107,26 @@ export const changeTweetDetailComment = (comments) => (
     {type: CHANGE_TWEET_DETAIL_COMMENT, comments: comments}
 );
 
-export const updateTweetStatus = (_id, status) => (
-    {type: UPDATE_TWEET_STATUS, _id: _id, status: status}
+export const realtimeTweetStatus = (status) => (
+    {type: REALTIME_TWEET_STATUS, status: status}
+);
+
+export const realtimeTweetList = (tweet) => (
+    {type: REALTIME_TWEET_LIST, tweet: tweet}
 );
 
 export const addTweetDetailComment = (comments) =>(
     {type: ADD_TWEET_DETAIL_COMMENT, comments: comments}
 );
+
+export const realtimeTweetDetailComment = (comment) =>(
+    {type: REALTIME_TWEET_DETAIL_COMMENT, comment: comment}
+);
+
+export const realtimeTweetDetailStatus =  (status) => (
+    {type: REALTIME_TWEET_DETAIL_STATUS, status: status}
+);
+
 export const addMoreListFollower = (followers) =>(
     {type: ADD_FOLLOWER_LIST, followers: followers}
 );
