@@ -276,7 +276,7 @@ export default class AppRouter {
          * @method: GET
          */
         app.get('/api/newfeeds', (req, res, next) => {
-            app.models.transaction.getTransactions(req.query.id,req.query.page,req.query.limit).then(rs => {
+            app.models.transaction.getNewFeeds(req.query.id,req.query.page,req.query.limit).then(rs => {
                 return res.status(200).json(rs);
             }).catch(err => {
                 return res.status(304).json({

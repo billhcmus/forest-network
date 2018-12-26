@@ -1,5 +1,11 @@
 import {encode, sign} from '../transaction';
 import {SECRET_KEY} from '../config';
+import {
+    decodeText,
+    decodeFollowings,
+    decodeReact
+} from '../transaction/myv1';
+import _ from 'lodash';
 
 "use strict";
 
@@ -22,8 +28,9 @@ export default class Transaction {
         return res
     }
 
-    async getTransactions(id, page=1, limit=2){
+    async getNewFeeds(id, page=1, limit=2){
 
+        //get list you folloe
         let listFollowings = await this.app.db.collection('follow')
                                             .find({following: id})
                                             .toArray();
@@ -38,11 +45,65 @@ export default class Transaction {
                                 .toArray();
 
         let res = trans.map(async (item_tran)=>{
+            let item = {
+                _id: item_tran._id,
+                operation: item_tran.operation,
+                time: item_tran.time,
+            };
+
             let user = await this.app.models.user.getUser(item_tran.tags[0].value)
             try {
-                item_tran.avatar = user.picture
-                item_tran.displayName = user.name
-                return item_tran
+                // item.avatar = user.picture
+                item.displayName = user.name
+                item.author = user._id
+
+                if(item_tran.operation==="create_account"){
+                    let params = _.get(item_tran.tx, "params");
+                    let address = _.get(params, "address");
+                    item.address = address
+                }
+
+                if (item_tran.operation === "post") {
+                    let params = _.get(item_tran.tx, "params")
+                    let content = _.get(params, "content");
+                    item.content = decodeText(content.buffer);
+                    // item.content = content;
+                }
+
+                if(item_tran.operation === 'payment') {
+                    let params = _.get(item_tran.tx, "params")
+                    let address = _.get(params, "address");
+                    let amount = _.get(params, "amount");
+                    let userAddress = await this.app.models.user.getUser(address)
+                    item.amount = amount;
+                    item.addressName = userAddress.name;
+                    item.address = address;
+                }
+
+                if(item_tran.operation === 'update_account')
+                {
+                    let params = _.get(item_tran.tx, "params")
+                    let key = _.get(params, "key");
+                    let value = _.get(params, "value");
+                    if(key === "name") {
+                        item.params = {
+                            type: key,
+                            value:value.toString('utf-8')
+                        }
+                    }
+                    if(key === "picture") {
+                        item.params = {
+                            type: key,
+                            value:value.length
+                        }
+                    }
+                    if(key === "followings"){
+                            
+                    }
+                }
+                // item.tx = item_tran.tx;
+
+                return item;
             }
             catch (e) {
                 console.log(e)
