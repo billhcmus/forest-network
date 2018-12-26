@@ -271,6 +271,22 @@ export default class AppRouter {
                 });
             });
         })
+
+        /**
+         * @endpoint: /api/tweet
+         * @method: GET
+         */
+        app.get('/api/transactions', (req, res, next) => {
+            console.log(req.query)
+            app.models.transaction.getTransactions(req.query.id,req.query.page,req.query.limit).then(rs => {
+                console.log(res.lenght)
+                return res.status(200).json(rs);
+            }).catch(err => {
+                return res.status(304).json({
+                    err: err,
+                });
+            });
+        });
     }
 }
 

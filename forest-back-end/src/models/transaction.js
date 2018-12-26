@@ -21,4 +21,13 @@ export default class Transaction {
         let res = await this.app.db.collection('transaction').findOne({_id:id});
         return res
     }
+
+    async getTransactions(id, page=1, limit=2){
+        let res = await this.app.db.collection('transaction')
+                                .find({tags:{$elemMatch:{key:'account',value:id}}})
+                                .sort({time:-1})
+                                .skip(+(page-1)*limit).limit(+limit)
+                                .toArray();
+        return res
+    }
 }
