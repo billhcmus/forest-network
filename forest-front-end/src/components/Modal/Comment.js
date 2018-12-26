@@ -6,6 +6,7 @@ import WebService from "../../webservice";
 import {encode, sign} from '../../transaction/index';
 import {encodeText} from '../../transaction/myv1'
 import _ from 'lodash'
+import {openNotification} from "../../notification";
 
 
 class Comment extends Component {
@@ -53,7 +54,7 @@ class Comment extends Component {
                     })
                 }).catch(err => {
                     const message = _.get(err, 'response.data.error.message', "Comment Unsuccess!");
-                    console.log(message)
+                    openNotification("Error", message);
                 })
             })
         }

@@ -5,6 +5,7 @@ import {Keypair} from 'stellar-base';
 import WebService from "../../webservice";
 import {encode, sign} from '../../transaction/index';
 import _ from 'lodash'
+import {openNotification} from "../../notification";
 
 
 const FormItem = Form.Item;
@@ -45,7 +46,7 @@ class TransferForm extends Component {
                         this.props.onCancel();
                     }).catch(err => {
                         const message = _.get(err, 'response.data.error.message', "Transaction Unsuccess!");
-                        console.log(message);
+                        openNotification("Error", message);
                     })
                 })
             }
