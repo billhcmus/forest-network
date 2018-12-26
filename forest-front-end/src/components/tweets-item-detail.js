@@ -10,7 +10,8 @@ import {encodeReact} from "../transaction/myv1";
 import {encode, sign} from "../transaction";
 import Comment from "./Modal/Comment";
 import ReactionPanel from "./Modal/reaction-panel";
-import {openNotification} from "../notification";
+import {openNotification, warnNotification} from "../notification";
+import {CalculateOxy} from "../constants";
 
 
 class TweetItemDetail extends Component {
@@ -57,12 +58,22 @@ class TweetItemDetail extends Component {
             };
             sign(tx,secret);
             let data_encoding = '0x' + encode(tx).toString('hex');
-            this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
 
-            }).catch(err => {
-                const message = _.get(err, 'response.data.error.message', "React Unsuccess!");
-                openNotification("Error", message);
+            this.service.get(`api/accountInfo/?id=${Keypair.fromSecret(secret).publicKey()}`).then(account => {
+                let oxy = CalculateOxy(account.data.balance, account.data.bandwidthTime, account.data.bandwidth);
+
+                if (encode(tx).length > oxy) {
+                    warnNotification("Energy", "Not enough Oxy");
+                } else {
+                    this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
+
+                    }).catch(err => {
+                        const message = _.get(err, 'response.data.error.message', "React Unsuccess!");
+                        openNotification("Error", message);
+                    })
+                }
             })
+
         })
     };
 

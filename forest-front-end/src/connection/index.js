@@ -14,7 +14,6 @@ import {
     setUserInfo
 } from "../actions";
 import {Keypair} from 'stellar-base';
-import loginer from "../reducers/UserReducer";
 
 export default class Connection {
     constructor() {
@@ -61,9 +60,10 @@ export default class Connection {
         const action = _.get(messageObj, "action");
         const payload = _.get(messageObj, "payload");
         const poststatus = _.get(messageObj, "poststatus");
-        const account = payload.account
+        const account = _.get(payload, "account");
         const activeUser = localStorage.getItem("ACTIVE_USER");
-        if (payload.account && activeUser === payload.account._id){
+
+        if (payload.account && activeUser ===  _.get(account, "_id")){
             store.dispatch(changeAccountInfo(account));
         }
         switch (action) {
@@ -101,7 +101,8 @@ export default class Connection {
             case 'post':
                 openNotification(payload.title, payload.description);
                 //Nếu đang xem trang nó
-                if (activeUser === payload.data.author) {
+                if (activeUser === payload.data.author)
+                {
                     //thêm vào đầu listTweet
                     store.dispatch(increaseTweetCount());
                     store.dispatch(realtimeTweetList(payload.data));
@@ -111,10 +112,11 @@ export default class Connection {
                 openNotification(payload.title, payload.description);
                 //payload.data._id là id của thằng thay đổi thông tin
 
-                //Update lại thèn loggin nếu là thông tin của nó
-                if (payload.account._id === store.getState().loginer)
+                //Update lại thèn loginer nếu là thông tin của nó
+                if (payload.account._id === Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey()) {
+                    console.log("update ne",payload.data)
                     store.dispatch(setUserInfo(payload.data))
-
+                }
                 //Nếu đang xem tài khoản của 1 thằng( không ngoại lệ đang xem trang của bản thân )
                 if (activeUser === payload.account._id) {
                     //Update hình ảnh và tên thị của active user từ payload.data

@@ -7,7 +7,8 @@ import {encode, sign} from "../transaction";
 import base32 from 'base32.js';
 import _ from "lodash";
 import WebService from "../webservice";
-import {openNotification} from "../notification";
+import {openNotification, warnNotification} from "../notification";
+import {CalculateOxy} from "../constants";
 
 class UserProfile extends Component {
     constructor(props) {
@@ -62,12 +63,22 @@ class UserProfile extends Component {
         }
         sign(tx,secret);
         let data_encoding = '0x' + encode(tx).toString('hex');
-        this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
-            this.props.toggleFollow(0)
-        }).catch(err => {
-            const message = _.get(err, 'response.data.error.message', "Follow Unsuccess!");
-            openNotification("Error",message);
+
+        this.service.get(`api/accountInfo/?id=${Keypair.fromSecret(secret).publicKey()}`).then(account => {
+            let oxy = CalculateOxy(account.data.balance, account.data.bandwidthTime, account.data.bandwidth);
+
+            if (encode(tx).length > oxy) {
+                warnNotification("Energy", "Not enough Oxy");
+            } else {
+                this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
+                    this.props.toggleFollow(0)
+                }).catch(err => {
+                    const message = _.get(err, 'response.data.error.message', "Follow Unsuccess!");
+                    openNotification("Error",message);
+                })
+            }
         })
+
     };
 
     handleUnfollowClick = async (e) =>{
@@ -99,12 +110,21 @@ class UserProfile extends Component {
         sign(tx,secret);
         let data_encoding = '0x' + encode(tx).toString('hex');
 
-        this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
-            this.props.toggleFollow(1);
-        }).catch(err => {
-            const message = _.get(err, 'response.data.error.message', "UnFollow Unsuccess!");
-            openNotification("Error", message);
+        this.service.get(`api/accountInfo/?id=${Keypair.fromSecret(secret).publicKey()}`).then(account => {
+            let oxy = CalculateOxy(account.data.balance, account.data.bandwidthTime, account.data.bandwidth);
+
+            if (encode(tx).length > oxy) {
+                warnNotification("Energy", "Not enough Oxy");
+            } else {
+                this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
+                    this.props.toggleFollow(1);
+                }).catch(err => {
+                    const message = _.get(err, 'response.data.error.message', "UnFollow Unsuccess!");
+                    openNotification("Error", message);
+                })
+            }
         })
+
     };
 
     //Để gọi API lại khi thay đổi activeUser mà ko bị xoay vòng

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Follow from "../containers/recommend-follow";
+// import Follow from "../containers/recommend-follow";
 import TweetBoard from '../containers/tweets-board';
 import SideBar from '../containers/left-sidebar';
 import FollowingList from '../containers/following';

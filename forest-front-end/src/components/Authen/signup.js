@@ -4,7 +4,7 @@ import {withRouter} from "react-router-dom";
 import WebService from "../../webservice";
 import {Keypair} from 'stellar-base';
 import './auth-style.scss'
-import _ from 'lodash'
+// import _ from 'lodash'
 
 const FormItem = Form.Item;
 
@@ -24,7 +24,7 @@ class RegisterForm extends Component {
                     secretKey: key.secret()
                 };
 
-                let secretKey = key.secret();
+                // let secretKey = key.secret();
                 this.props.form.setFieldsValue(data);
                 // localStorage.setItem("SECRET_KEY", secretKey);
             }

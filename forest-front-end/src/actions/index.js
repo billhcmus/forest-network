@@ -271,7 +271,6 @@ export const getCount = (publicKey) =>
 export const getUserInfo = (publicKey) =>
     (dispatch, getState) =>{
         let service = new WebService();
-        console.log("abc");
         service.get(`api/userInfo/?id=${publicKey}`).then(user =>{
             //dispatch(changeUserInfo(user.data))
         })

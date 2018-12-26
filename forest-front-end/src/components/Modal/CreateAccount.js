@@ -6,6 +6,7 @@ import WebService from "../../webservice";
 import {encode, sign} from '../../transaction/index';
 import _ from 'lodash'
 import {openNotification,warnNotification} from "../../notification";
+import {CalculateOxy} from "../../constants";
 
 const FormItem = Form.Item;
 
@@ -37,12 +38,21 @@ class Register extends Component {
                     try {
                         sign(tx, secret);
                         let data_encoding = '0x' + encode(tx).toString('hex');
-                        this.service.post(`api/users/sendTx`, {tx: data_encoding}).then((response) => {
-                            openNotification("Register", "Successfully");
-                            this.props.onCancel();
-                        }).catch(err => {
-                            const message = _.get(err, 'response.data.error.message', "Register return with failure!");
-                            warnNotification("Error", message);
+                        this.service.get(`api/accountInfo/?id=${Keypair.fromSecret(secret).publicKey()}`).then(account => {
+                            let oxy = CalculateOxy(account.data.balance, account.data.bandwidthTime, account.data.bandwidth);
+
+                            if (encode(tx).length > oxy) {
+                                warnNotification("Energy", "Not enough Oxy");
+                            }
+                            else {
+                                this.service.post(`api/users/sendTx`, {tx: data_encoding}).then((response) => {
+                                    openNotification("Register", "Successfully");
+                                    this.props.onCancel();
+                                }).catch(err => {
+                                    const message = _.get(err, 'response.data.error.message', "Register return with failure!");
+                                    warnNotification("Error", message);
+                                })
+                            }
                         })
                     }
                     catch (e) {
