@@ -273,6 +273,7 @@ export default class Synchronization {
                     message.payload = {
                         title: `${actorName} đã cập nhật trạng thái`,
                         description: `${decodeText(content).text}`,
+                        data: ""
                     }
                     listFollowers.forEach(u => {
                         if (u.following !== account._id)

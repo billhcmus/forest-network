@@ -50,9 +50,9 @@ export default class Connection {
         const action = _.get(messageObj, "action");
         const payload = _.get(messageObj, "payload");
         const poststatus = _.get(messageObj, "poststatus");
-        const account = payload.account
+        const account = _.get(payload, "account");
         const activeUser = localStorage.getItem("ACTIVE_USER");
-        if (activeUser === payload.account._id)
+        if (activeUser === _.get(account, "_id"))
         {
             store.dispatch(changeAccountInfo(account));
         }
@@ -91,6 +91,7 @@ export default class Connection {
             case 'post':
                 openNotification(payload.title, payload.description);
                 //Nếu đang xem trang nó
+                console.log(payload.data);
                 if (activeUser === payload.data.author)
                 {
                     //thêm vào đầu listTweet

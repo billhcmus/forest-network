@@ -1,4 +1,6 @@
 // Constant will define here.
+import moment from "moment";
+
 export const DISMISS_ITEM_RECOMMEND = 'DISMISS_ITEM_RECOMMEND';
 export const INCREASE_FOLLOWING = 'INCREASE_FOLLOWING';
 export const UPDATE_DETAIL = 'UPDATE_DETAIL';
@@ -28,3 +30,24 @@ export const ADD_FOLLOWER_LIST = 'ADD_FOLLOWER_LIST';
 export const CHANGE_PAYMENT_LIST = 'CHANGE_PAYMENT_LIST';
 export const CHANGE_TRANSACTION ='CHANGE_TRANSACTION';
 export const CREATE_NEW_CONNECTION = 'CREATE_NEW_CONNECTION';
+
+
+export const BANDWIDTH_PERIOD = 86400;
+export const MAX_BLOCK_SIZE = 22020096;
+export const RESERVE_RATIO = 1;
+export const MAX_CELLULOSE = Number.MAX_SAFE_INTEGER;
+export const NETWORK_BANDWIDTH = RESERVE_RATIO * MAX_BLOCK_SIZE * BANDWIDTH_PERIOD;
+
+/**
+ * @return {number}
+ */
+export function CalculateOxy(balance, bandwidthTime, bandwidth) {
+    const bandwidthLimit = Math.ceil(balance / MAX_CELLULOSE * NETWORK_BANDWIDTH);
+    let now = moment();
+    // 24 hours window max 65kB
+    let duration = moment.duration(now.diff(bandwidthTime));
+    let diff = duration.asSeconds();
+    let used = Math.ceil(Math.max(0, (BANDWIDTH_PERIOD - diff) / BANDWIDTH_PERIOD) * bandwidth);
+
+    return bandwidthLimit - used;;
+}
