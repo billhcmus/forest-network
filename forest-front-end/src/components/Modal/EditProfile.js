@@ -25,7 +25,6 @@ class EditProfile extends Component {
 
             if(this.state.displayName !== this.props.userInfo.displayName) {
                 this.service.get(`api/sequence/?id=${key.publicKey()}`).then(result =>{
-                    console.log(result.data)
                         let tx = {
                             version: 1,
                             account: key.publicKey(),
@@ -49,7 +48,6 @@ class EditProfile extends Component {
 
             if(this.state.avatar !== this.props.userInfo.avatar) {
                 this.service.get(`api/sequence/?id=${key.publicKey()}`).then(result =>{
-                    console.log(result.data)
                     let tx = {
                         version: 1,
                         account: key.publicKey(),
@@ -61,7 +59,6 @@ class EditProfile extends Component {
                             value: new Buffer(this.state.avatar, 'binary')
                         },
                     }
-                    console.log(tx)
                     sign(tx, secretKey)
                     let data_encoding = '0x'+ encode(tx).toString('hex');
                     if(this.state.displayName !== this.props.userInfo.displayName)

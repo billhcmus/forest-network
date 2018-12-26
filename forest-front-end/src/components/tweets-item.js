@@ -53,6 +53,7 @@ class TweetItem extends Component {
         const countSum = this.props.itemInfo ?
             (itemInfo.like + itemInfo.love + itemInfo.haha + itemInfo.wow + itemInfo.sad + itemInfo.angry)
             : 0
+        console.log(itemInfo)
         return (
             <div>
                 <ViewTweet isModalShow={this.state.isModalShow} onCancel={(e) => this.handleCancel(e)}/>
@@ -93,7 +94,9 @@ class TweetItem extends Component {
                         </div>
                         {
                             itemInfo.like > 0 ?
-                                <div className="action-item">
+                                <div className="action-item" title={
+                                    itemInfo.likeList.toString()
+                                }>
                                     <div className="reaction-icon-small like"></div>
                                     <span className="actionCount">{itemInfo.like}</span>
                                 </div>
@@ -101,7 +104,9 @@ class TweetItem extends Component {
                         }
                         {
                             itemInfo.love > 0 ?
-                                <div className="action-item">
+                                <div className="action-item"title={
+                                    itemInfo.loveList.toString()
+                                }>
                                     <div className="reaction-icon-small love"></div>
                                     <span className="actionCount">{itemInfo.love}</span>
                                 </div>
@@ -109,7 +114,9 @@ class TweetItem extends Component {
                         }
                         {
                             itemInfo.haha > 0 ?
-                                <div className="action-item">
+                                <div className="action-item"title={
+                                    itemInfo.hahaList.toString()
+                                }>
                                     <div className="reaction-icon-small haha"></div>
                                     <span className="actionCount">{itemInfo.haha}</span>
                                 </div>
@@ -117,7 +124,9 @@ class TweetItem extends Component {
                         }
                         {
                             itemInfo.wow > 0 ?
-                                <div className="action-item">
+                                <div className="action-item"title={
+                                    itemInfo.wowList.toString()
+                                }>
                                     <div className="reaction-icon-small wow"></div>
                                     <span className="actionCount">{itemInfo.wow}</span>
                                 </div>
@@ -125,7 +134,9 @@ class TweetItem extends Component {
                         }
                         {
                             itemInfo.sad > 0 ?
-                                <div className="action-item">
+                                <div className="action-item"title={
+                                    itemInfo.sadList.toString()
+                                }>
                                     <div className="reaction-icon-small sad"></div>
                                     <span className="actionCount">{itemInfo.sad}</span>
                                 </div>
@@ -133,7 +144,9 @@ class TweetItem extends Component {
                         }
                         {
                             itemInfo.angry > 0 ?
-                                <div className="action-item">
+                                <div className="action-item"title={
+                                    itemInfo.angryList.toString()
+                                }>
                                     <div className="reaction-icon-small angry"></div>
                                     <span className="actionCount">{itemInfo.angry}</span>
                                 </div>

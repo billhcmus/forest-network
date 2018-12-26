@@ -176,7 +176,7 @@ export const updatePeopleInfo = (loginKey, peopleKey) =>
 export const updateListFollowing = (publicKey) =>
     (dispatch, getState) => {
         let service = new WebService();
-        service.get(`api/followings/?id=${publicKey}&needMore=1&start=0&count=9`).then(followings => {
+        service.get(`api/followings/?id=${publicKey}&needMore=1&start=0&count=15`).then(followings => {
             dispatch(changeListFollowing(followings.data))
         })
     };
@@ -184,7 +184,7 @@ export const updateListFollowing = (publicKey) =>
 export const updateListFollower = (publicKey) =>
     (dispatch, getState) => {
         let service = new WebService();
-        service.get(`api/followers/?id=${publicKey}&start=0&count=9`).then(followers => {
+        service.get(`api/followers/?id=${publicKey}&start=0&count=15`).then(followers => {
             dispatch(changeListFollower(followers.data))
         })
     };
@@ -192,7 +192,7 @@ export const updateListFollower = (publicKey) =>
 export const addListFollowing = (publicKey,offset) =>
     (dispatch, getState) => {
         let service = new WebService();
-        service.get(`api/followings/?id=${publicKey}&needMore=1&start=${offset}&count=9`).then(followings => {
+        service.get(`api/followings/?id=${publicKey}&needMore=1&start=${offset}&count=15`).then(followings => {
             dispatch(addMoreListFollowing(followings.data))
         })
     };
@@ -200,7 +200,7 @@ export const addListFollowing = (publicKey,offset) =>
 export const addListFollower = (publicKey,offset) =>
     (dispatch, getState) => {
         let service = new WebService();
-        service.get(`api/followers/?id=${publicKey}&start=${offset}&count=9`).then(followers => {
+        service.get(`api/followers/?id=${publicKey}&start=${offset}&count=15`).then(followers => {
             dispatch(addMoreListFollower(followers.data))
         })
     };
