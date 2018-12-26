@@ -320,7 +320,11 @@ export default class Synchronization {
             let object = _.get(params, "object");
             let content = _.get(params, "content");
 
-            let post = await this.app.db.collection('post').findOne({_id: object})
+            let post = await this.app.db.collection('post').findOne({_id: object});
+
+            if (!post) {
+                post = await this.app.db.collection('comment').findOne({_id: object});
+            }
 
             //try check comment
             try {
