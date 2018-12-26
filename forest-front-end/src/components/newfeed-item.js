@@ -8,9 +8,6 @@ import {Keypair} from "stellar-base";
 import WebService from "../webservice";
 import ReactionPanel from "./Modal/reaction-panel"
 
-import {decodeReact, decodeText, decodeFollowings } from "../transaction/myv1"
-
-
 class NewFeedItem extends Component {
 
     constructor(props) {
@@ -41,21 +38,18 @@ class NewFeedItem extends Component {
         })
     }
 
-    // handleSpanClick = (e) => {
-    //     e.stopPropagation()
-    //     this.setState({
-    //         isModalShow: true
-    //     })
-    //     this.props.getDetailTweet(this.props.itemInfo,Keypair.fromSecret(
-    //         localStorage.getItem("SECRET_KEY")).publicKey())
-    // }
+    handleSpanClick = (e) => {
+        e.stopPropagation()
+        this.setState({
+            isModalShow: true
+        })
+        // this.props.getDetailTweet(this.props.itemInfo,Keypair.fromSecret(
+        //     localStorage.getItem("SECRET_KEY")).publicKey())
+    }
 
     render() {
         // console.log(this.props.itemInfo)
-        if(this.props.itemInfo.operation === "post") {
-            console.log(this.props.itemInfo.tx.params.content)
-            let a = decodeText(this.props.itemInfo.tx.params.content)
-        }
+
         const itemInfo = this.props.itemInfo
         const countSum = this.props.itemInfo ?
             (itemInfo.like + itemInfo.love + itemInfo.haha + itemInfo.wow + itemInfo.sad + itemInfo.angry)
@@ -85,14 +79,21 @@ class NewFeedItem extends Component {
                         
                         <div className="tweet-text-container">
                             {itemInfo && itemInfo.operation === "post" && 
-                                
-                                       <p>  {moment(itemInfo.time).format('HH:mm, DD MMM, YYYY')}</p>
-                            }
+                                <p>{itemInfo.content.text}</p>
+                            }   
                         
                             {itemInfo && itemInfo.operation === "create_account" &&
 
-                                  <div><b>{itemInfo.operation}</b> <a>{itemInfo.tx.params.address}</a></div>
+                                  <div><b>{itemInfo.operation}</b> <span style={{color: "#3490fa"}}>{itemInfo.address}</span></div>
                             }
+
+                            {itemInfo && itemInfo.operation === "payment" &&
+                                <div>
+                                    <p>sent <b>{itemInfo.amount} TRE</b> to</p> 
+                                    <span style={{color: "#3490fa"}}>{itemInfo.addressName ? itemInfo.addressName : itemInfo.address}</span>
+                                </div>
+                            }
+
                         </div>
 
 
@@ -100,8 +101,8 @@ class NewFeedItem extends Component {
                     </div>
 
                     <div className="moreStat">
-                        <span className="countStat"><strong>{countSum}</strong> Reactions</span>
-                        <span className="countStat"><strong>{itemInfo.comment}</strong> Comments</span>
+                        {/*<span className="countStat"><strong>{countSum}</strong> Reactions</span>*/}
+                        {/*<span className="countStat"><strong>{itemInfo.comment}</strong> Comments</span>*/}
                     </div>
 
                     <div className="tweet-action-footer">

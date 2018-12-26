@@ -1,4 +1,4 @@
-import {INIT_NEW_LIST, UPDATE_TWEET_STATUS} from "../constants";
+import {INIT_NEW_LIST, GET_MORE_NEWS, UPDATE_TWEET_STATUS} from "../constants";
 const initState = [];
 
 
