@@ -3,7 +3,13 @@ import _ from 'lodash';
 import {openNotification} from "../notification";
 import {store} from "../index";
 
-import {realtimeTweetDetailComment,realtimeTweetDetailStatus, realtimeTweetStatus,realtimeTweetList} from "../actions";
+import {
+    realtimeTweetDetailComment,
+    realtimeTweetDetailStatus,
+    realtimeTweetStatus,
+    realtimeTweetList,
+    changeAccountInfo
+} from "../actions";
 
 import {Keypair} from 'stellar-base';
 
