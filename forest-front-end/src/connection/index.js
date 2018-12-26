@@ -2,9 +2,7 @@ import {WEB_SOCKET_URL} from "../config";
 import _ from 'lodash';
 import {openNotification} from "../notification";
 import {store} from "../index";
-
-import {realtimeTweetDetailComment,realtimeTweetDetailStatus, realtimeTweetStatus,realtimeTweetList} from "../actions";
-
+import {realtimeTweetDetailComment,realtimeTweetDetailStatus, realtimeTweetStatus,realtimeTweetList,changeAccountInfo} from "../actions";
 import {Keypair} from 'stellar-base';
 
 export default class Connection {
@@ -52,29 +50,27 @@ export default class Connection {
         const action = _.get(messageObj, "action");
         const payload = _.get(messageObj, "payload");
         const poststatus = _.get(messageObj, "poststatus");
+        const account = payload.account
+        const activeUser = localStorage.getItem("ACTIVE_USER");
+        if (activeUser === payload.account._id)
+        {
+            store.dispatch(changeAccountInfo(account));
+        }
         switch (action) {
             case 'auth':
                 console.log(payload);
                 break;
+            case 'create_account':
+                openNotification(payload.title, payload.description);
+                break;
             case 'payment':
                 openNotification(payload.title, payload.description);
-
-                let account = {
-                    balance: payload.data.balance,
-                    bandwidth: payload.data.bandwidth,
-                    bandwidthTime: payload.data.bandwidthTime,
-                    sequence: payload.data.sequence,
-                    _id: payload.data._id
-                };
-
-                store.dispatch(changeAccountInfo(account));
                 break;
             case 'interact':
                 const publicKey = Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey();
                 if (payload.data.author !== publicKey) {
                     openNotification(payload.title, payload.description);
                 }
-
                 if (payload.type === "comment") {
                     //Khi nó đang xem chi tiết mà có th commment
                     if (poststatus._id === store.getState().tweetDetail.main._id) {
@@ -94,7 +90,6 @@ export default class Connection {
                 break;
             case 'post':
                 openNotification(payload.title, payload.description);
-                const activeUser = localStorage.getItem("ACTIVE_USER");
                 //Nếu đang xem trang nó
                 if (activeUser === payload.data.author)
                 {
@@ -104,6 +99,7 @@ export default class Connection {
                 break;
             case 'update_account':
                 openNotification(payload.title, payload.description);
+
                 break;
             default:
                 break;

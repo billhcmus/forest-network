@@ -26,7 +26,7 @@ class RegisterForm extends Component {
 
                 let secretKey = key.secret();
                 this.props.form.setFieldsValue(data);
-                localStorage.setItem("SECRET_KEY", secretKey);
+                // localStorage.setItem("SECRET_KEY", secretKey);
             }
         });
     };

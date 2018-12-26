@@ -5,7 +5,7 @@ import {Keypair} from 'stellar-base';
 import WebService from "../../webservice";
 import {encode, sign} from '../../transaction/index';
 import _ from 'lodash'
-import {openNotification} from "../../notification";
+import {openNotification,warnNotification} from "../../notification";
 
 const FormItem = Form.Item;
 
@@ -24,7 +24,7 @@ class Register extends Component {
                 const address = values.address;
                 this.service.get(`api/sequence/?id=${
                     Keypair.fromSecret(secret).publicKey()}`
-                ).then(seq =>{
+                ).then(seq => {
                     let tx = {
                         version: 1,
                         account: '',
@@ -34,18 +34,23 @@ class Register extends Component {
                         params: {address: address},
                     };
 
-                    sign(tx,secret);
-
-                    let data_encoding = '0x' + encode(tx).toString('hex');
-                    this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
-                        openNotification("Register", "Successfully");
-                        this.props.onCancel();
-                    }).catch(err => {
-                        const message = _.get(err, 'response.data.error.message', "Register return with failure!");
-                        openNotification("Error", message);
-                    })
+                    try {
+                        sign(tx, secret);
+                        let data_encoding = '0x' + encode(tx).toString('hex');
+                        this.service.post(`api/users/sendTx`, {tx: data_encoding}).then((response) => {
+                            openNotification("Register", "Successfully");
+                            this.props.onCancel();
+                        }).catch(err => {
+                            const message = _.get(err, 'response.data.error.message', "Register return with failure!");
+                            warnNotification("Error", message);
+                        })
+                    }
+                    catch (e) {
+                        warnNotification("Error","Invalid address")
+                    }
                 })
             }
+
         });
     };
 
