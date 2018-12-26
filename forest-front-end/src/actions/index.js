@@ -24,6 +24,7 @@ import {
     CHANGE_TRANSACTION, CREATE_NEW_CONNECTION, UPDATE_TWEET_STATUS,
     INIT_NEW_LIST,
     GET_MORE_NEWS,
+    GET_NEWFEED_DETAIL_MAIN,
 } from "../constants";
 
 import WebService from '../webservice'
@@ -137,6 +138,10 @@ export const initNewsList = (news) => (
 
 export const getMoreNews = (news) => (
     {type: GET_MORE_NEWS, news: news}
+);
+
+export const getNewMain = (main_new) => (
+    {type: GET_NEWFEED_DETAIL_MAIN, main_new: main_new}
 );
 
 export const getDetailTweet = (object, loginer) =>
@@ -259,7 +264,6 @@ export const getCount = (publicKey) =>
 export const getUserInfo = (publicKey) =>
     (dispatch, getState) =>{
         let service = new WebService();
-        console.log("abc");
         service.get(`api/userInfo/?id=${publicKey}`).then(user =>{
             //dispatch(changeUserInfo(user.data))
         })
@@ -279,4 +283,13 @@ export const getNewsMore = (publicKey, page = 1, limit = 5) =>
         service.get(`api/newfeeds/?id=${publicKey}&page=${page}&limit=${limit}`).then(news => {
             dispatch(getMoreNews(news.data))
         })
+    };
+
+export const getDetailNewFeed = (object, loginer) =>
+    (dispatch, getState) => {
+        dispatch(getNewMain(object));
+        let service = new WebService();
+        // service.get(`api/tweetDetail/?object=${object._id}&loginer=${loginer}&start=0&count=5`).then(postDetail => {
+        //     dispatch(changeTweetDetailComment(postDetail.data))
+        // });
     };

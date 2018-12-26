@@ -53,7 +53,7 @@ export default class Transaction {
 
             let user = await this.app.models.user.getUser(item_tran.tags[0].value)
             try {
-                // item.avatar = user.picture
+                item.avatar = user.picture
                 item.displayName = user.name
                 item.author = user._id
 
@@ -67,7 +67,6 @@ export default class Transaction {
                     let params = _.get(item_tran.tx, "params")
                     let content = _.get(params, "content");
                     item.content = decodeText(content.buffer);
-                    // item.content = content;
                 }
 
                 if(item_tran.operation === 'payment') {

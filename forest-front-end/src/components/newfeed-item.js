@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Icon} from 'react-icons-kit';
 import {commentingO} from 'react-icons-kit/fa';
-import ViewTweet from '../containers/view-detail-tweet';
+import ViewNew from '../containers/newfeed-detail';
 import Comment from '../components/Modal/Comment';
 import moment from "moment";
 import {Keypair} from "stellar-base";
@@ -43,8 +43,8 @@ class NewFeedItem extends Component {
         this.setState({
             isModalShow: true
         })
-        // this.props.getDetailTweet(this.props.itemInfo,Keypair.fromSecret(
-        //     localStorage.getItem("SECRET_KEY")).publicKey())
+        this.props.getDetailNewFeed(this.props.itemInfo,Keypair.fromSecret(
+            localStorage.getItem("SECRET_KEY")).publicKey())
     }
 
     render() {
@@ -56,7 +56,7 @@ class NewFeedItem extends Component {
             : 0
         return (
             <div>
-                <ViewTweet isModalShow={this.state.isModalShow} onCancel={(e) => this.handleCancel(e)}/>
+                <ViewNew isModalShow={this.state.isModalShow} onCancel={(e) => this.handleCancel(e)}/>
                 <Comment objectid={itemInfo._id} isCommentShow={this.state.isCommentShow} onCancel={(e) => this.handleCommentCancel(e)}/>
                 <li className="item-tweet" onClick={(e) =>this.handleSpanClick(e)}>
                     <div className="tweet-content">
@@ -92,6 +92,10 @@ class NewFeedItem extends Component {
                                     <p>sent <b>{itemInfo.amount} TRE</b> to</p> 
                                     <span style={{color: "#3490fa"}}>{itemInfo.addressName ? itemInfo.addressName : itemInfo.address}</span>
                                 </div>
+                            }
+
+                            {itemInfo && itemInfo.operation === "update_account" && itemInfo.params.type === "name" &&
+                                <span>update name to {itemInfo.params.value}</span>
                             }
 
                         </div>

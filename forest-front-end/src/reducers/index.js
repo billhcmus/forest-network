@@ -6,12 +6,13 @@ import tweets from "./TweetsReducer";
 import tweetDetail from "./TweetDetailReducer";
 import RecommendReducer from './RecommendReducer';
 import AuthReducer from './AuthReducer';
-import loginer from  './UserReducer'
-import activeUser from './ActiveUserReducer'
-import payment from  './PaymentHistoryReducer'
-import transaction from  './TransactionReducer'
-import connection from './ConnectionReducer'
-import newfeeds from './NewFeedsReducer'
+import loginer from  './UserReducer';
+import activeUser from './ActiveUserReducer';
+import payment from  './PaymentHistoryReducer';
+import transaction from  './TransactionReducer';
+import connection from './ConnectionReducer';
+import newfeeds from './NewFeedsReducer';
+import newfeedDetail from "./NewFeedDetailReducer"
 
 export default combineReducers({
     userInfo,
@@ -26,5 +27,6 @@ export default combineReducers({
     activeUser,
     transaction,
     connection,
-    newfeeds
+    newfeeds,
+    newfeedDetail
 });

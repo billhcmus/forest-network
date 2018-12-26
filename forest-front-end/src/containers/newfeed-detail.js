@@ -1,20 +1,19 @@
 import {connect} from 'react-redux';
-import NewFeedItem from '../components/newfeed-item'
+import ViewNew from "../components/Modal/ViewNewFeed";
 import {getDetailNewFeed} from "../actions";
 
 const mapStateToProps = state => {
     return {
+        newfeedDetail: state.newfeedDetail,
         activeUser: state.activeUser,
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        getDetailNewFeed: (object,loginer) =>{
-            dispatch(getDetailNewFeed(object,loginer))
-        }
+
     }
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewFeedItem);
+export default connect(mapStateToProps, mapDispatchToProps)(ViewNew);

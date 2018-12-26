@@ -25,7 +25,7 @@ class NewFeedsBoard extends Component {
         const wrappedElement = document.getElementById('a-scroll');
         if (this.isBottom(wrappedElement)) {
             console.log('Loadmore');
-            if (this.props.tweets.length > 0) {
+            if (this.props.newfeeds.length > 0) {
                 this.props.getNewsMore(Keypair.fromSecret(
                     localStorage.getItem("SECRET_KEY")).publicKey(), this.props.newfeeds.length)
             }
