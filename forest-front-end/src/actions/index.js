@@ -42,7 +42,7 @@ export const changeAuthTab = (status) => (
     {type: CHANGE_AUTH_TAB, payload: status}
 );
 
-export const changeAcountInfo = (account) => (
+export const changeAccountInfo = (account) => (
     {type: CHANGE_ACCOUNT_INFO, account: account}
 );
 
@@ -166,7 +166,7 @@ export const updatePeopleInfo = (loginKey, peopleKey) =>
     (dispatch, getState) => {
         let service = new WebService();
         service.get(`api/accountInfo/?id=${peopleKey}`).then(account => {
-            dispatch(changeAcountInfo(account.data))
+            dispatch(changeAccountInfo(account.data))
         });
         service.get(`api/userInfo/?id=${peopleKey}`).then(user => {
             dispatch(changeUserInfo(user.data))

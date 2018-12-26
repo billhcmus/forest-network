@@ -2,7 +2,7 @@ import {WEB_SOCKET_URL} from "../config";
 import _ from 'lodash';
 import {openNotification} from "../notification";
 import {store} from "../index";
-import {addTweetDetailComment, updateTweetStatus} from "../actions";
+import {addTweetDetailComment, changeAccountInfo, updateTweetStatus} from "../actions";
 import {Keypair} from 'stellar-base';
 
 export default class Connection {
@@ -56,6 +56,16 @@ export default class Connection {
                 break;
             case 'payment':
                 openNotification(payload.title, payload.description);
+
+                let account = {
+                    balance: payload.data.balance,
+                    bandwidth: payload.data.bandwidth,
+                    bandwidthTime: payload.data.bandwidthTime,
+                    sequence: payload.data.sequence,
+                    _id: payload.data._id
+                };
+
+                store.dispatch(changeAccountInfo(account));
                 break;
             case 'interact':
                 const publicKey = Keypair.fromSecret(localStorage.getItem("SECRET_KEY")).publicKey();

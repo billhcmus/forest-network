@@ -210,9 +210,9 @@ export default class Synchronization {
             })
 
             // push notification
-
-            // Thong bao cho nguoi gui
             if (needNotify) {
+            // Thong bao cho nguoi gui
+
                 const sender = await this.app.db.collection('account').findOne({
                     _id: account._id
                 });
