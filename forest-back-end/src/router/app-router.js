@@ -21,10 +21,16 @@ export default class AppRouter {
          * @method: POST
          */
         app.post('/api/users/login', (req, res, next) => {
-           app.models.account.auth(req.body.publicKey).then((result)=>{
-             return res.status(200).json(result);
-           }).catch(err =>{
-            return res.status(404).json({
+            app.models.account.auth(req.body.publicKey).then((result) => {
+                if (result) {
+                    return res.status(200).json(result);
+                } else {
+                    return res.status(404).json({
+                        error: err,
+                    });
+                }
+            }).catch(err => {
+                return res.status(404).json({
                     error: err,
                 });
             })
