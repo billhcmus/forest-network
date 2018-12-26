@@ -1,7 +1,12 @@
-import {CHANGE_TWEET_DETAIL_COMMENT,CHANGE_TWEET_DETAIL_MAIN,ADD_TWEET_DETAIL_COMMENT} from "../constants";
+import {
+    CHANGE_TWEET_DETAIL_COMMENT,
+    CHANGE_TWEET_DETAIL_MAIN,
+    ADD_TWEET_DETAIL_COMMENT,
+} from "../constants";
 const initState = {
-    comments:[]
-}
+    comments:[],
+    main: ""
+};
 
 
 export default (state = initState, action) => {
@@ -10,7 +15,7 @@ export default (state = initState, action) => {
             return {
                 ...state,
                 main: action.main
-            }
+            };
         case CHANGE_TWEET_DETAIL_COMMENT: {
             let tmp = {
                 ...state,
@@ -32,7 +37,7 @@ export default (state = initState, action) => {
             if (action.comments) {
                 action.comments.forEach((comment) => {
                     if (comment) {
-                        tmp.comments = [...tmp.comments, comment]
+                        tmp.comments = [comment, ...tmp.comments]
                     }
                 })
             }

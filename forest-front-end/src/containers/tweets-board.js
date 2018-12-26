@@ -8,7 +8,7 @@ const mapStateToProps = state => {
 		tweets : state.tweets,
 		activeUser : state.activeUser,
 	}
-}
+};
 
 const mapDispatchToProps = dispatch => {
 	return {
