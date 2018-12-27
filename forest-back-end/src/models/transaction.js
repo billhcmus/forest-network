@@ -53,7 +53,7 @@ export default class Transaction {
 
             let user = await this.app.models.user.getUser(item_tran.tags[0].value)
             try {
-                item.avatar = user.picture
+                // item.avatar = user.picture
                 item.displayName = user.name
                 item.author = user._id
 
@@ -97,10 +97,23 @@ export default class Transaction {
                         }
                     }
                     if(key === "followings"){
-                            
+                        let list = decodeFollowings(value).addresses.map(add => {
+                            console.log(base32.encode(add))
+                            return base32.encode(add)
+                        });
+                        // let follwingsls = list.map(async(follow_item)=>{
+                        //     console.log(follow_item)
+                        //     let it = await this.app.models.user.getUser(follow_item)
+                        //     return {
+                        //         name: it.name,
+                        //         address: it._id
+                        //     }
+                        // })
+                        console.log(list)
+                        item.follwings = list;
                     }
                 }
-                // item.tx = item_tran.tx;
+                item.tx = item_tran.tx;
 
                 return item;
             }
@@ -108,49 +121,6 @@ export default class Transaction {
                 console.log(e)
             }
         })
-        // if (needMore === "0")
-        //     return listFollowings.map(user =>{
-        //         return user.followed
-        //     })
-        // let res = listFollowings.map(user =>{
-        //     return this.app.db.collection('user').findOne({_id: user.followed})
-        // })
-        // let user = await this.app.models.user.getUser(publicKey)
-        // let res = posts.map(async (post) =>{
-        //     try {
-        //         post.avatar = user.picture
-        //         post.displayName = user.name
-        //         post.like = 0
-        //         post.haha = 0
-        //         post.wow = 0
-        //         post.sad = 0
-        //         post.angry = 0
-        //         post.love = 0
-        //         post.comment = await this.app.db.collection('comment').find({object:post._id}).count();
-        //         await this.app.db.collection('reaction').find({object:post._id}).toArray().then(reaction =>{
-        //             reaction.forEach(react => {
-        //                 if (react.reaction === 1)
-        //                     post.like++;
-        //                 else if (react.reaction === 2)
-        //                     post.love++;
-        //                 else if (react.reaction === 3)
-        //                     post.haha++;
-        //                 else if (react.reaction === 4)
-        //                     post.wow++;
-        //                 else if (react.reaction === 5)
-        //                     post.sad++;
-        //                 else if (react.reaction === 6)
-        //                     post.angry++;
-        //             })
-        //         })
-        //         let tmp = await this.app.db.collection('reaction').findOne({object:post._id,author:loginer});
-        //         post.currentReaction = tmp ? tmp.reaction : 0;
-        //         return post
-        //     }
-        //     catch (e) {
-        //         console.log(e)
-        //     }
-        // })
         return Promise.all(res);
     }
 }
