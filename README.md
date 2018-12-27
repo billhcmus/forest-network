@@ -1,5 +1,25 @@
 ﻿# Release notes
 
+## Tóm tắt
+- Block chain là một công nghệ khá là được biết đến trong giai đoạn gần đây.
+- Cơ bản thì block chain là hệ thống phi tập trung (decentralize) mà ở đó có một sổ cái chứa toàn bộ các giao dịch đã được thực hiện trước đó, các thành viên tham gia vào hệ thống phải tải số cái này về máy mình để đồng bộ hóa với toàn hệ thống. 
+- Vì sổ cái này được chứa ở nhiều nơi, lưu ở nhiều máy nên việc sửa đổi nó là rất khó, và đó cũng chính là lý do mà blockchain được sử dụng (mình sẽ không đi sâu vào phần cấu trúc, tấn công, kiểm định và những thứ liên quan bên trong blockchain).
+- Vì mang tính chất không thể sửa đổi nên các giao dịch liên quan đến tiền bạc, ngân hàng hay những thứ đòi hỏi sự tin tưởng rất thích hợp để dùng block chain, và để ứng dụng nó như một ví dụ, project này sẽ dùng blockchain làm nơi lưu trữ dữ liệu cho toàn bộ hệ thống, và ứng dụng sẽ là một mạng xã hội, với các user, các giao dịch chuyển tiền, đăng bài, comment, reaction, tạo tài khoản, theo dõi trang cá nhân của người khác. Hệ thông blockchain được thầy Đỗ Nguyên Kha xây dựng https://github.com/nguyenkha/forest.network và việc của project này là xây dựng hệ thống gồm:
+  + Backend: Lưu trữ các giao dịch trên sổ cái của blockchain dưới một hình thức khác, có các bảng, các trường được tổ chức phù hợp với cấu trúc của transaction trên blockchain để phục vụ truy vấn nhanh hơn và đồng thời cung cấp các API cho client sử dụng những dữ liệu lưu trữ này. Backend phải kết nối realtime với blockchain để cập nhật và đồng bộ nếu có dữ liệu mới, việc kết nối này được hỗ trợ bởi thư viện Tendermint (bên dưới xài websocket). Backend còn phải hỗ trợ để client lấy dữ liệu realtime và có các thông báo đến client khi có sự kiện dữ liệu trên block bị thay đổi.
+  + Frontend: Web app viết bằng reactjs là ứng dụng mạng xã hội với các chức năng như mô tả ở trên và sử dụng API do backend cung cấp để hiện thị và xử lý dữ liệu.
+ - Dưới đây là chi tiết từng phần.
+
+## Backend 
+## Frontend
+
+
+
+
+
+
+
+
+
 ## Liệt kê lại những thứ chưa làm
 
 - [ ] Realtime comment, react, transfer
