@@ -374,7 +374,8 @@ export default class Synchronization {
                             title: `${actorName} đã thay đổi thông tin theo dõi`,
                             description: ``,
                             countFollowing: list.length,
-                            account: sender
+                            account: sender,
+                            data: sender
                             //gửi số người theo dõi mới cho những thằng theo dõi nó
                         }
                         listFollowers.forEach(u => {
