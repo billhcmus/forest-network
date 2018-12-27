@@ -113,8 +113,8 @@ export default class Transaction {
                         item.follwings = list;
                     }
                 }
-                item.tx = item_tran.tx;
-
+                // item.tx = item_tran.tx;
+                
                 return item;
             }
             catch (e) {

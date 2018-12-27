@@ -6,7 +6,7 @@ import {Keypair} from "stellar-base";
 class NewFeedsBoard extends Component {
     componentWillMount() {
         this.props.getNews(Keypair.fromSecret(
-            localStorage.getItem("SECRET_KEY")).publicKey(), 0, 5)
+            localStorage.getItem("SECRET_KEY")).publicKey(), 0, 20)
         this.props.updatePeopleInfo(Keypair.fromSecret(
                     localStorage.getItem("SECRET_KEY")).publicKey(), Keypair.fromSecret(
                     localStorage.getItem("SECRET_KEY")).publicKey())
@@ -26,6 +26,7 @@ class NewFeedsBoard extends Component {
 
     trackScrolling = () => {
         const wrappedElement = document.getElementById('a-scroll');
+              console.log(this.props.newfeeds.length)
         if (this.isBottom(wrappedElement)) {
             console.log('Loadmore');
             if (this.props.newfeeds.length > 0) {
