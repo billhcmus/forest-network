@@ -6,6 +6,7 @@ import {
     CHANGE_TWEET_COUNT,
     CHANGE_USER_INFO,
     INCREASE_FOLLOWING,
+    INCREASE_TWEET,
 } from "../constants";
 import _ from 'lodash';
 
@@ -68,6 +69,11 @@ export default (state = initState, action) => {
             return {
                 ...state,
                 followingCount: state.followingCount + 1
+            };
+        case INCREASE_TWEET:
+            return {
+                ...state,
+                tweetCount: state.tweetCount + 1
             };
         default:
             return state

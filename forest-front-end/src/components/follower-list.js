@@ -23,7 +23,7 @@ class FollowersList extends Component {
     trackScrolling = () => {
         const wrappedElement = document.getElementById('scrollfollower');
         if (this.isBottom(wrappedElement)) {
-            if (this.props.list_follower.length > 0) {
+            if (this.props.list_follower.length > 9) {
                 this.props.addListFollower(this.props.activeUser,this.props.list_follower.length)
             }
         }

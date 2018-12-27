@@ -5,7 +5,7 @@ import _ from 'lodash'
 import './auth-style.scss'
 import WebService from "../../webservice";
 import { Keypair } from 'stellar-base';
-import {openNotification} from "../../notification";
+import {warnNotification} from "../../notification";
 
 const FormItem = Form.Item;
 
@@ -26,19 +26,24 @@ class LoginForm extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                const user = {
-                    publicKey: Keypair.fromSecret(values.secretkey).publicKey(),
-                    password: values.password
-                };
-                this.service.post('api/users/login', user).then((response) => {
-                    localStorage.setItem('token', Keypair.fromSecret(values.secretkey).publicKey());
-                    localStorage.setItem('ACTIVE_USER', Keypair.fromSecret(values.secretkey).publicKey());
-                    localStorage.setItem("SECRET_KEY", values.secretkey);
-                    this.props.history.push(`/home`);
-                }).catch(err => {
-                    const message = _.get(err, 'response.data.error.message', "Login Error!");
-                    openNotification("Error", message);
-                })
+                try {
+                    const user = {
+                        publicKey: Keypair.fromSecret(values.secretkey).publicKey(),
+                        password: values.password
+                    };
+                    this.service.post('api/users/login', user).then((response) => {
+                        localStorage.setItem('token', Keypair.fromSecret(values.secretkey).publicKey());
+                        localStorage.setItem('ACTIVE_USER', Keypair.fromSecret(values.secretkey).publicKey());
+                        localStorage.setItem("SECRET_KEY", values.secretkey);
+                        this.props.history.push(`/home`);
+                    }).catch(err => {
+                        const message = _.get(err, 'response.data.error.message', "Account not exist!");
+                        warnNotification("Login Error", message);
+                    })
+                }
+                catch (e) {
+                    warnNotification("Login Error", "Wrong privatekey!");
+                }
             }
         });
     };

@@ -3,7 +3,7 @@ import Navbar from '../containers/navbar';
 import UserProfile from '../containers/user-profile'
 import Wall from "./wall";
 import connect from "react-redux/es/connect/connect";
-import {Route, Switch} from 'react-router-dom';
+
 import {activeUser, createNewConnection} from "../actions";
 import Connection from "../connection";
 

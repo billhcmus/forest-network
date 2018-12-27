@@ -8,3 +8,10 @@ export const openNotification = (title, description) => {
         icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
     });
 };
+
+export const warnNotification = (title, description) => {
+    notification.warn({
+        message: title,
+        description: description,
+    });
+};

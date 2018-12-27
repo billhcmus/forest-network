@@ -21,10 +21,15 @@ import {
     ADD_FOLLOWING_LIST,
     ADD_FOLLOWER_LIST,
     CHANGE_PAYMENT_LIST,
-    CHANGE_TRANSACTION, CREATE_NEW_CONNECTION, UPDATE_TWEET_STATUS,
     INIT_NEW_LIST,
     GET_MORE_NEWS,
     GET_NEWFEED_DETAIL_MAIN,
+    CHANGE_TRANSACTION,
+    CREATE_NEW_CONNECTION,
+    REALTIME_TWEET_STATUS,
+    REALTIME_TWEET_DETAIL_COMMENT,
+    REALTIME_TWEET_DETAIL_STATUS,
+    REALTIME_TWEET_LIST, INCREASE_TWEET,
 } from "../constants";
 
 import WebService from '../webservice'
@@ -37,6 +42,10 @@ export const increaseFollowing = () => (
     {type: INCREASE_FOLLOWING}
 );
 
+export const increaseTweetCount = () => (
+    {type: INCREASE_TWEET}
+);
+
 export const updateDetail = (userDetail) => (
     {type: CHANGE_DETAIL, userDetail: userDetail}
 );
@@ -45,7 +54,7 @@ export const changeAuthTab = (status) => (
     {type: CHANGE_AUTH_TAB, payload: status}
 );
 
-export const changeAcountInfo = (account) => (
+export const changeAccountInfo = (account) => (
     {type: CHANGE_ACCOUNT_INFO, account: account}
 );
 
@@ -105,13 +114,26 @@ export const changeTweetDetailComment = (comments) => (
     {type: CHANGE_TWEET_DETAIL_COMMENT, comments: comments}
 );
 
-export const updateTweetStatus = (_id, status) => (
-    {type: UPDATE_TWEET_STATUS, _id: _id, status: status}
+export const realtimeTweetStatus = (status) => (
+    {type: REALTIME_TWEET_STATUS, status: status}
+);
+
+export const realtimeTweetList = (tweet) => (
+    {type: REALTIME_TWEET_LIST, tweet: tweet}
 );
 
 export const addTweetDetailComment = (comments) =>(
     {type: ADD_TWEET_DETAIL_COMMENT, comments: comments}
 );
+
+export const realtimeTweetDetailComment = (comment) =>(
+    {type: REALTIME_TWEET_DETAIL_COMMENT, comment: comment}
+);
+
+export const realtimeTweetDetailStatus =  (status) => (
+    {type: REALTIME_TWEET_DETAIL_STATUS, status: status}
+);
+
 export const addMoreListFollower = (followers) =>(
     {type: ADD_FOLLOWER_LIST, followers: followers}
 );
@@ -181,7 +203,7 @@ export const updatePeopleInfo = (loginKey, peopleKey) =>
     (dispatch, getState) => {
         let service = new WebService();
         service.get(`api/accountInfo/?id=${peopleKey}`).then(account => {
-            dispatch(changeAcountInfo(account.data))
+            dispatch(changeAccountInfo(account.data))
         });
         service.get(`api/userInfo/?id=${peopleKey}`).then(user => {
             dispatch(changeUserInfo(user.data))
@@ -194,7 +216,7 @@ export const updatePeopleInfo = (loginKey, peopleKey) =>
 export const updateListFollowing = (publicKey) =>
     (dispatch, getState) => {
         let service = new WebService();
-        service.get(`api/followings/?id=${publicKey}&needMore=1&start=0&count=9`).then(followings => {
+        service.get(`api/followings/?id=${publicKey}&needMore=1&start=0&count=15`).then(followings => {
             dispatch(changeListFollowing(followings.data))
         })
     };
@@ -202,7 +224,7 @@ export const updateListFollowing = (publicKey) =>
 export const updateListFollower = (publicKey) =>
     (dispatch, getState) => {
         let service = new WebService();
-        service.get(`api/followers/?id=${publicKey}&start=0&count=9`).then(followers => {
+        service.get(`api/followers/?id=${publicKey}&start=0&count=15`).then(followers => {
             dispatch(changeListFollower(followers.data))
         })
     };
@@ -210,7 +232,7 @@ export const updateListFollower = (publicKey) =>
 export const addListFollowing = (publicKey,offset) =>
     (dispatch, getState) => {
         let service = new WebService();
-        service.get(`api/followings/?id=${publicKey}&needMore=1&start=${offset}&count=9`).then(followings => {
+        service.get(`api/followings/?id=${publicKey}&needMore=1&start=${offset}&count=15`).then(followings => {
             dispatch(addMoreListFollowing(followings.data))
         })
     };
@@ -218,7 +240,7 @@ export const addListFollowing = (publicKey,offset) =>
 export const addListFollower = (publicKey,offset) =>
     (dispatch, getState) => {
         let service = new WebService();
-        service.get(`api/followers/?id=${publicKey}&start=${offset}&count=9`).then(followers => {
+        service.get(`api/followers/?id=${publicKey}&start=${offset}&count=15`).then(followers => {
             dispatch(addMoreListFollower(followers.data))
         })
     };

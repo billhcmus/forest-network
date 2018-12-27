@@ -23,7 +23,7 @@ class FollowingList extends Component {
   trackScrolling = () => {
     const wrappedElement = document.getElementById('scrollfollowing');
     if (this.isBottom(wrappedElement)) {
-      if (this.props.list_following.length > 0) {
+      if (this.props.list_following.length > 9) {
         this.props.addListFollowing(this.props.activeUser,this.props.list_following.length)
       }
     }

@@ -4,9 +4,9 @@ import {getLoginerInfo} from "../actions";
 
 const mapStateToProps = state => {
     return {
-        loginerInfo: state.loginer
+        loginerInfo: state.loginer,
     }
-}
+};
 
 const mapDispatchToProps = dispatch => {
     return {

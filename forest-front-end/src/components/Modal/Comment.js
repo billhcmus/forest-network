@@ -6,6 +6,8 @@ import WebService from "../../webservice";
 import {encode, sign} from '../../transaction/index';
 import {encodeText} from '../../transaction/myv1'
 import _ from 'lodash'
+import {openNotification, warnNotification} from "../../notification";
+import {CalculateOxy} from "../../constants";
 
 
 class Comment extends Component {
@@ -46,14 +48,23 @@ class Comment extends Component {
                 };
                 sign(tx,secret);
                 let data_encoding = '0x' + encode(tx).toString('hex');
-                this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
-                    this.props.onCancel();
-                    this.setState({
-                        content:""
-                    })
-                }).catch(err => {
-                    const message = _.get(err, 'response.data.error.message', "Comment Unsuccess!");
-                    console.log(message)
+
+                this.service.get(`api/accountInfo/?id=${Keypair.fromSecret(secret).publicKey()}`).then(account => {
+                    let oxy = CalculateOxy(account.data.balance, account.data.bandwidthTime, account.data.bandwidth);
+
+                    if (encode(tx).length > oxy) {
+                        warnNotification("Energy", "Not enough Oxy");
+                    } else {
+                        this.service.post(`api/users/sendTx`,{tx: data_encoding}).then((response) => {
+                            this.props.onCancel();
+                            this.setState({
+                                content:""
+                            })
+                        }).catch(err => {
+                            const message = _.get(err, 'response.data.error.message', "Comment Unsuccess!");
+                            openNotification("Error", message);
+                        })
+                    }
                 })
             })
         }

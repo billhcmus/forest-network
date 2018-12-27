@@ -28,12 +28,17 @@ export default class Connection {
                 const action = _.get(messageObj, "action");
                 switch(action) {
                     case 'auth':
-                        const userToken = _.get(messageObj, "payload"); // hien tai la public key
+                        try {
+                            const userToken = _.get(messageObj, "payload"); // hien tai la public key
 
-                        const connection = this.connections.get(socketId);
-                        if (connection) {
-                            connection.publicKey = userToken;
-                            this.connections = this.connections.set(socketId, connection);
+                            const connection = this.connections.get(socketId);
+                            if (connection) {
+                                connection.publicKey = userToken;
+                                this.connections = this.connections.set(socketId, connection);
+                            }
+                        }
+                        catch (e) {
+
                         }
                     break;
                 }

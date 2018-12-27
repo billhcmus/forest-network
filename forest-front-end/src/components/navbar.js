@@ -8,6 +8,7 @@ import '../css/navstyle.scss';
 import {Keypair} from "stellar-base";
 import {Link} from "react-router-dom";
 import WebService from "../webservice";
+import {openNotification} from "../notification";
 
 const {Header} = Layout;
 const Search = Input.Search;
@@ -86,7 +87,7 @@ class Navbar extends Component {
                 window.location = `/${res.data._id}`;
             }).catch(err => {
                 const message = _.get(err, 'response.data.error.message', "Can't find this user");
-                alert(message);
+                openNotification("Error", message);
             })
     }
 

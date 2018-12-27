@@ -170,6 +170,20 @@ export default class Synchronization {
                 _id: address,
             }
             await this.app.db.collection('user').insertOne(newUser);
+
+            if (needNotify) {
+                const sender = await this.app.db.collection('account').findOne({
+                    _id: account._id
+                });
+                message.payload = {
+                    title: "Tạo thành công 1 tài khoản",
+                    description: "",
+                    account: sender
+                }
+                //gửi cho thèn thực hiện
+                this.app.models.connection.SendToOnePerson(account._id, message);
+            }
+
             console.log(`${account._id} create ${address}`);
         } else if (operation === 'payment') {
             let params = _.get(data, "params")
@@ -210,16 +224,16 @@ export default class Synchronization {
             })
 
             // push notification
-
-            // Thong bao cho nguoi gui
             if (needNotify) {
+            // Thong bao cho nguoi gui
+
                 const sender = await this.app.db.collection('account').findOne({
                     _id: account._id
                 });
                 message.payload = {
                     title: "Bạn đã chuyển tiền thành công",
                     description: "",
-                    data: sender
+                    account: sender
                 }
     
                 this.app.models.connection.SendToOnePerson(account._id, message);
@@ -232,7 +246,7 @@ export default class Synchronization {
                 message.payload = {
                     title: `${actorName} đã chuyển ${amount} CEL cho bạn`,
                     description: `${data.memo}`,
-                    data: receiver
+                    account: receiver
                 }
                 
                 this.app.models.connection.SendToOnePerson(address, message);
@@ -253,23 +267,29 @@ export default class Synchronization {
                     keys: keys,
                 }
                 await this.app.db.collection('post').insertOne(newPost);
-
                 // broadcast cho nhung thang follow thang nay
                 if (needNotify) {
+                    const sender = await this.app.db.collection('account').findOne({
+                        _id: account._id
+                    });
+                    let rs = await this.app.models.post.getSpecificPostInfo(hashTx, account._id);
                     let listFollowers = await this.app.db.collection('follow').find({followed: account._id});
                     message.payload = {
                         title: `${actorName} đã cập nhật trạng thái`,
                         description: `${decodeText(content).text}`,
-                        data: newPost
+                        account: sender,
+                        data:rs
                     }
                     listFollowers.forEach(u => {
-                        this.app.models.connection.SendToOnePerson(u.following, message);
+                        if (u.following !== account._id)
+                            this.app.models.connection.SendToOnePerson(u.following, message);
                     });
+                    this.app.models.connection.SendToOnePerson(account._id, message);
                 }
 
                 console.log(`${account._id} post type ${newPost.content.type} text ${newPost.content.text} keys ${keys}`);
             } catch (err) {
-                console.log(`${account._id} post ERR content ${content}`);
+                console.log(`${account._id} post ERR content ${err}`);
             }
         } else if (operation === 'update_account') {
             let params = _.get(data, "params")
@@ -284,6 +304,24 @@ export default class Synchronization {
                             name: value.toString('utf-8')
                         }
                     })
+                    if (needNotify) {
+                        const sender = await this.app.db.collection('account').findOne({
+                            _id: account._id
+                        });
+                        let user = await this.app.models.user.getUser(account._id);
+                        let listFollowers = await this.app.db.collection('follow').find({followed: account._id});
+                        message.payload = {
+                            title: `${actorName} đã cập nhật tên mới là`,
+                            description:`${value.toString('utf-8')}`,
+                            account: sender,
+                            data: user
+
+                    }
+                        listFollowers.forEach(u => {
+                            this.app.models.connection.SendToOnePerson(u.following, message);
+                        });
+                        this.app.models.connection.SendToOnePerson(account._id, message);
+                    }
                 } else if (key === "picture") {
                     await this.app.db.collection('user').findOneAndUpdate({
                         _id: data.account
@@ -292,6 +330,23 @@ export default class Synchronization {
                             picture: value
                         }
                     })
+                    if (needNotify) {
+                        const sender = await this.app.db.collection('account').findOne({
+                            _id: account._id
+                        });
+                        let user = await this.app.models.user.getUser(account._id);
+                        let listFollowers = await this.app.db.collection('follow').find({followed: account._id});
+                        message.payload = {
+                            title: `${actorName} đã cập nhật ảnh đại diện`,
+                            description:`size ${value.length} bytes`,
+                            account: sender,
+                            data: user
+                        }
+                        listFollowers.forEach(u => {
+                            this.app.models.connection.SendToOnePerson(u.following, message);
+                        });
+                        this.app.models.connection.SendToOnePerson(account._id, message);
+                    }
                 } else if (key === "followings") {
                     const list = decodeFollowings(value).addresses.map(add => {
                         return base32.encode(add)
@@ -310,6 +365,23 @@ export default class Synchronization {
                             followed: item,
                         })
                     })
+                    if (needNotify) {
+                        const sender = await this.app.db.collection('account').findOne({
+                            _id: account._id
+                        });
+                        let listFollowers = await this.app.db.collection('follow').find({followed: account._id});
+                        message.payload = {
+                            title: `${actorName} đã thay đổi thông tin theo dõi`,
+                            description: ``,
+                            countFollowing: list.length,
+                            account: sender
+                            //gửi số người theo dõi mới cho những thằng theo dõi nó
+                        }
+                        listFollowers.forEach(u => {
+                            this.app.models.connection.SendToOnePerson(u.following, message);
+                        });
+                        this.app.models.connection.SendToOnePerson(account._id, message);
+                    }
                 }
                 console.log(`${account._id} update_account key ${key} value ${value}`);
             } catch (e) {
@@ -319,12 +391,6 @@ export default class Synchronization {
             let params = _.get(data, "params")
             let object = _.get(params, "object");
             let content = _.get(params, "content");
-
-            let post = await this.app.db.collection('post').findOne({_id: object});
-
-            if (!post) {
-                post = await this.app.db.collection('comment').findOne({_id: object});
-            }
 
             //try check comment
             try {
@@ -339,7 +405,6 @@ export default class Synchronization {
 
                 // push noti
                 if (needNotify) {
-
                     let comment = await this.app.db.collection('comment').findOne({_id: hashTx});
                     let user = await this.app.models.user.getUser(comment.author);
                     comment.avatar = user.picture
@@ -351,7 +416,12 @@ export default class Synchronization {
                     comment.angry = 0
                     comment.love = 0
                     comment.comment = 0
-                    comment.currentReaction = 0
+                    comment.likeList = []
+                    comment.hahaList = []
+                    comment.wowList = []
+                    comment.sadList = []
+                    comment.angryList = []
+                    comment.loveList = []
                     message.payload = {
                         type: "comment",
                         title: `${actorName} đã bình luận về bài viết của bạn`,
@@ -385,7 +455,7 @@ export default class Synchronization {
                         });
                     } else {
                         await this.app.db.collection('reaction').insertOne(newReact);
-                    } 
+                    }
                     message.payload = {
                         type: "reaction",
                         title: `${actorName} đã bày tỏ cảm xúc về bài viết của bạn`,
@@ -401,12 +471,22 @@ export default class Synchronization {
             }
 
             if (needNotify) {
-                this.app.models.post.getSpecificPostInfo(post._id, post.author, account._id).then(rs => {
+                const sender = await this.app.db.collection('account').findOne({
+                    _id: account._id
+                });
+                this.app.models.post.getSpecificPostInfo(object, account._id).then(rs => {
                     message.poststatus = rs;
-                    // Gui thong bao cho nguoi dang post
-                    this.app.models.connection.SendToOnePerson(post.author, message);
-                    // Gui cho nguoi comment
-                    this.app.models.connection.SendToOnePerson(account._id, message);
+                    //cung la 1 nguoi
+                    if (rs.author === account._id)
+                    {
+                        message.payload.account = sender;
+                        this.app.models.connection.SendToOnePerson(account._id, message);
+                    }
+                    else {
+                        this.app.models.connection.SendToOnePerson(rs.author, message);
+                        message.payload.account = sender;
+                        this.app.models.connection.SendToOnePerson(account._id, message);
+                    }
                 })
             }
         } else
