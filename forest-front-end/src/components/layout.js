@@ -28,7 +28,9 @@ class Layout extends Component {
         return (
             <div className="">
                 <Navbar/>
-                <UserProfile/>
+                {this.props.match && this.props.match.path !== '/home'
+                    && <UserProfile/>
+                }
                 <Wall/>
             </div>
         );

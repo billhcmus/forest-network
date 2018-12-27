@@ -5,6 +5,7 @@ import SideBar from '../containers/left-sidebar';
 import FollowingList from '../containers/following';
 import FollowerList from '../containers/followers'
 import HistoryPayment from "../containers/history-payment";
+import NewFeedsBoard from "../containers/newfeeds-board"
 
 import {Route, Switch} from 'react-router-dom';
 
@@ -16,7 +17,12 @@ export default class Wall extends Component {
                     path="/home"
                     children={({ match }) => (
                         <div className={"main-content"}>
-                            <p>Home</p>
+                            <div className={"sidebar-left"}>
+                                <SideBar/>
+                            </div>
+                            <div className={"content"}>
+                                <NewFeedsBoard/>
+                            </div>
                         </div>
                     )}
                 />

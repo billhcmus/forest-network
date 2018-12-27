@@ -21,6 +21,9 @@ import {
     ADD_FOLLOWING_LIST,
     ADD_FOLLOWER_LIST,
     CHANGE_PAYMENT_LIST,
+    INIT_NEW_LIST,
+    GET_MORE_NEWS,
+    GET_NEWFEED_DETAIL_MAIN,
     CHANGE_TRANSACTION,
     CREATE_NEW_CONNECTION,
     REALTIME_TWEET_STATUS,
@@ -151,6 +154,18 @@ export const createNewConnection = (connection) => (
     {type: CREATE_NEW_CONNECTION, payload: connection}
 );
 
+export const initNewsList = (news) => (
+    {type: INIT_NEW_LIST, news: news}
+);
+
+export const getMoreNews = (news) => (
+    {type: GET_MORE_NEWS, news: news}
+);
+
+export const getNewMain = (main_new) => (
+    {type: GET_NEWFEED_DETAIL_MAIN, main_new: main_new}
+);
+
 export const getDetailTweet = (object, loginer) =>
     (dispatch, getState) => {
         dispatch(changeTweetDetailMain(object));
@@ -272,6 +287,31 @@ export const getUserInfo = (publicKey) =>
     (dispatch, getState) =>{
         let service = new WebService();
         service.get(`api/userInfo/?id=${publicKey}`).then(user =>{
-            //dispatch(changeUserInfo(user.data))
+            dispatch(changeUserInfo(user.data))
         })
+    };
+
+export const getNews = (publicKey, page = 1, limit = 5) =>
+    (dispatch, getState) => {
+        let service = new WebService();
+        service.get(`api/newfeeds/?id=${publicKey}&page=${page}&limit=${limit}`).then(news => {
+            dispatch(initNewsList(news.data))
+        })
+    };
+
+export const getNewsMore = (publicKey, page = 1, limit = 5) =>
+    (dispatch, getState) => {
+        let service = new WebService();
+        service.get(`api/newfeeds/?id=${publicKey}&page=${page}&limit=${limit}`).then(news => {
+            dispatch(getMoreNews(news.data))
+        })
+    };
+
+export const getDetailNewFeed = (object, loginer) =>
+    (dispatch, getState) => {
+        dispatch(getNewMain(object));
+        let service = new WebService();
+        // service.get(`api/tweetDetail/?object=${object._id}&loginer=${loginer}&start=0&count=5`).then(postDetail => {
+        //     dispatch(changeTweetDetailComment(postDetail.data))
+        // });
     };
