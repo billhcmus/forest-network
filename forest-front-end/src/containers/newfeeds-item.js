@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import NewFeedItem from '../components/newfeed-item'
-import {getDetailNewFeed} from "../actions";
+import {getDetailTransaction} from "../actions";
 
 const mapStateToProps = state => {
     return {
@@ -10,9 +10,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getDetailNewFeed: (object,loginer) =>{
-            dispatch(getDetailNewFeed(object,loginer))
-        }
+        getDetailTransaction:(id) => {
+            dispatch(getDetailTransaction(id));
+        },
     }
 };
 

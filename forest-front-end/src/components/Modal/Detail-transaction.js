@@ -23,9 +23,15 @@ class DetailTransaction extends Component {
                 { transaction !== ''
                     ? <div className="container">
                         <h5>
-                            {transaction._id}
+                           <a target="_blank" href={`https://forest.network/transactions/${transaction._id}`}>
+                               {transaction._id}
+                           </a>
                         </h5>
-                        <h5>Comfirmed at block {transaction.block}</h5>
+                        <h5>Comfirmed at block 
+                            <a target="_blank" href={`https://forest.network/blocks/${transaction.block}`}>
+                                {transaction.block}
+                            </a>
+                        </h5>
                         <article style={{backgroundColor:"aquamarine",height:'25px'}}>
                             <h5>Successful</h5>
                         </article>

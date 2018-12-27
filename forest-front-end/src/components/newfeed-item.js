@@ -1,51 +1,34 @@
 import React, {Component} from 'react';
-import {Icon} from 'react-icons-kit';
 import {commentingO} from 'react-icons-kit/fa';
-import ViewNew from '../containers/newfeed-detail';
-import Comment from '../components/Modal/Comment';
 import moment from "moment";
-import {Keypair} from "stellar-base";
-import WebService from "../webservice";
-import ReactionPanel from "./Modal/reaction-panel"
+// import {Keypair} from "stellar-base";
+// import WebService from "../webservice";
+// import ReactionPanel from "./Modal/reaction-panel"
+import DetailTransaction from "../containers/detail-transaction";
 
 class NewFeedItem extends Component {
-
     constructor(props) {
         super(props);
-        this.service = new WebService();
         this.state = {
             isModalShow: false,
-            isCommentShow:false,
         };
     }
 
-    handleCancel = (e) => {
+
+    handleHashCancel = (e) => {
         this.setState({
             isModalShow: false
         })
     }
 
-    handleCommentCancel = (e) => {
-        this.setState({
-            isCommentShow: false
-        })
-    }
-
-    handleCommentClick = (e) => {
-        e.stopPropagation()
-        this.setState({
-            isCommentShow: true
-        })
-    }
-
-    handleSpanClick = (e) => {
+    handleHashClick = (e,id) => {
         e.stopPropagation()
         this.setState({
             isModalShow: true
         })
-        this.props.getDetailNewFeed(this.props.itemInfo,Keypair.fromSecret(
-            localStorage.getItem("SECRET_KEY")).publicKey())
+        this.props.getDetailTransaction(id)
     }
+
 
     render() {
         // console.log(this.props.itemInfo)
@@ -56,9 +39,8 @@ class NewFeedItem extends Component {
             : 0
         return (
             <div>
-                <ViewNew isModalShow={this.state.isModalShow} onCancel={(e) => this.handleCancel(e)}/>
-                <Comment objectid={itemInfo._id} isCommentShow={this.state.isCommentShow} onCancel={(e) => this.handleCommentCancel(e)}/>
-                <li className="item-tweet" onClick={(e) =>this.handleSpanClick(e)}>
+                <DetailTransaction isModalShow={this.state.isModalShow} onCancel={(e) => this.handleHashCancel(e)}/>
+                <li className="item-tweet" onClick={(e) =>this.handleHashClick(e,itemInfo._id)}>
                     <div className="tweet-content">
                         <div className="tweet-header">
                             <div className="tweet-profile-link">
@@ -117,58 +99,58 @@ class NewFeedItem extends Component {
                     </div>
 
                     <div className="tweet-action-footer">
-                        <ReactionPanel itemInfo={itemInfo}/>
-                        <div className="comment-btn" onClick={(e)=>{this.handleCommentClick(e)}}>
-                                <span><Icon icon={commentingO}/> Comment</span>
-                        </div>
-                        {
-                            itemInfo.like > 0 ?
-                                <div className="action-item">
-                                    <div className="reaction-icon-small like"></div>
-                                    <span className="actionCount">{itemInfo.like}</span>
-                                </div>
-                                : <div></div>
-                        }
-                        {
-                            itemInfo.love > 0 ?
-                                <div className="action-item">
-                                    <div className="reaction-icon-small love"></div>
-                                    <span className="actionCount">{itemInfo.love}</span>
-                                </div>
-                                : <div></div>
-                        }
-                        {
-                            itemInfo.haha > 0 ?
-                                <div className="action-item">
-                                    <div className="reaction-icon-small haha"></div>
-                                    <span className="actionCount">{itemInfo.haha}</span>
-                                </div>
-                                : <div></div>
-                        }
-                        {
-                            itemInfo.wow > 0 ?
-                                <div className="action-item">
-                                    <div className="reaction-icon-small wow"></div>
-                                    <span className="actionCount">{itemInfo.wow}</span>
-                                </div>
-                                : <div></div>
-                        }
-                        {
-                            itemInfo.sad > 0 ?
-                                <div className="action-item">
-                                    <div className="reaction-icon-small sad"></div>
-                                    <span className="actionCount">{itemInfo.sad}</span>
-                                </div>
-                                : <div></div>
-                        }
-                        {
-                            itemInfo.angry > 0 ?
-                                <div className="action-item">
-                                    <div className="reaction-icon-small angry"></div>
-                                    <span className="actionCount">{itemInfo.angry}</span>
-                                </div>
-                                : <div></div>
-                        }
+                        {/*<ReactionPanel itemInfo={itemInfo}/>*/}
+                        {/*<div className="comment-btn" onClick={(e)=>{this.handleCommentClick(e)}}>*/}
+                                {/*<span><Icon icon={commentingO}/> Comment</span>*/}
+                        {/*</div>*/}
+                        {/*{*/}
+                            {/*itemInfo.like > 0 ?*/}
+                                {/*<div className="action-item">*/}
+                                    {/*<div className="reaction-icon-small like"></div>*/}
+                                    {/*<span className="actionCount">{itemInfo.like}</span>*/}
+                                {/*</div>*/}
+                                {/*: <div></div>*/}
+                        {/*}*/}
+                        {/*{*/}
+                            {/*itemInfo.love > 0 ?*/}
+                                {/*<div className="action-item">*/}
+                                    {/*<div className="reaction-icon-small love"></div>*/}
+                                    {/*<span className="actionCount">{itemInfo.love}</span>*/}
+                                {/*</div>*/}
+                                {/*: <div></div>*/}
+                        {/*}*/}
+                        {/*{*/}
+                            {/*itemInfo.haha > 0 ?*/}
+                                {/*<div className="action-item">*/}
+                                    {/*<div className="reaction-icon-small haha"></div>*/}
+                                    {/*<span className="actionCount">{itemInfo.haha}</span>*/}
+                                {/*</div>*/}
+                                {/*: <div></div>*/}
+                        {/*}*/}
+                        {/*{*/}
+                            {/*itemInfo.wow > 0 ?*/}
+                                {/*<div className="action-item">*/}
+                                    {/*<div className="reaction-icon-small wow"></div>*/}
+                                    {/*<span className="actionCount">{itemInfo.wow}</span>*/}
+                                {/*</div>*/}
+                                {/*: <div></div>*/}
+                        {/*}*/}
+                        {/*{*/}
+                            {/*itemInfo.sad > 0 ?*/}
+                                {/*<div className="action-item">*/}
+                                    {/*<div className="reaction-icon-small sad"></div>*/}
+                                    {/*<span className="actionCount">{itemInfo.sad}</span>*/}
+                                {/*</div>*/}
+                                {/*: <div></div>*/}
+                        {/*}*/}
+                        {/*{*/}
+                            {/*itemInfo.angry > 0 ?*/}
+                                {/*<div className="action-item">*/}
+                                    {/*<div className="reaction-icon-small angry"></div>*/}
+                                    {/*<span className="actionCount">{itemInfo.angry}</span>*/}
+                                {/*</div>*/}
+                                {/*: <div></div>*/}
+                        {/*}*/}
                     </div>
                 </li>
             </div>
