@@ -6,7 +6,10 @@ import {Keypair} from "stellar-base";
 class NewFeedsBoard extends Component {
     componentWillMount() {
         this.props.getNews(Keypair.fromSecret(
-            localStorage.getItem("SECRET_KEY")).publicKey(), 0, 2)
+            localStorage.getItem("SECRET_KEY")).publicKey(), 0, 5)
+        this.props.updatePeopleInfo(Keypair.fromSecret(
+                    localStorage.getItem("SECRET_KEY")).publicKey(), Keypair.fromSecret(
+                    localStorage.getItem("SECRET_KEY")).publicKey())
     }
 
     isBottom(el) {

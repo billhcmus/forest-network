@@ -39,7 +39,7 @@ export default class Transaction {
         })
 
         let trans = await this.app.db.collection('transaction')
-                                .find({tags:{$elemMatch:{key:'account',value:{$in: arr_followings}}}})
+                                .find({tags:{$elemMatch:{key:'account',value:{$in: arr_followings}}}, operation: {$ne: "interact"}})
                                 .sort({time:-1})
                                 .skip(+page).limit(+limit)
                                 .toArray();
@@ -53,7 +53,7 @@ export default class Transaction {
 
             let user = await this.app.models.user.getUser(item_tran.tags[0].value)
             try {
-                // item.avatar = user.picture
+                item.avatar = user.picture
                 item.displayName = user.name
                 item.author = user._id
 
